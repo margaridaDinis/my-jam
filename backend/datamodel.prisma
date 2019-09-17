@@ -1,0 +1,19 @@
+type User {
+  id: ID! @id
+  name: String!
+  email: String!
+}
+
+type Album {
+  id: ID! @id
+  name: String!
+  description: String
+  image: String!
+  largeImage: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+#  genres: [list of genres]
+#  artists: [Artist]!
+#  type: [one of "album" , "single" , or "compilation"]!
+#  user: User!
+}

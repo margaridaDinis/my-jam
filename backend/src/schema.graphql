@@ -1,0 +1,14 @@
+# import * from './generated/prisma.graphql'
+
+type Mutation {
+  createAlbum(
+    name: String,
+    description: String,
+    image: String,
+    largeImage: String
+  ): Album!
+}
+
+type Query {
+  albuns: [Album]!
+}
