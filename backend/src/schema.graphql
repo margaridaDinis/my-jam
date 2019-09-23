@@ -2,6 +2,7 @@
 
 type Mutation {
   createAlbum(
+    year: Int,
     name: String,
     description: String,
     image: String,
@@ -10,5 +11,5 @@ type Mutation {
 }
 
 type Query {
-  albuns: [Album]!
+  albums: [Album]!
 }

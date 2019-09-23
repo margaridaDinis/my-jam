@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/my-jam/my-jam/dev
-# timestamp: Sat Aug 31 2019 13:48:13 GMT+0200 (Central European Summer Time)
+# timestamp: Mon Sep 23 2019 22:32:44 GMT+0200 (Central European Summer Time)
 
 type AggregateAlbum {
   count: Int!
@@ -11,6 +11,7 @@ type AggregateUser {
 
 type Album implements Node {
   id: ID!
+  year: Int
   name: String!
   description: String
   image: String!
@@ -31,6 +32,7 @@ type AlbumConnection {
 
 input AlbumCreateInput {
   id: ID
+  year: Int
   name: String!
   description: String
   image: String!
@@ -49,6 +51,8 @@ type AlbumEdge {
 enum AlbumOrderByInput {
   id_ASC
   id_DESC
+  year_ASC
+  year_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -65,6 +69,7 @@ enum AlbumOrderByInput {
 
 type AlbumPreviousValues {
   id: ID!
+  year: Int
   name: String!
   description: String
   image: String!
@@ -113,6 +118,7 @@ input AlbumSubscriptionWhereInput {
 }
 
 input AlbumUpdateInput {
+  year: Int
   name: String
   description: String
   image: String
@@ -120,6 +126,7 @@ input AlbumUpdateInput {
 }
 
 input AlbumUpdateManyMutationInput {
+  year: Int
   name: String
   description: String
   image: String
@@ -175,6 +182,28 @@ input AlbumWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  year: Int
+
+  """All values that are not equal to given value."""
+  year_not: Int
+
+  """All values that are contained in given list."""
+  year_in: [Int!]
+
+  """All values that are not contained in given list."""
+  year_not_in: [Int!]
+
+  """All values less than the given value."""
+  year_lt: Int
+
+  """All values less than or equal the given value."""
+  year_lte: Int
+
+  """All values greater than the given value."""
+  year_gt: Int
+
+  """All values greater than or equal the given value."""
+  year_gte: Int
   name: String
 
   """All values that are not equal to given value."""

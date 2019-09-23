@@ -4,8 +4,8 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import NProgress from 'nprogress';
 
-import Nav from './Nav';
-import Search from './Search';
+import Nav from '../Nav';
+import Search from '../Search';
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();

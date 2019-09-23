@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Albums = () => (
+import Albums from '../components/organisms/Albums';
+
+const AlbumsPage = () => (
   <div>
-    Albuns!
+    <Albums />
   </div>
 );
 
-export default Albums;
+export default AlbumsPage;
+

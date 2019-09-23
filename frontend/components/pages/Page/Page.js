@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-import Header from '../organisms/Header';
-import Meta from '../organisms/Meta';
+import Header from '../../organisms/Header';
+import Meta from '../../organisms/Meta';
 
 const theme = {
   primaryColor: '#FF0000',

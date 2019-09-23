@@ -1,7 +1,7 @@
 const { forwardTo } = require('prisma-binding');
 
 const Query = {
-  albuns: forwardTo('db')
+  albums: forwardTo('db')
 };
 
 module.exports = Query;
