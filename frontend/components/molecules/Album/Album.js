@@ -13,7 +13,7 @@ const Album = ({ album }) => {
       </h2>
 
       <div className="buttonList">
-        <Link href={{ pathname: '/update', query: { id: album.id } }}>
+        <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
           <a>Edit ✏️</a>
         </Link>
         <Link href='/'>

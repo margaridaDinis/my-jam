@@ -7,7 +7,7 @@ import Input from '../../atoms/Input';
 
 import { CREATE_ALBUM_MUTATION } from './index';
 
-const initialState = { name: 'Name', year: 0, description: '', image: '', largeImage: '' };
+const initialState = { name: '', year: '', description: '', image: '', largeImage: '' };
 
 const CreateAlbum = () => {
   const [values, setValues] = useState(initialState);
@@ -38,7 +38,6 @@ const CreateAlbum = () => {
     );
 
     const file = await response.json();
-
     setValues({
       ...values,
       image: file.secure_url,

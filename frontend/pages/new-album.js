@@ -1,10 +1,10 @@
 import React from 'react';
 import CreateAlbum from '../components/organisms/CreateAlbum';
 
-const NewAlbum = () => {
+const CreateAlbumPage = () => {
   return (
     <CreateAlbum />
   );
 };
 
-export default NewAlbum;
+export default CreateAlbumPage;

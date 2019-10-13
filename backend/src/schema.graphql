@@ -8,8 +8,17 @@ type Mutation {
     image: String,
     largeImage: String
   ): Album!
+  updateAlbum(
+    id: ID!,
+    year: Int,
+    name: String,
+    description: String,
+#    image: String,
+#    largeImage: String
+  ): Album!
 }
 
 type Query {
   albums: [Album]!
+  album(where: AlbumWhereUniqueInput): Album
 }
