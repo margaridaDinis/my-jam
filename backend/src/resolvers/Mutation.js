@@ -13,6 +13,12 @@ const mutations = {
         id: args.id
       }
     }, info);
+  },
+  async deleteAlbum(parent, args, context, info) {
+    const where = { id: args.id };
+    const item = await context.db.query.album({ where }, `{ id name }`);
+
+    return context.db.mutation.deleteAlbum({ where }, info);
   }
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import DeleteAlbum from '../DeleteAlbum';
 
 const Album = ({ album }) => {
   return (
@@ -19,9 +20,7 @@ const Album = ({ album }) => {
         <Link href='/'>
           <a>Add to cart️</a>
         </Link>
-        <Link href='/'>
-          <a> Delete️️</a>
-        </Link>
+        <DeleteAlbum id={album.id}>Delete</DeleteAlbum>
       </div>
     </article>
   );

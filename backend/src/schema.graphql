@@ -16,6 +16,7 @@ type Mutation {
 #    image: String,
 #    largeImage: String
   ): Album!
+  deleteAlbum(id: ID!): Album
 }
 
 type Query {
