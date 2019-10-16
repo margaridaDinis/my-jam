@@ -7,19 +7,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessege';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
-
-export const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    album(where: { id: $id }) {
-      id
-      name
-      year
-      description
-      image
-      largeImage
-    }
-  }
-`;
+import { SINGLE_ITEM_QUERY } from '../Album';
 
 export const UPDATE_ALBUM_MUTATION = gql`
   mutation UPDATE_ALBUM_MUTATION(
@@ -98,7 +86,7 @@ const UpdateAlbum = ({ id }) => {
           defaultValue={data.album.description}
           handleChange={handleChange}
         />
-        {data.album.image && <img src={data.album.image} alt="Uploaded Image" width="200" />}
+        {data.album.image && <img src={data.album.image} alt={data.album.name} width="200" />}
       </fieldset>
       <button type="submit">Save Changes</button>
     </Form>
