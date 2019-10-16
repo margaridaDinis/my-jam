@@ -66,29 +66,29 @@ const UpdateAlbum = ({ id }) => {
       {error && <ErrorMessage error={error} />}
       <fieldset disabled={submitting} aria-busy={submitting}>
         <Input
-          name="name"
-          label="Album Name"
+          name='name'
+          label='Album Name'
           defaultValue={data.album.name}
           handleChange={handleChange}
           required
         />
         <Input
-          type="number"
-          name="year"
-          label="Year"
+          type='number'
+          name='year'
+          label='Year'
           defaultValue={data.album.year}
           handleChange={handleChange}
         />
         <Input
-          type="textarea"
-          name="description"
-          label="Description"
+          type='textarea'
+          name='description'
+          label='Description'
           defaultValue={data.album.description}
           handleChange={handleChange}
         />
-        {data.album.image && <img src={data.album.image} alt={data.album.name} width="200" />}
+        {data.album.image && <img src={data.album.image} alt={data.album.name} width='200' />}
       </fieldset>
-      <button type="submit">Save Changes</button>
+      <button type='submit'>Save Changes</button>
     </Form>
   );
 };

@@ -7,17 +7,17 @@ const Nav = () => (
   <NavStyles>
     <ul>
       <li>
-        <Link href="/">
+        <Link href='/'>
           <a>Home</a>
         </Link>
       </li>
       <li>
-        <Link href="/albums">
+        <Link href='/albums'>
           <a>Albums</a>
         </Link>
       </li>
       <li>
-        <Link href="/new-album">
+        <Link href='/new-album'>
           <a>New Album</a>
         </Link>
       </li>

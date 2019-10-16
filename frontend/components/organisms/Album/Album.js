@@ -30,7 +30,7 @@ const Album = ({ id }) => {
       <h1>{data.album.name}</h1>
       <p>{data.album.year}</p>
       <p>{data.album.description}</p>
-      {data.album.largeImage && <img src={data.album.largeImage} alt={data.album.name} width="400" />}
+      {data.album.largeImage && <img src={data.album.largeImage} alt={data.album.name} width='400' />}
     </div>
   );
 };

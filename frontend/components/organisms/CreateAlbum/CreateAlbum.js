@@ -88,36 +88,36 @@ const CreateAlbum = () => {
       {error && <ErrorMessage error={error} />}
       <fieldset disabled={loading} aria-busy={loading}>
         <Input
-          name="name"
-          label="Album Name"
+          name='name'
+          label='Album Name'
           value={values.name}
           handleChange={handleChange}
           required
         />
         <Input
-          type="number"
-          name="year"
-          label="Year"
+          type='number'
+          name='year'
+          label='Year'
           value={values.year}
           handleChange={handleChange}
         />
         <Input
-          type="textarea"
-          name="description"
-          label="Description"
+          type='textarea'
+          name='description'
+          label='Description'
           value={values.description}
           handleChange={handleChange}
         />
         <Input
-          type="file"
-          name="image"
-          label="Album cover"
+          type='file'
+          name='image'
+          label='Album cover'
           handleChange={handleUploadFile}
           required
         />
-        {values.image && <img src={values.image} alt="Uploaded Image" width="200" />}
+        {values.image && <img src={values.image} alt='Uploaded Image' width='200' />}
       </fieldset>
-      <button type="submit" disabled={!values.image}>Submit</button>
+      <button type='submit' disabled={!values.image}>Submit</button>
     </Form>
   );
 };
