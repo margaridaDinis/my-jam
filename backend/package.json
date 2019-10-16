@@ -32,5 +32,10 @@
     "presets": [
       "env"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
