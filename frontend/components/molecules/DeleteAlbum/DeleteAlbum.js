@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 
 import { ALL_ALBUMS_QUERY } from '../../organisms/Albums';
 
@@ -14,31 +14,30 @@ export const DELETE_ALBUM_MUTATION = gql`
 `;
 
 const DeleteAlbum = ({ id, children }) => {
-  const deleteHandler = (deleteAlbum) => {
+  const [removeAlbum] = useMutation(
+    DELETE_ALBUM_MUTATION,
+    {
+      update(cache, { data: { deleteAlbum } }) {
+        const { albums } = cache.readQuery({ query: ALL_ALBUMS_QUERY });
+        cache.writeQuery({
+          query: ALL_ALBUMS_QUERY,
+          data: { albums: albums.filter((album) => album.id !== deleteAlbum.id) },
+        });
+      },
+    },
+  );
+
+  const deleteHandler = () => {
     // eslint-disable-next-line
     if (confirm('Are you sure you want to delete this album?')) {
-      deleteAlbum();
+      removeAlbum({ variables: { id } });
     }
   };
 
-  const handleUpdate = (cache, payload) => {
-    const data = cache.readQuery({ query: ALL_ALBUMS_QUERY });
-    data.albums = data.albums.filter((album) => album.id !== payload.data.deleteAlbum.id);
-    cache.writeQuery({ query: ALL_ALBUMS_QUERY, data });
-  };
-
   return (
-    <Mutation
-      mutation={DELETE_ALBUM_MUTATION}
-      variables={{ id }}
-      update={handleUpdate}
-    >
-      {(deleteAlbum) => (
-        <button onClick={() => deleteHandler(deleteAlbum)}>
-          {children}
-        </button>
-      )}
-    </Mutation>
+    <button onClick={deleteHandler}>
+      {children}
+    </button>
   );
 };
 

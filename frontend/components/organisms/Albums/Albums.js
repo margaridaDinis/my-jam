@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 
 import ErrorMessage from '../../molecules/ErrorMessege';
 import Album from '../../molecules/Album';
@@ -31,23 +31,20 @@ const AlbumsList = styled.div`
   margin: 0 auto;
 `;
 
-const Albums = () => (
-  <Query query={ALL_ALBUMS_QUERY}>
-    {({ data, error, loading }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <ErrorMessage error={error} />;
+const Albums = () => {
+  const { loading, error, data } = useQuery(ALL_ALBUMS_QUERY);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <ErrorMessage error={error} />;
 
-      return (
-        <Center>
-          <AlbumsList>
-            {data.albums.map((album) => (
-              <Album key={album.id} album={album} />
-            ))}
-          </AlbumsList>
-        </Center>
-      );
-    }}
-  </Query>
-);
+  return (
+    <Center>
+      <AlbumsList>
+        {data.albums.map((album) => (
+          <Album key={album.id} album={album} />
+        ))}
+      </AlbumsList>
+    </Center>
+  );
+};
 
 export default Albums;

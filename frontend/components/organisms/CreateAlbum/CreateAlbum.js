@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 
 import ErrorMessage from '../../molecules/ErrorMessege';
 import Form from '../../atoms/Form';
@@ -37,6 +37,7 @@ const initialState = {
 };
 
 const CreateAlbum = () => {
+  const [createAlbum, { loading, error }] = useMutation(CREATE_ALBUM_MUTATION);
   const [values, setValues] = useState(initialState);
 
   const handleChange = ({ target: { name, value, type } }) => {
@@ -72,9 +73,9 @@ const CreateAlbum = () => {
     });
   };
 
-  const handleSubmit = async (e, createAlbum) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await createAlbum();
+    const res = await createAlbum({ variables: values });
 
     Router.push({
       pathname: '/album',
@@ -83,45 +84,41 @@ const CreateAlbum = () => {
   };
 
   return (
-    <Mutation mutation={CREATE_ALBUM_MUTATION} variables={values}>
-      {(createAlbum, { loading, error }) => (
-        <Form onSubmit={(e) => handleSubmit(e, createAlbum)}>
-          {error && <ErrorMessage error={error} />}
-          <fieldset disabled={loading} aria-busy={loading}>
-            <Input
-              name="name"
-              label="Album Name"
-              value={values.name}
-              handleChange={handleChange}
-              required
-            />
-            <Input
-              type="number"
-              name="year"
-              label="Year"
-              value={values.year}
-              handleChange={handleChange}
-            />
-            <Input
-              type="textarea"
-              name="description"
-              label="Description"
-              value={values.description}
-              handleChange={handleChange}
-            />
-            <Input
-              type="file"
-              name="image"
-              label="Album cover"
-              handleChange={handleUploadFile}
-              required
-            />
-            {values.image && <img src={values.image} alt="Uploaded Image" width="200" />}
-          </fieldset>
-          <button type="submit" disabled={!values.image}>Submit</button>
-        </Form>
-      )}
-    </Mutation>
+    <Form onSubmit={(e) => handleSubmit(e, createAlbum)}>
+      {error && <ErrorMessage error={error} />}
+      <fieldset disabled={loading} aria-busy={loading}>
+        <Input
+          name="name"
+          label="Album Name"
+          value={values.name}
+          handleChange={handleChange}
+          required
+        />
+        <Input
+          type="number"
+          name="year"
+          label="Year"
+          value={values.year}
+          handleChange={handleChange}
+        />
+        <Input
+          type="textarea"
+          name="description"
+          label="Description"
+          value={values.description}
+          handleChange={handleChange}
+        />
+        <Input
+          type="file"
+          name="image"
+          label="Album cover"
+          handleChange={handleUploadFile}
+          required
+        />
+        {values.image && <img src={values.image} alt="Uploaded Image" width="200" />}
+      </fieldset>
+      <button type="submit" disabled={!values.image}>Submit</button>
+    </Form>
   );
 };
 
