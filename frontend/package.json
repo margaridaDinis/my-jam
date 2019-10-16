@@ -43,6 +43,7 @@
     "babel-jest": "^23.6.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "casual": "^1.5.19",
+    "cz-conventional-changelog": "3.0.2",
     "enzyme-to-json": "^3.3.4",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
@@ -118,6 +119,11 @@
           ]
         ]
       }
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
     }
   }
 }
