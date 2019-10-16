@@ -16,7 +16,7 @@ class _App extends App {
     pageProps.query = ctx.query;
 
     return { pageProps };
-  };
+  }
 
   render() {
     const { Component, apollo, pageProps } = this.props;

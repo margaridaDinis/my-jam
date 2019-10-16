@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 import Header from '../../organisms/Header';
@@ -17,11 +18,11 @@ const theme = {
 
 const StyledPage = styled.div`
   background: white;
-  color: ${props => props.theme.black};
+  color: ${(props) => props.theme.black};
 `;
 
 const Inner = styled.div`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
 `;
@@ -43,26 +44,28 @@ const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${props => props.theme.black};
+    color: ${(props) => props.theme.black};
   }
   button {  font-family: Livvic, sans-serif; }
 `;
 
-const Page = ({ children }) => {
-  return (
-    <ThemeProvider theme={theme}>
-      <Fragment>
-        <GlobalStyle/>
-        <StyledPage>
-          <Header/>
-          <Meta/>
-          <Inner>
-            {children}
-          </Inner>
-        </StyledPage>
-      </Fragment>
-    </ThemeProvider>
-  );
+const Page = ({ children }) => (
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
+      <StyledPage>
+        <Header />
+        <Meta />
+        <Inner>
+          {children}
+        </Inner>
+      </StyledPage>
+    </>
+  </ThemeProvider>
+);
+
+Page.propTypes = {
+  children: PropTypes.element,
 };
 
 export default Page;
