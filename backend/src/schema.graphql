@@ -22,4 +22,5 @@ type Mutation {
 type Query {
   albums: [Album]!
   album(where: AlbumWhereUniqueInput): Album
+  albumsConnection(where: AlbumWhereInput): AlbumConnection!
 }
