@@ -38,7 +38,7 @@ const AlbumsList = styled.div`
 const Albums = ({ page }) => {
   const { loading, error, data } = useQuery(
     ALL_ALBUMS_QUERY,
-    { variables: { skip: (page * perPage) - perPage } }
+    { variables: { skip: (page * perPage) - perPage } },
   );
   if (loading) return <p>Loading...</p>;
   if (error) return <ErrorMessage error={error} />;
@@ -57,7 +57,7 @@ const Albums = ({ page }) => {
 };
 
 Albums.propTypes = {
-  page: PropTypes.number
+  page: PropTypes.number,
 };
 
 export default Albums;

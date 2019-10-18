@@ -24,8 +24,8 @@ const Pagination = ({ page }) => {
 
   if (loading) return null;
 
-  const count = data.albumsConnection.aggregate.count;
-  const pages = Math.ceil(count / perPage)
+  const { count } = data.albumsConnection.aggregate;
+  const pages = Math.ceil(count / perPage);
 
   return (
     <PaginationStyles>
@@ -35,8 +35,8 @@ const Pagination = ({ page }) => {
       <Link prefetch href={{
         pathname: 'albums',
         query: {
-          page: page - 1
-        }
+          page: page - 1,
+        },
       }}>
         <a className='prev' aria-disabled={page <= 1}>Prev</a>
       </Link>
@@ -46,8 +46,8 @@ const Pagination = ({ page }) => {
       <Link prefetch href={{
         pathname: 'albums',
         query: {
-          page: page + 1
-        }
+          page: page + 1,
+        },
       }}>
         <a className='next' aria-disabled={page >= pages}>Next</a>
       </Link>
@@ -56,11 +56,11 @@ const Pagination = ({ page }) => {
 };
 
 Pagination.defaultProps = {
-  page: 1
+  page: 1,
 };
 
 Pagination.propTypes = {
-  page: PropTypes.number
+  page: PropTypes.number,
 };
 
 export default Pagination;
