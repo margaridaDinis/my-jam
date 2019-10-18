@@ -8,9 +8,11 @@ import ErrorMessage from '../../molecules/ErrorMessege';
 import Album from '../../molecules/Album';
 import Pagination from '../../molecules/Pagination/Pagination';
 
+import { perPage } from '../../../config';
+
 export const ALL_ALBUMS_QUERY = gql`
-  query ALL_ALBUMS_QUERY {
-    albums {
+  query ALL_ALBUMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
+    albums(skip: $skip, first: $first, orderBy: createdAt_DESC) {
       id
       year
       name
@@ -34,7 +36,10 @@ const AlbumsList = styled.div`
 `;
 
 const Albums = ({ page }) => {
-  const { loading, error, data } = useQuery(ALL_ALBUMS_QUERY);
+  const { loading, error, data } = useQuery(
+    ALL_ALBUMS_QUERY,
+    { variables: { skip: (page * perPage) - perPage } }
+  );
   if (loading) return <p>Loading...</p>;
   if (error) return <ErrorMessage error={error} />;
 
