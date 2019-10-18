@@ -20,7 +20,7 @@ type Mutation {
 }
 
 type Query {
-  albums: [Album]!
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, first: Int): [Album]!
   album(where: AlbumWhereUniqueInput): Album
   albumsConnection(where: AlbumWhereInput): AlbumConnection!
 }
