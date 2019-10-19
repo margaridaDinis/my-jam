@@ -9,14 +9,16 @@ const initialState = {
   name: '', email: '', password: '',
 };
 
-const AuthForm = ({ title, handleSubmit, showName, loading, error }) => {
+const AuthForm = ({
+  title, handleSubmit, showName, loading, error,
+}) => {
   const [values, setValues] = useState(initialState);
 
-  const _handleChange = ({ target: { name, value } }) => {
+  const change = ({ target: { name, value } }) => {
     setValues({ ...values, [name]: value });
   };
 
-  const _handleSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
 
     handleSubmit(values);
@@ -24,7 +26,7 @@ const AuthForm = ({ title, handleSubmit, showName, loading, error }) => {
   };
 
   return (
-    <Form onSubmit={_handleSubmit}>
+    <Form onSubmit={submit}>
       {error && <ErrorMessage error={error} />}
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>{title}</h2>
@@ -34,7 +36,7 @@ const AuthForm = ({ title, handleSubmit, showName, loading, error }) => {
             name='name'
             label='Name'
             value={values.name}
-            handleChange={_handleChange}
+            handleChange={change}
             required
           />
         )}
@@ -43,7 +45,7 @@ const AuthForm = ({ title, handleSubmit, showName, loading, error }) => {
           name='email'
           label='Email'
           value={values.email}
-          handleChange={_handleChange}
+          handleChange={change}
           required
         />
         <Input
@@ -51,7 +53,7 @@ const AuthForm = ({ title, handleSubmit, showName, loading, error }) => {
           name='password'
           label='Password'
           value={values.password}
-          handleChange={_handleChange}
+          handleChange={change}
           required
         />
         <button type='submit'>{title}</button>

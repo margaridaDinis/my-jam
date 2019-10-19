@@ -26,9 +26,11 @@ export const SIGN_UP_MUTATION = gql`
 const SignUp = () => {
   const [signUp, { loading, error }] = useMutation(
     SIGN_UP_MUTATION,
-  { refetchQueries: [{
-      query: CURRENT_USER_QUERY
-    }]}
+    {
+      refetchQueries: [{
+        query: CURRENT_USER_QUERY,
+      }],
+    },
   );
 
   const handleSubmit = async (values) => {
