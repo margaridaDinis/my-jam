@@ -24,4 +24,5 @@ type Query {
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, first: Int): [Album]!
   album(where: AlbumWhereUniqueInput): Album
   albumsConnection(where: AlbumWhereInput): AlbumConnection!
+  me: User
 }
