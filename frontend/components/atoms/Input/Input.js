@@ -8,7 +8,6 @@ const Input = ({
     {label}
     {type === 'textarea' ? (
       <textarea
-        id={name}
         name={name}
         onChange={handleChange}
         placeholder={placeholder}
@@ -18,7 +17,6 @@ const Input = ({
     ) : (
       <input
         type={type}
-        id={name}
         name={name}
         onChange={handleChange}
         placeholder={placeholder}

@@ -13,7 +13,7 @@ const AlbumsPage = ({ query }) => {
 
 AlbumsPage.propTypes = {
   query: PropTypes.shape({
-    page: PropTypes.number,
+    page: PropTypes.string,
   }),
 };
 

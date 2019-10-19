@@ -84,7 +84,7 @@ const CreateAlbum = () => {
   };
 
   return (
-    <Form onSubmit={(e) => handleSubmit(e, createAlbum)}>
+    <Form onSubmit={handleSubmit}>
       {error && <ErrorMessage error={error} />}
       <fieldset disabled={loading} aria-busy={loading}>
         <Input
