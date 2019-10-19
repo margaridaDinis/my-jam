@@ -4,12 +4,12 @@ const Query = {
   albums: forwardTo('db'),
   album: forwardTo('db'),
   albumsConnection: forwardTo('db'),
-  me(parent, args, context, info) {
-    const { userId } = context.request;
+  me(parent, args, ctx, info) {
+    const { userId } = ctx.request;
 
     if (!userId) return null;
 
-    return context.db.query.user({ where: { id: userId } }, info);
+    return ctx.db.query.user({ where: { id: userId } }, info);
   },
 };
 

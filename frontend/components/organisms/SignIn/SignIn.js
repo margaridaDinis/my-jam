@@ -2,48 +2,44 @@ import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import AuthForm from '../../molecules/AuthForm';
 import { CURRENT_USER_QUERY } from '../User';
+import AuthForm from '../../molecules/AuthForm';
 
-export const SIGN_UP_MUTATION = gql`
-  mutation SIGN_UP_MUTATION(
-    $name: String!
+export const SIGN_IN_MUTATION = gql`
+  mutation SIGN_IN_MUTATION(
     $email: String!
     $password: String!
   ) {
-    signUp(
-      name: $name
+    signIn(
       email: $email
       password: $password
     ) {
       id
-      name
       email
     }
   }
 `;
 
-const SignUp = () => {
-  const [signUp, { loading, error }] = useMutation(
-    SIGN_UP_MUTATION,
+const SignIn = () => {
+  const [signIn, { loading, error }] = useMutation(
+    SIGN_IN_MUTATION,
   { refetchQueries: [{
       query: CURRENT_USER_QUERY
     }]}
   );
 
   const handleSubmit = async (values) => {
-    await signUp({ variables: values });
+    await signIn({ variables: values });
   };
 
   return (
     <AuthForm
-      title='Sign Up'
+      title='Sign In'
       handleSubmit={handleSubmit}
       loading={loading}
       error={error}
-      showName
     />
   );
 };
 
-export default SignUp;
+export default SignIn;
