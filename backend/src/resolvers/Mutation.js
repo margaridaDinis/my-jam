@@ -61,6 +61,10 @@ const mutations = {
     setToken({ ctx, userId: user.id });
 
     return user;
+  },
+  async signOut(parent, args, ctx, info) {
+    ctx.response.clearCookie('token');
+    return { message: 'Signed out' };
   }
 };
 
