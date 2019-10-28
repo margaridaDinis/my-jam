@@ -1,18 +1,11 @@
 import styled from 'styled-components';
 
-const NavStyles = styled.nav`
+const NavStyles = styled.ul`
   margin: 0;
   padding: 0;
+  display: flex;
   justify-self: end;
-  align-self: center;
-
-  ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    font-size: 2rem;
-    list-style: none;
-  }
+  font-size: 2rem;
   a,
   button {
     padding: 1rem 3rem;
@@ -25,6 +18,8 @@ const NavStyles = styled.nav`
     background: none;
     border: 0;
     cursor: pointer;
+    color: ${props => props.theme.black};
+    font-weight: 800;
     @media (max-width: 700px) {
       font-size: 10px;
       padding: 0 10px;
@@ -58,9 +53,6 @@ const NavStyles = styled.nav`
       &:after {
         width: calc(100% - 60px);
       }
-    @media (max-width: 700px) {
-        width: calc(100% - 10px);
-    }
     }
   }
   @media (max-width: 1300px) {

@@ -3,44 +3,36 @@ import Link from 'next/link';
 
 import NavStyles from '../../../styles/NavStyles';
 import User from '../User';
+import SignOutButton from '../../atoms/SignOutButton';
 
 const Nav = () => (
   <User>
     {({ me }) => (
       <NavStyles>
-        <ul>
-          <li>
-            <Link href='/'>
-              <a>Home</a>
+        <Link href='/'>
+          <a>Home</a>
+        </Link>
+        <Link href='/albums'>
+          <a>Albums</a>
+        </Link>
+        {me && (
+          <Fragment>
+            <Link href='/new-album'>
+              <a>New Album</a>
             </Link>
-          </li>
-          <li>
-            <Link href='/albums'>
-              <a>Albums</a>
+            <Link href='/account'>
+              <a>Account</a>
             </Link>
-          </li>
-          {me && (
-            <Fragment>
-              <li>
-                <Link href='/new-album'>
-                  <a>New Album</a>
-                </Link>
-              </li>
-              <li>
-                <Link href='/signup'>
-                  <a>Account</a>
-                </Link>
-              </li>
-            </Fragment>
-          )}
-          {!me && (
-            <li>
-              <Link href='/signup'>
-                <a>Sign Up</a>
-              </Link>
-            </li>
-          )}
-        </ul>
+            <SignOutButton>
+              SignOut
+            </SignOutButton>
+          </Fragment>
+        )}
+        {!me && (
+          <Link href='/signup'>
+            <a>Sign Up</a>
+          </Link>
+        )}
       </NavStyles>
     )}
   </User>

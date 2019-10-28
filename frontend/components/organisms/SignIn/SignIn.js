@@ -32,6 +32,7 @@ const SignIn = () => {
 
   const handleSubmit = async (values) => {
     await signIn({ variables: values });
+    // TODO redirect to home or account
   };
 
   return (
