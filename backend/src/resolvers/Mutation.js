@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 
 const setToken = ({ ctx, userId }) => {
   const token = jwt.sign({ userId }, process.env.APP_SECRET);
@@ -65,6 +67,54 @@ const mutations = {
   async signOut(parent, args, ctx, info) {
     ctx.response.clearCookie('token');
     return { message: 'Signed out' };
+  },
+  async requestReset(parent, { email }, ctx, info) {
+    const user = await ctx.db.query.user({ where: { email } });
+    if (!user) throw new Error(`No such user found for email: ${email}`);
+
+    const promisifiedRandomBytes = promisify(randomBytes);
+    const resetToken = (await promisifiedRandomBytes(20)).toString('hex');
+    const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
+
+    const res = await ctx.db.mutation.updateUser({
+      where: { email },
+      data: { resetToken, resetTokenExpiry }
+    });
+
+    console.log(res);
+
+    return { message: 'Reset token generated' };
+  },
+  async resetPassword(parent, args, ctx, info) {
+    const { resetToken, password, confirmPassword } = args;
+
+    if (password !== confirmPassword) throw new Error('Password and confirmation do not match');
+
+    const [user] = await ctx.db.query.users({
+      where: {
+        resetToken, resetTokenExpiry_gte: Date.now() - 3600000
+      }
+    });
+
+    if (!user) throw new Error('The reset token is not valid');
+
+    const newPassword = await bcrypt.hash(password, 10);
+
+    const updatedUser = await ctx.db.mutation.updateUser(
+      {
+        where: { email: user.email },
+        data: {
+          password: newPassword,
+          resetToken: '',
+          resetTokenExpiry: ''
+        },
+      },
+      info
+    );
+
+    setToken({ ctx, userId: updatedUser.id });
+
+    return updatedUser;
   }
 };
 
