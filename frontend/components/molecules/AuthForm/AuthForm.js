@@ -6,13 +6,24 @@ import ErrorMessage from '../ErrorMessege';
 import Input from '../../atoms/Input';
 
 const initialState = {
-  name: '', email: '', password: '',
+  name: '', email: '', password: '', confirmPassword: '',
 };
 
 const AuthForm = ({
-  title, handleSubmit, showName, loading, error,
+  title,
+  successMessage,
+  handleSubmit,
+  showName,
+  showEmail,
+  showPassword,
+  showConfirmPassword,
+  loading,
+  error,
+  called,
 }) => {
   const [values, setValues] = useState(initialState);
+
+  const succeeded = !loading && !error && called;
 
   const change = ({ target: { name, value } }) => {
     setValues({ ...values, [name]: value });
@@ -22,7 +33,6 @@ const AuthForm = ({
     e.preventDefault();
 
     handleSubmit(values);
-    setValues(initialState);
   };
 
   return (
@@ -30,6 +40,7 @@ const AuthForm = ({
       {error && <ErrorMessage error={error} />}
       <fieldset disabled={loading} aria-busy={loading}>
         <h2>{title}</h2>
+        {succeeded && successMessage && <p>{successMessage}</p>}
         {showName && (
           <Input
             type='name'
@@ -40,22 +51,36 @@ const AuthForm = ({
             required
           />
         )}
-        <Input
-          type='email'
-          name='email'
-          label='Email'
-          value={values.email}
-          handleChange={change}
-          required
-        />
-        <Input
-          type='password'
-          name='password'
-          label='Password'
-          value={values.password}
-          handleChange={change}
-          required
-        />
+        {showEmail && (
+          <Input
+            type='email'
+            name='email'
+            label='Email'
+            value={values.email}
+            handleChange={change}
+            required
+          />
+        )}
+        {showPassword && (
+          <Input
+            type='password'
+            name='password'
+            label='Password'
+            value={values.password}
+            handleChange={change}
+            required
+          />
+        )}
+        {showConfirmPassword && (
+          <Input
+            type='password'
+            name='confirmPassword'
+            label='Confirm Password'
+            value={values.confirmPassword}
+            handleChange={change}
+            required
+          />
+        )}
         <button type='submit'>{title}</button>
       </fieldset>
     </Form>
@@ -65,9 +90,14 @@ const AuthForm = ({
 AuthForm.propTypes = {
   title: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  successMessage: PropTypes.string,
   showName: PropTypes.bool,
+  showEmail: PropTypes.bool,
+  showPassword: PropTypes.bool,
+  showConfirmPassword: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.string,
+  called: PropTypes.bool,
 };
 
 export default AuthForm;

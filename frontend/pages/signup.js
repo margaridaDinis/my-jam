@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SignUp from '../components/organisms/SignUp';
 import SignIn from '../components/organisms/SignIn';
+import RequestReset from '../components/organisms/RequestReset';
 
 const Columns = styled.div`
   display: grid;
@@ -13,6 +14,7 @@ const SignUpPage = () => (
   <Columns>
     <SignUp />
     <SignIn />
+    <RequestReset />
   </Columns>
 );
 

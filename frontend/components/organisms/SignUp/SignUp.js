@@ -1,6 +1,7 @@
 import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Router from 'next/router';
+import { useMutation } from '@apollo/react-hooks';
 
 import AuthForm from '../../molecules/AuthForm';
 import { CURRENT_USER_QUERY } from '../User';
@@ -24,7 +25,7 @@ export const SIGN_UP_MUTATION = gql`
 `;
 
 const SignUp = () => {
-  const [signUp, { loading, error }] = useMutation(
+  const [signUp, formState] = useMutation(
     SIGN_UP_MUTATION,
     {
       refetchQueries: [{
@@ -35,16 +36,17 @@ const SignUp = () => {
 
   const handleSubmit = async (values) => {
     await signUp({ variables: values });
-    // TODO redirect to home or account
+    Router.push({ pathname: '/' });
   };
 
   return (
     <AuthForm
       title='Sign Up'
       handleSubmit={handleSubmit}
-      loading={loading}
-      error={error}
+      {...formState}
       showName
+      showEmail
+      showPassword
     />
   );
 };

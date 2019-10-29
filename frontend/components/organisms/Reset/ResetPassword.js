@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import { useMutation } from '@apollo/react-hooks';
@@ -6,14 +7,16 @@ import { useMutation } from '@apollo/react-hooks';
 import { CURRENT_USER_QUERY } from '../User';
 import AuthForm from '../../molecules/AuthForm';
 
-export const SIGN_IN_MUTATION = gql`
-  mutation SIGN_IN_MUTATION(
-    $email: String!
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation RESET_PASSWORD_MUTATION(
+    $resetToken: String!
     $password: String!
+    $confirmPassword: String!
   ) {
-    signIn(
-      email: $email
+    resetPassword(
+      resetToken: $resetToken
       password: $password
+      confirmPassword: $confirmPassword
     ) {
       id
       email
@@ -21,9 +24,9 @@ export const SIGN_IN_MUTATION = gql`
   }
 `;
 
-const SignIn = () => {
-  const [signIn, formState] = useMutation(
-    SIGN_IN_MUTATION,
+const ResetPassword = ({ resetToken }) => {
+  const [resetPassword, formState] = useMutation(
+    RESET_PASSWORD_MUTATION,
     {
       refetchQueries: [{
         query: CURRENT_USER_QUERY,
@@ -32,19 +35,23 @@ const SignIn = () => {
   );
 
   const handleSubmit = async (values) => {
-    await signIn({ variables: values });
+    await resetPassword({ variables: { ...values, resetToken } });
     Router.push({ pathname: '/' });
   };
 
   return (
     <AuthForm
-      title='Sign In'
+      title='Set new password'
       handleSubmit={handleSubmit}
       {...formState}
-      showEmail
       showPassword
+      showConfirmPassword
     />
   );
 };
 
-export default SignIn;
+ResetPassword.propTypes = {
+  resetToken: PropTypes.string.isRequired,
+};
+
+export default ResetPassword;
