@@ -15,8 +15,21 @@ const setToken = ({ ctx, userId }) => {
 
 const mutations = {
   createAlbum(parent, args, ctx, info) {
+    const { userId } =  ctx.request;
+
+    if (!userId) {
+      throw new Error('You must be logged in to add albums');
+    }
+
     return ctx.db.mutation.createAlbum({
-      data: { ...args }
+      data: {
+        user: {
+          connect: {
+            id: userId
+          }
+        },
+        ...args
+      }
     }, info);
   },
   updateAlbum(parent, args, ctx, info) {

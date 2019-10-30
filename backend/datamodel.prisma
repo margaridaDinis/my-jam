@@ -29,5 +29,5 @@ type Album {
 #  genres: [list of genres]
 #  artists: [Artist]!
 #  type: [one of "album" , "single" , or "compilation"]!
-#  user: User!
+  user: User!
 }
