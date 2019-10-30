@@ -1,39 +1,34 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
-const { hasPermission, userEditPermissions } = require('../utils');
-
-const setToken = ({ ctx, userId }) => {
-  const token = jwt.sign({ userId }, process.env.APP_SECRET);
-
-  ctx.response.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
-  });
-};
+const { setToken, canPerformMutation, isAlbumOwner } = require('../utils');
+const {
+  userEditPermissions,
+  userAlbumCreatePermissions,
+  userAlbumDeletePermissions,
+  userAlbumUpdatePermissions
+} = require('../permissions');
 
 const mutations = {
   createAlbum(parent, args, ctx, info) {
-    const { userId } =  ctx.request;
-
-    if (!userId) {
-      throw new Error('You must be logged in to add albums');
-    }
+    canPerformMutation(ctx.request, userAlbumCreatePermissions);
 
     return ctx.db.mutation.createAlbum({
       data: {
         user: {
           connect: {
-            id: userId
+            id: ctx.request.userId
           }
         },
         ...args
       }
     }, info);
   },
-  updateAlbum(parent, args, ctx, info) {
+  async updateAlbum(parent, args, ctx, info) {
+    canPerformMutation(ctx.request, userAlbumUpdatePermissions);
+    await isAlbumOwner({ albumId: args.id, ctx });
+
     const updates = { ...args };
     delete updates.id;
     return ctx.db.mutation.updateAlbum({
@@ -44,10 +39,10 @@ const mutations = {
     }, info);
   },
   async deleteAlbum(parent, args, ctx, info) {
-    const where = { id: args.id };
-    const item = await ctx.db.query.album({ where }, `{ id name }`);
+    canPerformMutation(ctx.request, userAlbumDeletePermissions);
+    await isAlbumOwner({ albumId: args.id, ctx });
 
-    return ctx.db.mutation.deleteAlbum({ where }, info);
+    return ctx.db.mutation.deleteAlbum({ where: { id: args.id } }, info);
   },
   async signUp(parent, args, ctx, info) {
     args.email = args.email.toLowerCase();
@@ -140,10 +135,8 @@ const mutations = {
 
     return updatedUser;
   },
-  async updatePermissions(parent, { permissions, userId }, ctx, info) {
-    if (!ctx.request.userId) throw new Error(`No user found!`);
-
-    hasPermission(ctx.request.user, userEditPermissions);
+  updatePermissions(parent, { permissions, userId }, ctx, info) {
+    canPerformMutation(ctx.request, userEditPermissions);
 
     return ctx.db.mutation.updateUser(
       {

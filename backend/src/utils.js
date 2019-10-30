@@ -1,21 +1,32 @@
-function hasPermission(user, permissionsNeeded) {
-  const matchedPermissions = user.permissions.filter(permissionTheyHave =>
-    permissionsNeeded.includes(permissionTheyHave)
-  );
-  if (!matchedPermissions.length) {
-    throw new Error(`You do not have sufficient permissions
+const jwt = require('jsonwebtoken');
+const { hasPermission, } = require('./permissions');
 
-      : ${permissionsNeeded.join(', ')}
+const setToken = ({ ctx, userId }) => {
+  const token = jwt.sign({ userId }, process.env.APP_SECRET);
 
-      You Have:
+  ctx.response.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
+  });
+};
 
-      ${user.permissions.join(', ')}
-      `);
+const canPerformMutation = (request, requiredPermissions ) => {
+  const { userId, user } =  request;
+
+  if (!userId) {
+    throw new Error('You must be logged to do this.');
   }
-}
 
-exports.hasPermission = hasPermission;
-exports.userEditPermissions = ['ADMIN', 'PERMISSIONUPDATE'];
-exports.userAlbumCreatePermissions = ['ALBUMCREATE'];
-exports.userAlbumDeletePermissions = ['ALBUMDELETE'];
-exports.userAlbumUpdatePermissions = ['ALBUMUPDATE'];
+  if (requiredPermissions) hasPermission(user, requiredPermissions);
+};
+
+const isAlbumOwner = async({ ctx, albumId }) => {
+  const album = await ctx.db.query.album({ where: { id: albumId} }, `{ id name user { id } }`);
+
+  if (album.user.id !== ctx.request.userId) throw new Error('You can only change items you created')
+};
+
+
+exports.setToken = setToken;
+exports.canPerformMutation = canPerformMutation;
+exports.isAlbumOwner = isAlbumOwner;

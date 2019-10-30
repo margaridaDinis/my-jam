@@ -1,5 +1,5 @@
 const { forwardTo } = require('prisma-binding');
-const { hasPermission, userEditPermissions } = require('../utils');
+const { hasPermission, userEditPermissions } = require('../permissions');
 
 const Query = {
   albums: forwardTo('db'),

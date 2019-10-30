@@ -3,14 +3,7 @@ function hasPermission(user, permissionsNeeded) {
     permissionsNeeded.includes(permissionTheyHave)
   );
   if (!matchedPermissions.length) {
-    throw new Error(`You do not have sufficient permissions
-
-      : ${permissionsNeeded.join(', ')}
-
-      You Have:
-
-      ${user.permissions.join(', ')}
-      `);
+    throw new Error('You do not have sufficient permissions!');
   }
 }
 
