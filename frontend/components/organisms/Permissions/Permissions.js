@@ -42,7 +42,7 @@ const Permissions = () => {
         </tr>
       </thead>
       <tbody>
-        {users.map(user => (
+        {users.map((user) => (
           <UserPermissions
             key={user.id}
             possiblePermissions={possiblePermissions}
