@@ -5,13 +5,14 @@ function hasPermission(user, permissionsNeeded) {
   if (!matchedPermissions.length) {
     throw new Error(`You do not have sufficient permissions
 
-      : ${permissionsNeeded}
+      : ${permissionsNeeded.join(', ')}
 
       You Have:
 
-      ${user.permissions}
+      ${user.permissions.join(', ')}
       `);
   }
 }
 
 exports.hasPermission = hasPermission;
+exports.userEditPermissions = ['ADMIN', 'PERMISSIONUPDATE'];

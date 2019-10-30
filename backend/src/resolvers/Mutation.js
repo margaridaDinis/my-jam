@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
+const { hasPermission, userEditPermissions } = require('../utils');
 
 const setToken = ({ ctx, userId }) => {
   const token = jwt.sign({ userId }, process.env.APP_SECRET);
@@ -138,6 +139,23 @@ const mutations = {
     setToken({ ctx, userId: updatedUser.id });
 
     return updatedUser;
+  },
+  async updatePermissions(parent, { permissions, userId }, ctx, info) {
+    if (!ctx.request.userId) throw new Error(`No user found!`);
+
+    hasPermission(ctx.request.user, userEditPermissions);
+
+    return ctx.db.mutation.updateUser(
+      {
+        where: { id: userId },
+        data: {
+          permissions: {
+            set: permissions
+          }
+        },
+      },
+      info
+    );
   }
 };
 

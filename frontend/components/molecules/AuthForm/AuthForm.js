@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Form from '../../atoms/Form';
-import ErrorMessage from '../ErrorMessege';
+import ErrorMessage from '../ErrorMessage';
 import Input from '../../atoms/Input';
 
 const initialState = {

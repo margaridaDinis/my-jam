@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
-import ErrorMessage from '../../molecules/ErrorMessege';
+import ErrorMessage from '../../molecules/ErrorMessage';
 import Album from '../../molecules/Album';
 import Pagination from '../../molecules/Pagination/Pagination';
 

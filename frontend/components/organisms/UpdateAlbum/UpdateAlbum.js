@@ -4,7 +4,7 @@ import Router from 'next/router';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
-import ErrorMessage from '../../molecules/ErrorMessege';
+import ErrorMessage from '../../molecules/ErrorMessage';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
 import { SINGLE_ITEM_QUERY } from '../Album';
