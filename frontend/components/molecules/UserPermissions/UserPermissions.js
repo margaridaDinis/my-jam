@@ -21,11 +21,16 @@ const UserPermissions = ({
   const [userPermissions, setUserPermissions] = useState(permissions);
   const [updatePermissions, { loading, error }] = useMutation(UPDATE_PERMISSIONS_MUTATION);
 
-  const changeHandler = ({ target: { checked, value } }) => {
-    if (checked) setUserPermissions([...userPermissions, value]);
-    if (!checked) setUserPermissions(userPermissions.filter((permission) => permission !== value));
+  const getNewPermissions = ({ checked, value }) => {
+    if (checked) return [...userPermissions, value];
+    return userPermissions.filter((permission) => permission !== value);
+  };
 
-    updatePermissions({ variables: { permissions: userPermissions, userId: id } });
+  const changeHandler = async ({ target }) => {
+    const newPermissions = getNewPermissions(target);
+
+    setUserPermissions(newPermissions);
+    updatePermissions({ variables: { permissions: newPermissions, userId: id } });
   };
 
   return (
