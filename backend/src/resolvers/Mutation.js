@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
+const { transport, makeANiceEmail } = require('../mail');
 
 const setToken = ({ ctx, userId }) => {
   const token = jwt.sign({ userId }, process.env.APP_SECRET);
@@ -76,14 +77,23 @@ const mutations = {
     const resetToken = (await promisifiedRandomBytes(20)).toString('hex');
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
 
-    const res = await ctx.db.mutation.updateUser({
+    await ctx.db.mutation.updateUser({
       where: { email },
       data: { resetToken, resetTokenExpiry }
     });
 
-    console.log(res);
+    await transport.sendMail({
+      from: 'margarida@margaridadinis.com',
+      to: user.email,
+      subject: 'MyJam password reset request',
+      html: makeANiceEmail(`A password reset was recently requested for this email address.
+        \n\n
+        <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">
+        Click here to set a new password for your MyJam account.
+        </a>`)
+    });
 
-    return { message: 'Reset token generated' };
+    return { message: 'Success! Check your email for a reset link!' };
   },
   async resetPassword(parent, args, ctx, info) {
     const { resetToken, password, confirmPassword } = args;
