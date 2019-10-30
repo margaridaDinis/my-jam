@@ -1,8 +1,11 @@
 import React from 'react';
 import CreateAlbum from '../components/organisms/CreateAlbum';
+import RequestSignIn from '../components/organisms/RequestSignIn';
 
 const CreateAlbumPage = () => (
-  <CreateAlbum />
+  <RequestSignIn>
+    <CreateAlbum />
+  </RequestSignIn>
 );
 
 export default CreateAlbumPage;
