@@ -14,6 +14,7 @@ mutation REQUEST_RESET_MUTATION($email: String!) {
 
 const RequestReset = () => {
   const [requestReset, formState] = useMutation(REQUEST_RESET_MUTATION);
+  const successMessage = (formState && formState.data && formState.data.requestReset.message) || '';
 
   const handleSubmit = async (values) => {
     await requestReset({ variables: values });
@@ -24,7 +25,7 @@ const RequestReset = () => {
       title='Reset password'
       handleSubmit={handleSubmit}
       {...formState}
-      successMessage='Success! Check your email for a reset link!'
+      successMessage={successMessage}
       showEmail
     />
   );
