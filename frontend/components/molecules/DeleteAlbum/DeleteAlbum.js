@@ -30,7 +30,8 @@ const DeleteAlbum = ({ id, children }) => {
   const deleteHandler = () => {
     // eslint-disable-next-line
     if (confirm('Are you sure you want to delete this album?')) {
-      removeAlbum({ variables: { id } });
+      // eslint-disable-next-line
+      removeAlbum({ variables: { id } }).catch((e) => alert(e.message));
     }
   };
 
