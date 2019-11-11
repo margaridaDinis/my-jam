@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import DeleteAlbum from '../DeleteAlbum';
+import User from '../../organisms/User';
 
 const Album = ({ album }) => (
   <article>
@@ -11,16 +12,20 @@ const Album = ({ album }) => (
         <a>{album.name}</a>
       </Link>
     </h2>
+  <User>
+    {({ me }) => me && (
+      <div className='buttonList'>
+        <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
+          <a>Edit ✏️</a>
+        </Link>
+        <Link href='/'>
+          <a>Add to cart️</a>
+        </Link>
+        <DeleteAlbum id={album.id}>Delete</DeleteAlbum>
+      </div>
+    )}
+  </User>
 
-    <div className='buttonList'>
-      <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
-        <a>Edit ✏️</a>
-      </Link>
-      <Link href='/'>
-        <a>Add to cart️</a>
-      </Link>
-      <DeleteAlbum id={album.id}>Delete</DeleteAlbum>
-    </div>
   </article>
 );
 

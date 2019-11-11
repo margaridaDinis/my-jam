@@ -17,13 +17,9 @@ const DeleteAlbum = ({ id, children }) => {
   const [removeAlbum] = useMutation(
     DELETE_ALBUM_MUTATION,
     {
-      update(cache, { data: { deleteAlbum } }) {
-        const { albums } = cache.readQuery({ query: ALL_ALBUMS_QUERY });
-        cache.writeQuery({
-          query: ALL_ALBUMS_QUERY,
-          data: { albums: albums.filter((album) => album.id !== deleteAlbum.id) },
-        });
-      },
+      refetchQueries: [{
+        query: ALL_ALBUMS_QUERY,
+      }],
     },
   );
 

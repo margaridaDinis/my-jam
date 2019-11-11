@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
+import { ALL_ALBUMS_QUERY } from '../Albums';
 
 export const CREATE_ALBUM_MUTATION = gql`
   mutation CREATE_ALBUM_MUTATION(
@@ -37,7 +38,14 @@ const initialState = {
 };
 
 const CreateAlbum = () => {
-  const [createAlbum, { loading, error }] = useMutation(CREATE_ALBUM_MUTATION);
+  const [createAlbum, { loading, error }] = useMutation(
+    CREATE_ALBUM_MUTATION,
+    {
+      refetchQueries: [{
+        query: ALL_ALBUMS_QUERY,
+      }],
+    },
+  );
   const [values, setValues] = useState(initialState);
 
   const handleChange = ({ target: { name, value, type } }) => {
