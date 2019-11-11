@@ -18,14 +18,17 @@ server.express.use((req, res, next) => {
   next();
 });
 
-server.express.use(async(req, res, next) => {
+server.express.use(async (req, res, next) => {
   const { userId } = req;
 
-  if (!userId) return next();
+  if (!userId) {
+    next();
+    return;
+  }
 
   req.user = await db.query.user(
     { where: { id: userId } },
-    '{ id, name, email, permissions }'
+    '{ id, name, email, permissions }',
   );
 
   next();
@@ -34,8 +37,9 @@ server.express.use(async(req, res, next) => {
 server.start({
   cors: {
     credentials: true,
-    origin: process.env.FRONTEND_URL
-  }
-}, details => {
-  console.warn(`The server is now running on PORT http://localhost:${details.port}`)
+    origin: process.env.FRONTEND_URL,
+  },
+}, (details) => {
+  // eslint-disable-next-line
+  console.warn(`The server is now running on PORT http://localhost:${details.port}`);
 });

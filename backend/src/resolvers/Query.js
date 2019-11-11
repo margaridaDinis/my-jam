@@ -20,7 +20,7 @@ const Query = {
     hasPermission(user, userEditPermissions);
 
     return ctx.db.query.users({}, info);
-  }
+  },
 };
 
 module.exports = Query;

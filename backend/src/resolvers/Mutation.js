@@ -7,7 +7,7 @@ const {
   userEditPermissions,
   userAlbumCreatePermissions,
   userAlbumDeletePermissions,
-  userAlbumUpdatePermissions
+  userAlbumUpdatePermissions,
 } = require('../permissions');
 
 const mutations = {
@@ -18,11 +18,11 @@ const mutations = {
       data: {
         user: {
           connect: {
-            id: ctx.request.userId
-          }
+            id: ctx.request.userId,
+          },
         },
-        ...args
-      }
+        ...args,
+      },
     }, info);
   },
   async updateAlbum(parent, args, ctx, info) {
@@ -34,8 +34,8 @@ const mutations = {
     return ctx.db.mutation.updateAlbum({
       data: updates,
       where: {
-        id: args.id
-      }
+        id: args.id,
+      },
     }, info);
   },
   async deleteAlbum(parent, args, ctx, info) {
@@ -45,24 +45,25 @@ const mutations = {
     return ctx.db.mutation.deleteAlbum({ where: { id: args.id } }, info);
   },
   async signUp(parent, args, ctx, info) {
-    args.email = args.email.toLowerCase();
+    const data = [...args];
+    data.email = data.email.toLowerCase();
     const password = await bcrypt.hash(args.password, 10);
     const user = await ctx.db.mutation.createUser(
       {
         data: {
-          ...args,
+          ...data,
           password,
           permissions: { set: ['USER'] },
         },
       },
-      info
+      info,
     );
 
     setToken({ ctx, userId: user.id });
 
     return user;
   },
-  async signIn(parent, { email, password }, ctx, info) {
+  async signIn(parent, { email, password }, ctx) {
     const user = await ctx.db.query.user({ where: { email } });
 
     if (!user) throw new Error(`No such user found for email: ${email}`);
@@ -74,11 +75,11 @@ const mutations = {
 
     return user;
   },
-  async signOut(parent, args, ctx, info) {
+  async signOut(parent, args, ctx) {
     ctx.response.clearCookie('token');
     return { message: 'Signed out' };
   },
-  async requestReset(parent, { email }, ctx, info) {
+  async requestReset(parent, { email }, ctx) {
     const user = await ctx.db.query.user({ where: { email } });
     if (!user) throw new Error(`No such user found for email: ${email}`);
 
@@ -88,7 +89,7 @@ const mutations = {
 
     await ctx.db.mutation.updateUser({
       where: { email },
-      data: { resetToken, resetTokenExpiry }
+      data: { resetToken, resetTokenExpiry },
     });
 
     await transport.sendMail({
@@ -99,7 +100,7 @@ const mutations = {
         \n\n
         <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">
         Click here to set a new password for your MyJam account.
-        </a>`)
+        </a>`),
     });
 
     return { message: 'Success! Check your email for a reset link!' };
@@ -111,8 +112,8 @@ const mutations = {
 
     const [user] = await ctx.db.query.users({
       where: {
-        resetToken, resetTokenExpiry_gte: Date.now() - 3600000
-      }
+        resetToken, resetTokenExpiry_gte: Date.now() - 3600000,
+      },
     });
 
     if (!user) throw new Error('The reset token is not valid');
@@ -125,10 +126,10 @@ const mutations = {
         data: {
           password: newPassword,
           resetToken: '',
-          resetTokenExpiry: ''
+          resetTokenExpiry: '',
         },
       },
-      info
+      info,
     );
 
     setToken({ ctx, userId: updatedUser.id });
@@ -143,13 +144,13 @@ const mutations = {
         where: { id: userId },
         data: {
           permissions: {
-            set: permissions
-          }
+            set: permissions,
+          },
         },
       },
-      info
+      info,
     );
-  }
+  },
 };
 
 module.exports = mutations;
