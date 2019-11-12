@@ -6,8 +6,8 @@ import Header from '../../organisms/Header';
 import Meta from '../../organisms/Meta';
 
 const theme = {
-  primaryColor: '#FF0000',
-  white: '#EDEDED',
+  red: '#FF0000',
+  white: '#FFFFFF',
   black: '#393939',
   grey: '#3A3A3A',
   lightGrey: '#E1E1E1',
@@ -17,7 +17,7 @@ const theme = {
 };
 
 const StyledPage = styled.div`
-  background: white;
+  background: ${(props) => props.theme.white};
   color: ${(props) => props.theme.black};
 `;
 

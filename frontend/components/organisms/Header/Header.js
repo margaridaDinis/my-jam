@@ -6,6 +6,7 @@ import NProgress from 'nprogress';
 
 import Nav from '../Nav';
 import Search from '../Search';
+import Cart from '../Cart';
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -19,7 +20,7 @@ const Logo = styled.h1`
   
   a {
     padding: 0.5rem 1rem;
-    background: ${(props) => props.theme.primaryColor};
+    background: ${(props) => props.theme.red};
     color: ${(props) => props.theme.white};
     text-transform: uppercase;
     text-decoration: none;
@@ -60,6 +61,7 @@ const Header = () => (
         </Link>
       </Logo>
       <Nav />
+      <Cart />
     </div>
     <div className='sub-bar'>
       <Search />
