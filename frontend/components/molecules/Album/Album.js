@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import DeleteAlbum from '../DeleteAlbum';
 import User from '../../organisms/User';
+import AddToCart from '../AddToCart';
 
 const Album = ({ album }) => (
   <article>
@@ -18,9 +19,7 @@ const Album = ({ album }) => (
         <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
           <a>Edit ✏️</a>
         </Link>
-        <Link href='/'>
-          <a>Add to cart️</a>
-        </Link>
+        <AddToCart id={album.id}>Add to cart</AddToCart>
         <DeleteAlbum id={album.id}>Delete</DeleteAlbum>
       </div>
     )}

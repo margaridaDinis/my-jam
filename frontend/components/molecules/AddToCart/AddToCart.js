@@ -3,44 +3,33 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ALL_ALBUMS_QUERY } from '../../organisms/Albums';
-
-export const DELETE_ALBUM_MUTATION = gql`
-  mutation DELETE_ALBUM_MUTATION($id: ID!) {
-    deleteAlbum(id: $id) {
+const ADD_TO_CART_MUTATION = gql`
+  mutation addToCart($id: ID!) {
+    addToCart(id: $id) {
       id
+      quantity
     }
   }
 `;
 
-const DeleteAlbum = ({ id, children }) => {
-  const [removeAlbum] = useMutation(
-    DELETE_ALBUM_MUTATION,
-    {
-      refetchQueries: [{
-        query: ALL_ALBUMS_QUERY,
-      }],
-    },
-  );
+const AddToCart = ({ id, children }) => {
+  const [addToCart] = useMutation(ADD_TO_CART_MUTATION);
 
-  const deleteHandler = () => {
+  const addToCartHandler = () => {
     // eslint-disable-next-line
-    if (confirm('Are you sure you want to delete this album?')) {
-      // eslint-disable-next-line
-      removeAlbum({ variables: { id } }).catch((e) => alert(e.message));
-    }
+    addToCart({ variables: { id } }).catch((e) => alert(e.message));
   };
 
   return (
-    <button onClick={deleteHandler}>
+    <button onClick={addToCartHandler}>
       {children}
     </button>
   );
 };
 
-DeleteAlbum.propTypes = {
+AddToCart.propTypes = {
   id: PropTypes.string,
   children: PropTypes.string,
 };
 
-export default DeleteAlbum;
+export default AddToCart;

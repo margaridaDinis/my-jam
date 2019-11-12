@@ -1,1 +1,1 @@
-export { default } from './DeleteAlbum';
+export { default } from './AddToCart';
