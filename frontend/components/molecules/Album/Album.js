@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import DeleteAlbum from '../DeleteAlbum';
 import User from '../../organisms/User';
-import AddToCart from '../AddToCart';
+import AddToCart from '../../atoms/AddToCart';
 
 const Album = ({ album }) => (
   <article>

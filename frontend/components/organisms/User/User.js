@@ -26,6 +26,7 @@ export const CURRENT_USER_QUERY = gql`
 
 const User = ({ children }) => {
   const { data } = useQuery(CURRENT_USER_QUERY);
+
   return (
     <Fragment>
       {children(data || { me: { name: '', cart: [] } })}
