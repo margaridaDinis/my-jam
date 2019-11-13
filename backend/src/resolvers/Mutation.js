@@ -158,7 +158,7 @@ const mutations = {
     const [existingCartItem] = await ctx.db.query.cartItems({
       where: {
         user: { id: userId },
-        item: { id: args.id },
+        album: { id: args.id },
       },
     });
 
@@ -172,7 +172,7 @@ const mutations = {
     return ctx.db.mutation.createCartItem({
       data: {
         user: { connect: { id: userId } },
-        item: { connect: { id: args.id } },
+        album: { connect: { id: args.id } },
       },
     }, info);
   },

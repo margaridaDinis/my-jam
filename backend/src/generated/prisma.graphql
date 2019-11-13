@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/my-jam/my-jam/dev
-# timestamp: Tue Nov 12 2019 22:21:25 GMT+0100 (Central European Standard Time)
+# timestamp: Wed Nov 13 2019 18:56:48 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
   count: Int!
@@ -456,7 +456,7 @@ type BatchPayload {
 type CartItem implements Node {
   id: ID!
   quantity: Int!
-  item: Album!
+  album: Album!
   user: User!
 }
 
@@ -473,7 +473,7 @@ type CartItemConnection {
 input CartItemCreateInput {
   id: ID
   quantity: Int
-  item: AlbumCreateOneInput!
+  album: AlbumCreateOneInput!
   user: UserCreateOneWithoutCartInput!
 }
 
@@ -485,7 +485,7 @@ input CartItemCreateManyWithoutUserInput {
 input CartItemCreateWithoutUserInput {
   id: ID
   quantity: Int
-  item: AlbumCreateOneInput!
+  album: AlbumCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -623,7 +623,7 @@ input CartItemSubscriptionWhereInput {
 
 input CartItemUpdateInput {
   quantity: Int
-  item: AlbumUpdateOneRequiredInput
+  album: AlbumUpdateOneRequiredInput
   user: UserUpdateOneRequiredWithoutCartInput
 }
 
@@ -654,7 +654,7 @@ input CartItemUpdateManyWithWhereNestedInput {
 
 input CartItemUpdateWithoutUserDataInput {
   quantity: Int
-  item: AlbumUpdateOneRequiredInput
+  album: AlbumUpdateOneRequiredInput
 }
 
 input CartItemUpdateWithWhereUniqueWithoutUserInput {
@@ -739,7 +739,7 @@ input CartItemWhereInput {
 
   """All values greater than or equal the given value."""
   quantity_gte: Int
-  item: AlbumWhereInput
+  album: AlbumWhereInput
   user: UserWhereInput
 }
 
