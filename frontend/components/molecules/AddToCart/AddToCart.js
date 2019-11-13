@@ -13,7 +13,7 @@ const ADD_TO_CART_MUTATION = gql`
 `;
 
 const AddToCart = ({ id, children }) => {
-  const [addToCart] = useMutation(ADD_TO_CART_MUTATION);
+  const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION);
 
   const addToCartHandler = () => {
     // eslint-disable-next-line
@@ -21,7 +21,7 @@ const AddToCart = ({ id, children }) => {
   };
 
   return (
-    <button onClick={addToCartHandler}>
+    <button onClick={addToCartHandler} disabled={loading}>
       {children}
     </button>
   );

@@ -5,6 +5,8 @@ import CartStyles from '../../../styles/CartStyles';
 import CloseButton from '../../../styles/CloseButton';
 import Supreme from '../../../styles/Supreme';
 import Button from '../../../styles/Button';
+import User, { CURRENT_USER_QUERY } from '../User';
+import CartItem from '../../molecules/CartItem';
 
 export const LOCAL_STATE_QUERY = gql`
   query {
@@ -20,25 +22,38 @@ export const TOGGLE_CART_MUTATION = gql`
 
 const Cart = () => {
   const { data: { cartOpen } } = useQuery(LOCAL_STATE_QUERY);
-  const [toggleCart] = useMutation(TOGGLE_CART_MUTATION);
+  const [toggleCart] = useMutation(
+    TOGGLE_CART_MUTATION,
+    {
+      refetchQueries: [{
+        query: CURRENT_USER_QUERY,
+      }],
+    },
+  );
 
   return (
-    <CartStyles open={cartOpen}>
-      <header>
-        <CloseButton
-          title='close'
-          onClick={toggleCart}
-        >
-          &times;
-        </CloseButton>
-        <Supreme>Your Cart</Supreme>
-        <p>You have __ items in your cart</p>
-      </header>
-      <footer>
-        <p>$10.10</p>
-        <Button>Checkout</Button>
-      </footer>
-    </CartStyles>
+    <User>
+      {({ me }) => me && (
+        <CartStyles open={cartOpen}>
+          <header>
+            <CloseButton
+              title='close'
+              onClick={toggleCart}
+            >
+              &times;
+            </CloseButton>
+            <Supreme>{me.name}&apos;s Cart</Supreme>
+            <p>You have {me.cart.length} item{me.cart.length > 1 ? 's' : ''} in your cart</p>
+          </header>
+          <ul>
+            {me.cart.map((cartItem) => <CartItem key={cartItem.id} {...cartItem} />)}
+          </ul>
+          <footer>
+            <Button>Checkout</Button>
+          </footer>
+        </CartStyles>
+      )}
+    </User>
   );
 };
 

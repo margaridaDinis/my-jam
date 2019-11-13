@@ -27,7 +27,7 @@ function createClient({ headers }) {
         }
       },
       defaults: {
-        cartOpen: false
+        cartOpen: true
       }
     }
   });

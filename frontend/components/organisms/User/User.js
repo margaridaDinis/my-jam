@@ -10,15 +10,25 @@ export const CURRENT_USER_QUERY = gql`
      name
      email
      permissions
-   } 
+     cart {
+       id
+       quantity
+       album {
+         id
+         name
+         year
+         description
+         image
+       }
+     }
+   }
 }`;
 
 const User = ({ children }) => {
-  const { data = {} } = useQuery(CURRENT_USER_QUERY);
-
+  const { data } = useQuery(CURRENT_USER_QUERY);
   return (
     <Fragment>
-      {children(data)}
+      {children(data || { me: { name: '', cart: [] } })}
     </Fragment>
   );
 };
