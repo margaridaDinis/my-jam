@@ -36,6 +36,6 @@ type Album {
 type CartItem {
   id: ID! @id
   quantity: Int! @default(value: 1)
-  album: Album!
+  album: Album
   user: User!
 }

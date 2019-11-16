@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/my-jam/my-jam/dev
-# timestamp: Wed Nov 13 2019 18:56:48 GMT+0100 (Central European Standard Time)
+# timestamp: Sat Nov 16 2019 17:12:39 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
   count: Int!
@@ -154,9 +154,11 @@ input AlbumUpdateManyMutationInput {
   largeImage: String
 }
 
-input AlbumUpdateOneRequiredInput {
+input AlbumUpdateOneInput {
   create: AlbumCreateInput
   connect: AlbumWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: AlbumUpdateDataInput
   upsert: AlbumUpsertNestedInput
 }
@@ -456,7 +458,7 @@ type BatchPayload {
 type CartItem implements Node {
   id: ID!
   quantity: Int!
-  album: Album!
+  album: Album
   user: User!
 }
 
@@ -473,7 +475,7 @@ type CartItemConnection {
 input CartItemCreateInput {
   id: ID
   quantity: Int
-  album: AlbumCreateOneInput!
+  album: AlbumCreateOneInput
   user: UserCreateOneWithoutCartInput!
 }
 
@@ -485,7 +487,7 @@ input CartItemCreateManyWithoutUserInput {
 input CartItemCreateWithoutUserInput {
   id: ID
   quantity: Int
-  album: AlbumCreateOneInput!
+  album: AlbumCreateOneInput
 }
 
 """An edge in a connection."""
@@ -623,7 +625,7 @@ input CartItemSubscriptionWhereInput {
 
 input CartItemUpdateInput {
   quantity: Int
-  album: AlbumUpdateOneRequiredInput
+  album: AlbumUpdateOneInput
   user: UserUpdateOneRequiredWithoutCartInput
 }
 
@@ -654,7 +656,7 @@ input CartItemUpdateManyWithWhereNestedInput {
 
 input CartItemUpdateWithoutUserDataInput {
   quantity: Int
-  album: AlbumUpdateOneRequiredInput
+  album: AlbumUpdateOneInput
 }
 
 input CartItemUpdateWithWhereUniqueWithoutUserInput {
