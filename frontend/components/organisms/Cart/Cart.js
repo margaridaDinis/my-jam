@@ -21,13 +21,13 @@ export const TOGGLE_CART_MUTATION = gql`
 `;
 
 const Cart = () => {
-  const { data: { cartOpen } } = useQuery(LOCAL_STATE_QUERY);
+  const { data } = useQuery(LOCAL_STATE_QUERY);
   const [toggleCart] = useMutation(TOGGLE_CART_MUTATION);
 
   return (
     <User>
       {({ me }) => me && (
-        <CartStyles open={cartOpen}>
+        <CartStyles open={data && data.cartOpen}>
           <header>
             <CloseButton
               title='close'

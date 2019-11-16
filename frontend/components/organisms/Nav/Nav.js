@@ -5,6 +5,7 @@ import { TOGGLE_CART_MUTATION } from '../Cart/Cart';
 import User from '../User';
 import SignOutButton from '../../atoms/SignOutButton';
 import NavStyles from '../../../styles/NavStyles';
+import CartCount from '../../atoms/CartCount';
 
 const Nav = () => {
   const [toggleCart] = useMutation(TOGGLE_CART_MUTATION);
@@ -27,7 +28,10 @@ const Nav = () => {
               <Link href='/account'>
                 <a>Account</a>
               </Link>
-              <button onClick={toggleCart}>Cart</button>
+              <button onClick={toggleCart}>
+                Cart
+                <CartCount count={me.cart.reduce((acc, cur) => acc + cur.quantity, 0)}/>
+              </button>
               <SignOutButton>
                 SignOut
               </SignOutButton>
