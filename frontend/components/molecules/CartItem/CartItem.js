@@ -18,7 +18,17 @@ const CartItemStyles = styled.li`
   }
 `;
 
-const CartItem = ({ id, quantity, album }) => (
+const CartItem = ({ id, quantity, album }) => {
+  if (!album) {
+    return (
+      <CartItemStyles>
+        <p>Item has been removed</p>
+        <RemoveFromCart id={id}/>
+      </CartItemStyles>
+    );
+  }
+
+  return (
     <CartItemStyles>
       <img width={100} src={album.image} alt={album.name}/>
       <div className='cart-item-details'>
@@ -27,7 +37,8 @@ const CartItem = ({ id, quantity, album }) => (
       </div>
       <RemoveFromCart id={id}/>
     </CartItemStyles>
-);
+  );
+};
 
 CartItem.propTypes = {
   id: PropTypes.string,
