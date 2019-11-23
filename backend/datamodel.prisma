@@ -15,7 +15,6 @@ type User {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission] @scalarList(strategy: RELATION)
-  cart: [CartItem!]!
 }
 
 type Album {
@@ -30,12 +29,5 @@ type Album {
 #  genres: [list of genres]
 #  artists: [Artist]!
 #  type: [one of "album" , "single" , or "compilation"]!
-  user: User!
-}
-
-type CartItem {
-  id: ID! @id
-  quantity: Int! @default(value: 1)
-  album: Album
   user: User!
 }

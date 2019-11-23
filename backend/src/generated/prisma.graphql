@@ -1,11 +1,7 @@
 # source: https://eu1.prisma.sh/my-jam/my-jam/dev
-# timestamp: Sat Nov 16 2019 17:12:39 GMT+0100 (Central European Standard Time)
+# timestamp: Sat Nov 23 2019 17:31:58 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
-  count: Int!
-}
-
-type AggregateCartItem {
   count: Int!
 }
 
@@ -43,11 +39,6 @@ input AlbumCreateInput {
   image: String!
   largeImage: String!
   user: UserCreateOneInput!
-}
-
-input AlbumCreateOneInput {
-  create: AlbumCreateInput
-  connect: AlbumWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -128,15 +119,6 @@ input AlbumSubscriptionWhereInput {
   node: AlbumWhereInput
 }
 
-input AlbumUpdateDataInput {
-  year: Int
-  name: String
-  description: String
-  image: String
-  largeImage: String
-  user: UserUpdateOneRequiredInput
-}
-
 input AlbumUpdateInput {
   year: Int
   name: String
@@ -152,20 +134,6 @@ input AlbumUpdateManyMutationInput {
   description: String
   image: String
   largeImage: String
-}
-
-input AlbumUpdateOneInput {
-  create: AlbumCreateInput
-  connect: AlbumWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: AlbumUpdateDataInput
-  upsert: AlbumUpsertNestedInput
-}
-
-input AlbumUpsertNestedInput {
-  update: AlbumUpdateDataInput!
-  create: AlbumCreateInput!
 }
 
 input AlbumWhereInput {
@@ -455,300 +423,6 @@ type BatchPayload {
   count: Long!
 }
 
-type CartItem implements Node {
-  id: ID!
-  quantity: Int!
-  album: Album
-  user: User!
-}
-
-"""A connection to a list of items."""
-type CartItemConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [CartItemEdge]!
-  aggregate: AggregateCartItem!
-}
-
-input CartItemCreateInput {
-  id: ID
-  quantity: Int
-  album: AlbumCreateOneInput
-  user: UserCreateOneWithoutCartInput!
-}
-
-input CartItemCreateManyWithoutUserInput {
-  create: [CartItemCreateWithoutUserInput!]
-  connect: [CartItemWhereUniqueInput!]
-}
-
-input CartItemCreateWithoutUserInput {
-  id: ID
-  quantity: Int
-  album: AlbumCreateOneInput
-}
-
-"""An edge in a connection."""
-type CartItemEdge {
-  """The item at the end of the edge."""
-  node: CartItem!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum CartItemOrderByInput {
-  id_ASC
-  id_DESC
-  quantity_ASC
-  quantity_DESC
-}
-
-type CartItemPreviousValues {
-  id: ID!
-  quantity: Int!
-}
-
-input CartItemScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CartItemScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CartItemScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CartItemScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  quantity: Int
-
-  """All values that are not equal to given value."""
-  quantity_not: Int
-
-  """All values that are contained in given list."""
-  quantity_in: [Int!]
-
-  """All values that are not contained in given list."""
-  quantity_not_in: [Int!]
-
-  """All values less than the given value."""
-  quantity_lt: Int
-
-  """All values less than or equal the given value."""
-  quantity_lte: Int
-
-  """All values greater than the given value."""
-  quantity_gt: Int
-
-  """All values greater than or equal the given value."""
-  quantity_gte: Int
-}
-
-type CartItemSubscriptionPayload {
-  mutation: MutationType!
-  node: CartItem
-  updatedFields: [String!]
-  previousValues: CartItemPreviousValues
-}
-
-input CartItemSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CartItemSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CartItemSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CartItemSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: CartItemWhereInput
-}
-
-input CartItemUpdateInput {
-  quantity: Int
-  album: AlbumUpdateOneInput
-  user: UserUpdateOneRequiredWithoutCartInput
-}
-
-input CartItemUpdateManyDataInput {
-  quantity: Int
-}
-
-input CartItemUpdateManyMutationInput {
-  quantity: Int
-}
-
-input CartItemUpdateManyWithoutUserInput {
-  create: [CartItemCreateWithoutUserInput!]
-  connect: [CartItemWhereUniqueInput!]
-  set: [CartItemWhereUniqueInput!]
-  disconnect: [CartItemWhereUniqueInput!]
-  delete: [CartItemWhereUniqueInput!]
-  update: [CartItemUpdateWithWhereUniqueWithoutUserInput!]
-  updateMany: [CartItemUpdateManyWithWhereNestedInput!]
-  deleteMany: [CartItemScalarWhereInput!]
-  upsert: [CartItemUpsertWithWhereUniqueWithoutUserInput!]
-}
-
-input CartItemUpdateManyWithWhereNestedInput {
-  where: CartItemScalarWhereInput!
-  data: CartItemUpdateManyDataInput!
-}
-
-input CartItemUpdateWithoutUserDataInput {
-  quantity: Int
-  album: AlbumUpdateOneInput
-}
-
-input CartItemUpdateWithWhereUniqueWithoutUserInput {
-  where: CartItemWhereUniqueInput!
-  data: CartItemUpdateWithoutUserDataInput!
-}
-
-input CartItemUpsertWithWhereUniqueWithoutUserInput {
-  where: CartItemWhereUniqueInput!
-  update: CartItemUpdateWithoutUserDataInput!
-  create: CartItemCreateWithoutUserInput!
-}
-
-input CartItemWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CartItemWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CartItemWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CartItemWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  quantity: Int
-
-  """All values that are not equal to given value."""
-  quantity_not: Int
-
-  """All values that are contained in given list."""
-  quantity_in: [Int!]
-
-  """All values that are not contained in given list."""
-  quantity_not_in: [Int!]
-
-  """All values less than the given value."""
-  quantity_lt: Int
-
-  """All values less than or equal the given value."""
-  quantity_lte: Int
-
-  """All values greater than the given value."""
-  quantity_gt: Int
-
-  """All values greater than or equal the given value."""
-  quantity_gte: Int
-  album: AlbumWhereInput
-  user: UserWhereInput
-}
-
-input CartItemWhereUniqueInput {
-  id: ID
-}
-
 scalar DateTime
 
 """
@@ -758,22 +432,16 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createCartItem(data: CartItemCreateInput!): CartItem!
   createAlbum(data: AlbumCreateInput!): Album!
   createUser(data: UserCreateInput!): User!
-  updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteAlbum(where: AlbumWhereUniqueInput!): Album
   deleteUser(where: UserWhereUniqueInput!): User
-  upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   updateManyAlbums(data: AlbumUpdateManyMutationInput!, where: AlbumWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
   deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -815,13 +483,10 @@ enum Permission {
 }
 
 type Query {
-  cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  cartItem(where: CartItemWhereUniqueInput!): CartItem
   album(where: AlbumWhereUniqueInput!): Album
   user(where: UserWhereUniqueInput!): User
-  cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
   albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
@@ -833,7 +498,6 @@ type Query {
 }
 
 type Subscription {
-  cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
   album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -846,7 +510,6 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission!]!
-  cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
 }
 
 """A connection to a list of items."""
@@ -867,7 +530,6 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserCreatepermissionsInput
-  cart: CartItemCreateManyWithoutUserInput
 }
 
 input UserCreateOneInput {
@@ -875,23 +537,8 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutCartInput {
-  create: UserCreateWithoutCartInput
-  connect: UserWhereUniqueInput
-}
-
 input UserCreatepermissionsInput {
   set: [Permission!]
-}
-
-input UserCreateWithoutCartInput {
-  id: ID
-  name: String!
-  email: String!
-  password: String!
-  resetToken: String
-  resetTokenExpiry: String
-  permissions: UserCreatepermissionsInput
 }
 
 """An edge in a connection."""
@@ -974,7 +621,6 @@ input UserUpdateDataInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserUpdatepermissionsInput
-  cart: CartItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -984,7 +630,6 @@ input UserUpdateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserUpdatepermissionsInput
-  cart: CartItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1003,34 +648,13 @@ input UserUpdateOneRequiredInput {
   upsert: UserUpsertNestedInput
 }
 
-input UserUpdateOneRequiredWithoutCartInput {
-  create: UserCreateWithoutCartInput
-  connect: UserWhereUniqueInput
-  update: UserUpdateWithoutCartDataInput
-  upsert: UserUpsertWithoutCartInput
-}
-
 input UserUpdatepermissionsInput {
   set: [Permission!]
-}
-
-input UserUpdateWithoutCartDataInput {
-  name: String
-  email: String
-  password: String
-  resetToken: String
-  resetTokenExpiry: String
-  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
-}
-
-input UserUpsertWithoutCartInput {
-  update: UserUpdateWithoutCartDataInput!
-  create: UserCreateWithoutCartInput!
 }
 
 input UserWhereInput {
@@ -1282,9 +906,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   resetTokenExpiry_not_ends_with: String
-  cart_every: CartItemWhereInput
-  cart_some: CartItemWhereInput
-  cart_none: CartItemWhereInput
 }
 
 input UserWhereUniqueInput {
