@@ -9,6 +9,7 @@ type Mutation {
     name: String,
     description: String,
     image: String,
+    genre: [String],
     largeImage: String
   ): Album!
   updateAlbum(
@@ -16,7 +17,8 @@ type Mutation {
     year: Int,
     name: String,
     description: String,
-#    image: String,
+    genre: [String],
+    #    image: String,
 #    largeImage: String
   ): Album!
   deleteAlbum(id: ID!): Album
@@ -26,6 +28,9 @@ type Mutation {
   requestReset(email: String!): SuccessMessage
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   updatePermissions(permissions: [Permission], userId: ID!): User!
+  createGenre(name: String!): Genre!
+  updateGenre(id: ID!, name: String!): Genre!
+  deleteGenre(id: ID!): Genre!
 }
 
 type Query {
@@ -34,6 +39,8 @@ type Query {
   albumsConnection(where: AlbumWhereInput): AlbumConnection!
   me: User
   users: [User]!
+  genres: [Genre]!
+  genre(where: GenreWhereUniqueInput): Genre
 }
 
 type User {

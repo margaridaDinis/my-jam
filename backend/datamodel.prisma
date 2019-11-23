@@ -26,8 +26,15 @@ type Album {
   largeImage: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-#  genres: [list of genres]
-#  artists: [Artist]!
-#  type: [one of "album" , "single" , or "compilation"]!
+  genres: [Genre!]!
+  #  genres: [list of genres]
+  #  artists: [Artist]!
+  #  type: [one of "album" , "single" , or "compilation"]!
   user: User!
+}
+
+type Genre {
+  id: ID! @id,
+  name: String,
+  albums: [Album],
 }

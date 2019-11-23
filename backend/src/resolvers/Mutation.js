@@ -151,6 +151,28 @@ const mutations = {
       info,
     );
   },
+  createGenre(parent, args, ctx, info) {
+    return ctx.db.mutation.createGenre({
+      data: {
+        ...args,
+      },
+    }, info);
+  },
+  async updateGenre(parent, args, ctx, info) {
+    const updates = { ...args };
+    delete updates.id;
+
+    return ctx.db.mutation.updateGenre({
+      data: updates,
+      where: {
+        id: args.id,
+      },
+    }, info);
+  },
+  async deleteGenre(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteGenre({ where: { id: args.id } }, info);
+  },
+
 };
 
 module.exports = mutations;

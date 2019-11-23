@@ -21,6 +21,8 @@ const Query = {
 
     return ctx.db.query.users({}, info);
   },
+  genres: forwardTo('db'),
+  genre: forwardTo('db'),
 };
 
 module.exports = Query;

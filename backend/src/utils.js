@@ -26,7 +26,6 @@ const isAlbumOwner = async ({ ctx, albumId }) => {
   if (album.user.id !== ctx.request.userId) throw new Error('You can only change items you created');
 };
 
-
 exports.setToken = setToken;
 exports.canPerformMutation = canPerformMutation;
 exports.isAlbumOwner = isAlbumOwner;
