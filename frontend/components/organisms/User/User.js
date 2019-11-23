@@ -10,17 +10,6 @@ export const CURRENT_USER_QUERY = gql`
      name
      email
      permissions
-     cart {
-       id
-       quantity
-       album {
-         id
-         name
-         year
-         description
-         image
-       }
-     }
    }
 }`;
 
@@ -29,7 +18,7 @@ const User = ({ children }) => {
 
   return (
     <Fragment>
-      {children(data || { me: { name: '', cart: [] } })}
+      {children(data || { me: { name: '' } })}
     </Fragment>
   );
 };
