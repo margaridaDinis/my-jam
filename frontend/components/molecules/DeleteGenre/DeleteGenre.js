@@ -3,31 +3,31 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ALL_ALBUMS_QUERY } from '../../organisms/Albums';
+import { ALL_GENRES_QUERY } from '../../organisms/Genres';
 
-export const DELETE_ALBUM_MUTATION = gql`
-  mutation DELETE_ALBUM_MUTATION($id: ID!) {
-    deleteAlbum(id: $id) {
+export const DELETE_GENRE_MUTATION = gql`
+  mutation DELETE_GENRE_MUTATION($id: ID!) {
+    deleteGenre(id: $id) {
       id
     }
   }
 `;
 
-const DeleteAlbum = ({ id, children }) => {
-  const [removeAlbum] = useMutation(
-    DELETE_ALBUM_MUTATION,
+const DeleteGenre = ({ id, children }) => {
+  const [removeGenre] = useMutation(
+    DELETE_GENRE_MUTATION,
     {
       refetchQueries: [{
-        query: ALL_ALBUMS_QUERY,
+        query: ALL_GENRES_QUERY,
       }],
     },
   );
 
   const deleteHandler = () => {
     // eslint-disable-next-line
-    if (confirm('Are you sure you want to delete this album?')) {
+    if (confirm('Are you sure you want to delete this genre?')) {
       // eslint-disable-next-line
-      removeAlbum({ variables: { id } }).catch((e) => alert(e.message));
+      removeGenre({ variables: { id } }).catch((e) => alert(e.message));
     }
   };
 
@@ -38,9 +38,9 @@ const DeleteAlbum = ({ id, children }) => {
   );
 };
 
-DeleteAlbum.propTypes = {
+DeleteGenre.propTypes = {
   id: PropTypes.string,
   children: PropTypes.string,
 };
 
-export default DeleteAlbum;
+export default DeleteGenre;

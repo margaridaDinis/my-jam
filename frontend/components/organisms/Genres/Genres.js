@@ -4,6 +4,7 @@ import Link from 'next/link';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
+import DeleteGenre from '../../molecules/DeleteGenre';
 
 export const ALL_GENRES_QUERY = gql`
   query ALL_GENRES_QUERY {
@@ -36,6 +37,7 @@ const Genres = () => {
             <Link href={{ pathname: 'update-genre', query: { id: genre.id } }}>
               <a>✏️</a>
             </Link>
+            <DeleteGenre id={genre.id}>Delete Genre</DeleteGenre>
           </li>))}
       </ul>
     </div>
