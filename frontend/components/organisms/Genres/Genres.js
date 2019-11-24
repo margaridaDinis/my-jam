@@ -11,6 +11,9 @@ export const ALL_GENRES_QUERY = gql`
     genres {
       id
       name
+      albums {
+        id
+      }
     }
   }
 `;

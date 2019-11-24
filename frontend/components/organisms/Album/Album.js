@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Head from 'next/head';
+import Link from 'next/link';
 
 export const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
@@ -13,6 +14,10 @@ export const SINGLE_ITEM_QUERY = gql`
       description
       image
       largeImage
+      genres {
+        id
+        name
+      }
     }
   }
 `;
@@ -35,6 +40,15 @@ const Album = ({ id }) => {
       <p>{data.album.year}</p>
       <p>{data.album.description}</p>
       {data.album.largeImage && <img src={data.album.largeImage} alt={data.album.name} width='400' />}
+      <div>
+        {data.album.genres.map((genre) => (
+          <Link key={genre.id} href={{ pathname: 'genre', query: { id: genre.id } }}>
+            <a>
+              {genre.name}
+            </a>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

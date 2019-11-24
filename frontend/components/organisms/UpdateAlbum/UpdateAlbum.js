@@ -8,6 +8,7 @@ import ErrorMessage from '../../molecules/ErrorMessage';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
 import { SINGLE_ITEM_QUERY } from '../Album';
+import { ALL_GENRES_QUERY } from '../Genres';
 
 export const UPDATE_ALBUM_MUTATION = gql`
   mutation UPDATE_ALBUM_MUTATION(
@@ -15,30 +16,56 @@ export const UPDATE_ALBUM_MUTATION = gql`
     $name: String
     $year: Int
     $description: String
+    $genres: [String]
   ) {
     updateAlbum(
       id: $id
       name: $name
       year: $year
       description: $description
+      genres: $genres
     ) {
       id
       name
       year
       description
+      genres {
+        id
+      }
     }
   }
 `;
 
-const initialState = {};
-
 const UpdateAlbum = ({ id }) => {
+  const { data: genresData } = useQuery(ALL_GENRES_QUERY);
   const { loading, data } = useQuery(SINGLE_ITEM_QUERY, { variables: { id } });
   const [updateAlbum, { loading: submitting, error }] = useMutation(UPDATE_ALBUM_MUTATION);
-  const [values, setValues] = useState(initialState);
+
+  if (loading) return <p>Loading...</p>;
+  if (!data.album) return <p>No item found for ID {id} </p>;
+
+  const initialGenres = data.album.genres.map((genre) => genre.id);
+  const [values, setValues] = useState({ genres: initialGenres });
 
   const handleChange = ({ target: { name, value, type } }) => {
-    const val = type === 'number' ? parseFloat(value) : value;
+    let val;
+
+    switch (type) {
+      case 'number':
+        val = parseFloat(value);
+        break;
+      case 'select-multiple': {
+        const valueExists = values[name].includes(value);
+        if (valueExists) {
+          val = values[name].filter((v) => (v !== value));
+          break;
+        }
+        val = [...values[name], value];
+        break;
+      }
+      default:
+        val = value;
+    }
 
     setValues({ ...values, [name]: val });
   };
@@ -58,9 +85,6 @@ const UpdateAlbum = ({ id }) => {
     });
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (!data.album) return <p>No item found for ID {id} </p>;
-
   return (
     <Form onSubmit={handleSubmit}>
       {error && <ErrorMessage error={error} />}
@@ -79,6 +103,25 @@ const UpdateAlbum = ({ id }) => {
           defaultValue={data.album.year}
           handleChange={handleChange}
         />
+        <label htmlFor='genres'>
+          Genre
+          <select
+            name='genres'
+            id='genres'
+            onChange={handleChange}
+            multiple
+          >
+            {genresData.genres.map((genre) => (
+              <option
+                key={genre.id}
+                value={genre.id}
+                className={values.genres.includes(genre.id) ? 'selected' : ''}
+              >
+                {genre.name}
+              </option>
+            ))}
+          </select>
+        </label>
         <Input
           type='textarea'
           name='description'

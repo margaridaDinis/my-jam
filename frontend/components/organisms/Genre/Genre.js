@@ -10,6 +10,10 @@ export const SINGLE_GENRE_QUERY = gql`
     genre (where: { id: $id }) {
       id
       name
+      albums {
+        id
+        name
+      }
     }
   }
 `;
@@ -32,6 +36,16 @@ const Genre = ({ id }) => {
           <a>✏️</a>
         </Link>
       </p>
+      <div>
+        <b>Albums:</b>
+        {data.genre.albums.map((album) => (
+          <Link key={album.id} href={{ pathname: 'album', query: { id: album.id } }}>
+            <li>
+              {album.name}
+            </li>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
