@@ -9,7 +9,7 @@ type Mutation {
     name: String,
     description: String,
     image: String,
-    genre: [String],
+    genres: [String],
     largeImage: String
   ): Album!
   updateAlbum(
@@ -17,7 +17,7 @@ type Mutation {
     year: Int,
     name: String,
     description: String,
-    genre: [String],
+    genres: [String],
     #    image: String,
 #    largeImage: String
   ): Album!

@@ -13,6 +13,9 @@ const {
 const mutations = {
   createAlbum(parent, args, ctx, info) {
     canPerformMutation(ctx.request, userAlbumCreatePermissions);
+    const album = { ...args };
+    const genres = album.genres.map((id) => ({ id }));
+    delete album.genres;
 
     return ctx.db.mutation.createAlbum({
       data: {
@@ -21,18 +24,33 @@ const mutations = {
             id: ctx.request.userId,
           },
         },
-        ...args,
+        genres: {
+          connect: genres,
+        },
+        ...album,
       },
     }, info);
   },
   async updateAlbum(parent, args, ctx, info) {
     canPerformMutation(ctx.request, userAlbumUpdatePermissions);
     await isAlbumOwner({ albumId: args.id, ctx });
+    const albumGenres = await ctx.db.query.genres({ where: { albums_some: { id: args.id } } });
+    const oldGenres = albumGenres.map((genre) => ({ id: genre.id }))
+      .filter((genre) => !args.genres.includes(genre.id));
 
     const updates = { ...args };
+    const genres = updates.genres.map((id) => ({ id }));
     delete updates.id;
+    delete updates.genres;
+
     return ctx.db.mutation.updateAlbum({
-      data: updates,
+      data: {
+        genres: {
+          disconnect: oldGenres,
+          connect: genres,
+        },
+        ...updates,
+      },
       where: {
         id: args.id,
       },
