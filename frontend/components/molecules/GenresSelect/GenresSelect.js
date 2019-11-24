@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 import { useQuery } from '@apollo/react-hooks';
 import { ALL_GENRES_QUERY } from '../../organisms/Genres';
 import ErrorMessage from '../ErrorMessage';
@@ -13,36 +14,31 @@ const GenresSelect = ({ defaultValue, handleChange }) => {
   if (error) return <ErrorMessage error={error} />;
   if (!data.genres) return <p>No genres found</p>;
 
-  const onChange = ({ target: { value } }) => {
+  const onChange = (values) => {
     const target = { name: GENRES, type: 'select' };
-    const valueExists = defaultValue.includes(value);
 
-    target.value = valueExists
-      ? defaultValue.filter((v) => (v !== value))
-      : [...defaultValue, value];
+    target.value = values
+      ? values.map((option) => option.value)
+      : [];
 
     handleChange({ target });
   };
 
+  const options = data.genres.map((genre) => ({ value: genre.id, label: genre.name }));
+  const selectedValues = options.filter((v) => defaultValue.includes(v.value));
+
   return (
     <label htmlFor={GENRES}>
       Genre
-      <select
-        name={GENRES}
-        id={GENRES}
+      <Select
+        instanceId={GENRES}
+        options={options}
+        defaultValue={selectedValues}
         onChange={onChange}
-        multiple
-      >
-        {data.genres.map((genre) => (
-          <option
-            key={genre.id}
-            value={genre.id}
-            className={defaultValue.includes(genre.id) ? 'selected' : ''}
-          >
-            {genre.name}
-          </option>
-        ))}
-      </select>
+        isMulti
+        isClearable
+        isSearchable
+      />
     </label>
   );
 };
