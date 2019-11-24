@@ -1,1 +1,1 @@
-export { default } from './GenreForm';
+export { default, CREATE_GENRE_MUTATION } from './GenreForm';

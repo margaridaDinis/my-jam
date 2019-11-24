@@ -12,6 +12,7 @@ export const CREATE_ALBUM_MUTATION = gql`
     $description: String
     $image: String!
     $largeImage: String!
+    $genres: [String]
   ) {
     createAlbum(
       name: $name
@@ -19,6 +20,7 @@ export const CREATE_ALBUM_MUTATION = gql`
       description: $description
       image: $image
       largeImage: $largeImage
+      genres: $genres
     ) {
       id
       name

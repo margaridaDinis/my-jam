@@ -8,11 +8,10 @@ import GenresSelect from '../GenresSelect';
 const AlbumForm = ({
   album, handleSubmit, submitting, error, isEdit,
 }) => {
-  const [values, setValues] = useState({ genres: album.genres.map((genre) => genre.id) });
+  const [values, setValues] = useState();
 
   const handleChange = ({ target: { name, value, type } }) => {
     const val = type === 'number' ? parseFloat(value) : value;
-
     setValues({ ...values, [name]: val });
   };
 
@@ -76,7 +75,7 @@ const AlbumForm = ({
         />
         <GenresSelect
           defaultValue={album.genres.map((genre) => genre.id)}
-          handleChange={handleChange}
+          onChange={handleChange}
         />
         {/* TODO add replace image logic */}
         {!isEdit && (
@@ -88,7 +87,8 @@ const AlbumForm = ({
             required={!isEdit}
           />
         )}
-        {album.image && <img src={album.image} alt='Uploaded Image' width='200' />}
+        {(isEdit && album) && <img src={album.image} alt='Uploaded Image' width='200' />}
+        {values && values.image && <img src={values.image} alt='Uploaded Image' width='200' />}
       </fieldset>
       <button type='submit'>{isEdit ? 'Save Changes' : 'Create album'}</button>
     </Form>
