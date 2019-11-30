@@ -1,1 +1,1 @@
-export { default } from './GenresSelect';
+export { default } from './ArtistsSelect';

@@ -9,11 +9,11 @@ import Form from '../../atoms/Form';
 import { SINGLE_ARTIST_QUERY } from '../Artist';
 import { ALL_ARTISTS_QUERY } from '../Artists';
 
-const CREATE_ARTIST_MUTATION = gql`
+export const CREATE_ARTIST_MUTATION = gql`
   mutation CREATE_ARTIST_MUTATION($name: String!) { createArtist(name: $name) { id } }
 `;
 
-const UPDATE_ARTIST_MUTATION = gql`
+export const UPDATE_ARTIST_MUTATION = gql`
   mutation UPDATE_ARTIST_MUTATION($id: ID! $name: String!) {
     updateArtist(id: $id name: $name) {
       id

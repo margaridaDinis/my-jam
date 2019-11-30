@@ -15,6 +15,9 @@ const Album = ({ album }) => (
   <User>
     {({ me }) => me && (
       <div className='buttonList'>
+        <Link href={{ pathname: '/album', query: { id: album.id } }}>
+          <button>See album</button>
+        </Link>
         <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
           <a>Edit ✏️</a>
         </Link>

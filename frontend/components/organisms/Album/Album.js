@@ -18,6 +18,10 @@ export const SINGLE_ITEM_QUERY = gql`
         id
         name
       }
+      artists {
+        id
+        name
+      }
     }
   }
 `;
@@ -31,24 +35,47 @@ const Album = ({ id }) => {
   if (loading) return <p>Loading...</p>;
   if (!data.album) return <p>No item found for ID {id} </p>;
 
+  const { album } = data;
   return (
     <div>
       <Head>
-        <title>{data.album.name} | My Jam</title>
+        <title>{album.name} | My Jam</title>
       </Head>
-      <h1>{data.album.name}</h1>
-      <p>{data.album.year}</p>
-      <p>{data.album.description}</p>
-      {data.album.largeImage && <img src={data.album.largeImage} alt={data.album.name} width='400' />}
-      <div>
-        {data.album.genres.map((genre) => (
-          <Link key={genre.id} href={{ pathname: 'genre', query: { id: genre.id } }}>
-            <a>
-              {genre.name}
-            </a>
-          </Link>
-        ))}
-      </div>
+
+      <h1>{album.name}
+        <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
+          <a> ✏️</a>
+        </Link>
+      </h1>
+      {album.artists && (
+        <div>
+          {album.artists.map((artist) => (
+            <p key={artist.id} >
+              <Link href={{ pathname: 'artist', query: { id: artist.id } }}>
+                <a>
+                  {artist.name}
+                </a>
+              </Link>
+            </p>
+          ))}
+        </div>
+      )}
+      <p>{album.year}</p>
+      <p>{album.description}</p>
+      {album.largeImage && <img src={album.largeImage} alt={album.name} width='400' />}
+      {album.genres && (
+        <div>
+          {album.genres.map((genre) => (
+            <p key={genre.id}>
+              <Link href={{ pathname: 'genre', query: { id: genre.id } }}>
+                <a>
+                  {genre.name}
+                </a>
+              </Link>
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

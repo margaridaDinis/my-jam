@@ -16,6 +16,7 @@ export const UPDATE_ALBUM_MUTATION = gql`
     $image: String
     $largeImage: String
     $genres: [String]
+    $artists: [String]
   ) {
     updateAlbum(
       id: $id
@@ -25,14 +26,14 @@ export const UPDATE_ALBUM_MUTATION = gql`
       image: $image
       largeImage: $largeImage
       genres: $genres
+      artists: $artists
     ) {
       id
       name
       year
       description
-      genres {
-        id
-      }
+      genres { id }
+      artists { id }
     }
   }
 `;

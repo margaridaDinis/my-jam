@@ -5,6 +5,7 @@ import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
 import GenresSelect from '../GenresSelect';
 import FileInput from '../FileInput';
+import ArtistsSelect from '../ArtistsSelect';
 
 const AlbumForm = ({
   album, handleSubmit, submitting, error, isEdit,
@@ -17,7 +18,7 @@ const AlbumForm = ({
   };
 
   const handleExternalChange = (newValues) => {
-    setValues({ ...values, ...newValues });
+    setValues((prevValues) => ({ ...prevValues, ...newValues }));
   };
 
   const onSubmit = (e) => {
@@ -35,6 +36,10 @@ const AlbumForm = ({
           defaultValue={album.name}
           handleChange={handleChange}
           required={!isEdit}
+        />
+        <ArtistsSelect
+          defaultValue={album.artists.map((artist) => artist.id)}
+          onChange={handleExternalChange}
         />
         <Input
           type='number'
@@ -81,6 +86,7 @@ AlbumForm.defaultProps = {
     image: '',
     largeImage: '',
     genres: [],
+    artists: [],
   },
 };
 
@@ -92,6 +98,7 @@ AlbumForm.propTypes = {
     image: PropTypes.string,
     largeImage: PropTypes.string,
     genres: PropTypes.array,
+    artists: PropTypes.array,
   }),
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
