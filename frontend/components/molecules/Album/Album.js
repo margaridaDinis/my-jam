@@ -18,7 +18,7 @@ const Album = ({ album }) => (
         <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
           <a>Edit ✏️</a>
         </Link>
-        <DeleteAlbum id={album.id}>Delete</DeleteAlbum>
+        <DeleteAlbum id={album.id} image={album.image}>Delete</DeleteAlbum>
       </div>
     )}
   </User>

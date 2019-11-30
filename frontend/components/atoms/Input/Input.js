@@ -5,7 +5,7 @@ const Input = ({
   name, type, label, placeholder, handleChange, required, ...rest
 }) => (
   <label htmlFor={name}>
-    {label}
+    {label} {required && <small>*</small>}
     {type === 'textarea' ? (
       <textarea
         name={name}

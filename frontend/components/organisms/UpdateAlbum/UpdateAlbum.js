@@ -13,6 +13,8 @@ export const UPDATE_ALBUM_MUTATION = gql`
     $name: String
     $year: Int
     $description: String
+    $image: String
+    $largeImage: String
     $genres: [String]
   ) {
     updateAlbum(
@@ -20,6 +22,8 @@ export const UPDATE_ALBUM_MUTATION = gql`
       name: $name
       year: $year
       description: $description
+      image: $image
+      largeImage: $largeImage
       genres: $genres
     ) {
       id
@@ -35,24 +39,23 @@ export const UPDATE_ALBUM_MUTATION = gql`
 
 const UpdateAlbum = ({ id }) => {
   const { loading, data } = useQuery(SINGLE_ITEM_QUERY, { variables: { id } });
-  const [updateAlbum, { loading: submitting, error }] = useMutation(UPDATE_ALBUM_MUTATION);
+  const [updateAlbum, { loading: submitting, error }] = useMutation(
+    UPDATE_ALBUM_MUTATION,
+    { refetchQueries: [{ query: SINGLE_ITEM_QUERY, variables: { id } }] },
+  );
 
   if (loading) return <p>Loading...</p>;
   if (!data.album) return <p>No item found for ID {id} </p>;
 
   const handleSubmit = async (values) => {
-    const res = await updateAlbum({
-      variables: {
-        id,
-        ...values,
-      },
-    });
+    const res = await updateAlbum({ variables: { id, ...values } });
 
     Router.push({
       pathname: '/album',
       query: { id: res.data.updateAlbum.id },
     });
   };
+
 
   return (
     <AlbumForm

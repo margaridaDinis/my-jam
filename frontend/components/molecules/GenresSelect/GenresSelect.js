@@ -19,13 +19,8 @@ const GenresSelect = ({ defaultValue, onChange }) => {
 
   useEffect(() => {
     const values = selected || [];
-    const target = {
-      name: GENRES,
-      type: 'select',
-      value: values.map((option) => option.id),
-    };
 
-    onChange({ target });
+    onChange({ [GENRES]: values.map((option) => option.id) });
   }, [selected]);
 
   const handleCreate = async (name) => {
