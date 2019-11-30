@@ -3,6 +3,7 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
 const { setToken, canPerformMutation, isAlbumOwner } = require('../utils');
+const { getItemsToDisconnect, getItemsToConnect } = require('../connections');
 const {
   userEditPermissions,
   userAlbumCreatePermissions,
@@ -14,19 +15,16 @@ const mutations = {
   createAlbum(parent, args, ctx, info) {
     canPerformMutation(ctx.request, userAlbumCreatePermissions);
     const album = { ...args };
-    const genres = album.genres.map((id) => ({ id }));
+    const genres = getItemsToConnect(album.genres);
+    const artists = getItemsToConnect(album.artists);
     delete album.genres;
+    delete album.artists;
 
     return ctx.db.mutation.createAlbum({
       data: {
-        user: {
-          connect: {
-            id: ctx.request.userId,
-          },
-        },
-        genres: {
-          connect: genres,
-        },
+        user: { connect: { id: ctx.request.userId } },
+        genres: { connect: genres },
+        artists: { connect: artists },
         ...album,
       },
     }, info);
@@ -35,26 +33,23 @@ const mutations = {
     canPerformMutation(ctx.request, userAlbumUpdatePermissions);
     await isAlbumOwner({ albumId: args.id, ctx });
 
-    const albumGenres = await ctx.db.query.genres({ where: { albums_some: { id: args.id } } });
-    const oldGenres = albumGenres.map((genre) => ({ id: genre.id }))
-      .filter((genre) => !args.genres.includes(genre.id));
+    const oldGenres = await getItemsToDisconnect({ ctx, args, model: 'genres' });
+    const oldArtists = await getItemsToDisconnect({ ctx, args, model: 'artists' });
+    const genres = getItemsToConnect(args.genres);
+    const artists = getItemsToConnect(args.artists);
 
     const updates = { ...args };
-    const genres = updates.genres.map((id) => ({ id }));
     delete updates.id;
     delete updates.genres;
+    delete updates.artists;
 
     return ctx.db.mutation.updateAlbum({
       data: {
-        genres: {
-          disconnect: oldGenres,
-          connect: genres,
-        },
+        genres: { disconnect: oldGenres, connect: genres },
+        artists: { disconnect: oldArtists, connect: artists },
         ...updates,
       },
-      where: {
-        id: args.id,
-      },
+      where: { id: args.id },
     }, info);
   },
   async deleteAlbum(parent, args, ctx, info) {
@@ -172,9 +167,7 @@ const mutations = {
   },
   createGenre(parent, args, ctx, info) {
     return ctx.db.mutation.createGenre({
-      data: {
-        ...args,
-      },
+      data: { ...args },
     }, info);
   },
   async updateGenre(parent, args, ctx, info) {
@@ -183,9 +176,7 @@ const mutations = {
 
     return ctx.db.mutation.updateGenre({
       data: updates,
-      where: {
-        id: args.id,
-      },
+      where: { id: args.id },
     }, info);
   },
   async deleteGenre(parent, args, ctx, info) {
@@ -193,9 +184,7 @@ const mutations = {
   },
   createArtist(parent, args, ctx, info) {
     return ctx.db.mutation.createArtist({
-      data: {
-        ...args,
-      },
+      data: { ...args },
     }, info);
   },
   async updateArtist(parent, args, ctx, info) {
@@ -204,9 +193,7 @@ const mutations = {
 
     return ctx.db.mutation.updateArtist({
       data: updates,
-      where: {
-        id: args.id,
-      },
+      where: { id: args.id },
     }, info);
   },
   async deleteArtist(parent, args, ctx, info) {
