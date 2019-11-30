@@ -18,8 +18,8 @@ type Mutation {
     name: String,
     description: String,
     genres: [String],
-    #    image: String,
-#    largeImage: String
+    image: String,
+    largeImage: String
   ): Album!
   deleteAlbum(id: ID!): Album
   signUp(email: String!, password: String!, name: String!): User!
