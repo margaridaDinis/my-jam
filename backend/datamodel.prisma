@@ -27,13 +27,18 @@ type Album {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   genres: [Genre!]!
-  #  genres: [list of genres]
-  #  artists: [Artist]!
+  artists: [Artist]!
   #  type: [one of "album" , "single" , or "compilation"]!
   user: User!
 }
 
 type Genre {
+  id: ID! @id,
+  name: String,
+  albums: [Album],
+}
+
+type Artist {
   id: ID! @id,
   name: String,
   albums: [Album],

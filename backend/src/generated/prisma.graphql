@@ -1,7 +1,11 @@
 # source: https://eu1.prisma.sh/my-jam/my-jam/dev
-# timestamp: Sat Nov 23 2019 17:58:58 GMT+0100 (Central European Standard Time)
+# timestamp: Sat Nov 30 2019 17:50:27 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
+  count: Int!
+}
+
+type AggregateArtist {
   count: Int!
 }
 
@@ -23,6 +27,7 @@ type Album implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre!]
+  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
   user: User!
 }
 
@@ -44,12 +49,29 @@ input AlbumCreateInput {
   image: String!
   largeImage: String!
   genres: GenreCreateManyWithoutAlbumsInput
+  artists: ArtistCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
+}
+
+input AlbumCreateManyWithoutArtistsInput {
+  create: [AlbumCreateWithoutArtistsInput!]
+  connect: [AlbumWhereUniqueInput!]
 }
 
 input AlbumCreateManyWithoutGenresInput {
   create: [AlbumCreateWithoutGenresInput!]
   connect: [AlbumWhereUniqueInput!]
+}
+
+input AlbumCreateWithoutArtistsInput {
+  id: ID
+  year: Int
+  name: String!
+  description: String
+  image: String!
+  largeImage: String!
+  genres: GenreCreateManyWithoutAlbumsInput
+  user: UserCreateOneInput!
 }
 
 input AlbumCreateWithoutGenresInput {
@@ -59,6 +81,7 @@ input AlbumCreateWithoutGenresInput {
   description: String
   image: String!
   largeImage: String!
+  artists: ArtistCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
 }
 
@@ -424,6 +447,7 @@ input AlbumUpdateInput {
   image: String
   largeImage: String
   genres: GenreUpdateManyWithoutAlbumsInput
+  artists: ArtistUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
 }
 
@@ -443,6 +467,18 @@ input AlbumUpdateManyMutationInput {
   largeImage: String
 }
 
+input AlbumUpdateManyWithoutArtistsInput {
+  create: [AlbumCreateWithoutArtistsInput!]
+  connect: [AlbumWhereUniqueInput!]
+  set: [AlbumWhereUniqueInput!]
+  disconnect: [AlbumWhereUniqueInput!]
+  delete: [AlbumWhereUniqueInput!]
+  update: [AlbumUpdateWithWhereUniqueWithoutArtistsInput!]
+  updateMany: [AlbumUpdateManyWithWhereNestedInput!]
+  deleteMany: [AlbumScalarWhereInput!]
+  upsert: [AlbumUpsertWithWhereUniqueWithoutArtistsInput!]
+}
+
 input AlbumUpdateManyWithoutGenresInput {
   create: [AlbumCreateWithoutGenresInput!]
   connect: [AlbumWhereUniqueInput!]
@@ -460,18 +496,40 @@ input AlbumUpdateManyWithWhereNestedInput {
   data: AlbumUpdateManyDataInput!
 }
 
+input AlbumUpdateWithoutArtistsDataInput {
+  year: Int
+  name: String
+  description: String
+  image: String
+  largeImage: String
+  genres: GenreUpdateManyWithoutAlbumsInput
+  user: UserUpdateOneRequiredInput
+}
+
 input AlbumUpdateWithoutGenresDataInput {
   year: Int
   name: String
   description: String
   image: String
   largeImage: String
+  artists: ArtistUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
+}
+
+input AlbumUpdateWithWhereUniqueWithoutArtistsInput {
+  where: AlbumWhereUniqueInput!
+  data: AlbumUpdateWithoutArtistsDataInput!
 }
 
 input AlbumUpdateWithWhereUniqueWithoutGenresInput {
   where: AlbumWhereUniqueInput!
   data: AlbumUpdateWithoutGenresDataInput!
+}
+
+input AlbumUpsertWithWhereUniqueWithoutArtistsInput {
+  where: AlbumWhereUniqueInput!
+  update: AlbumUpdateWithoutArtistsDataInput!
+  create: AlbumCreateWithoutArtistsInput!
 }
 
 input AlbumUpsertWithWhereUniqueWithoutGenresInput {
@@ -758,10 +816,339 @@ input AlbumWhereInput {
   genres_every: GenreWhereInput
   genres_some: GenreWhereInput
   genres_none: GenreWhereInput
+  artists_every: ArtistWhereInput
+  artists_some: ArtistWhereInput
+  artists_none: ArtistWhereInput
   user: UserWhereInput
 }
 
 input AlbumWhereUniqueInput {
+  id: ID
+}
+
+type Artist implements Node {
+  id: ID!
+  name: String
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
+}
+
+"""A connection to a list of items."""
+type ArtistConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ArtistEdge]!
+  aggregate: AggregateArtist!
+}
+
+input ArtistCreateInput {
+  id: ID
+  name: String
+  albums: AlbumCreateManyWithoutArtistsInput
+}
+
+input ArtistCreateManyWithoutAlbumsInput {
+  create: [ArtistCreateWithoutAlbumsInput!]
+  connect: [ArtistWhereUniqueInput!]
+}
+
+input ArtistCreateWithoutAlbumsInput {
+  id: ID
+  name: String
+}
+
+"""An edge in a connection."""
+type ArtistEdge {
+  """The item at the end of the edge."""
+  node: Artist!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ArtistOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type ArtistPreviousValues {
+  id: ID!
+  name: String
+}
+
+input ArtistScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ArtistScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ArtistScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ArtistScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type ArtistSubscriptionPayload {
+  mutation: MutationType!
+  node: Artist
+  updatedFields: [String!]
+  previousValues: ArtistPreviousValues
+}
+
+input ArtistSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ArtistSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ArtistSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ArtistSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ArtistWhereInput
+}
+
+input ArtistUpdateInput {
+  name: String
+  albums: AlbumUpdateManyWithoutArtistsInput
+}
+
+input ArtistUpdateManyDataInput {
+  name: String
+}
+
+input ArtistUpdateManyMutationInput {
+  name: String
+}
+
+input ArtistUpdateManyWithoutAlbumsInput {
+  create: [ArtistCreateWithoutAlbumsInput!]
+  connect: [ArtistWhereUniqueInput!]
+  set: [ArtistWhereUniqueInput!]
+  disconnect: [ArtistWhereUniqueInput!]
+  delete: [ArtistWhereUniqueInput!]
+  update: [ArtistUpdateWithWhereUniqueWithoutAlbumsInput!]
+  updateMany: [ArtistUpdateManyWithWhereNestedInput!]
+  deleteMany: [ArtistScalarWhereInput!]
+  upsert: [ArtistUpsertWithWhereUniqueWithoutAlbumsInput!]
+}
+
+input ArtistUpdateManyWithWhereNestedInput {
+  where: ArtistScalarWhereInput!
+  data: ArtistUpdateManyDataInput!
+}
+
+input ArtistUpdateWithoutAlbumsDataInput {
+  name: String
+}
+
+input ArtistUpdateWithWhereUniqueWithoutAlbumsInput {
+  where: ArtistWhereUniqueInput!
+  data: ArtistUpdateWithoutAlbumsDataInput!
+}
+
+input ArtistUpsertWithWhereUniqueWithoutAlbumsInput {
+  where: ArtistWhereUniqueInput!
+  update: ArtistUpdateWithoutAlbumsDataInput!
+  create: ArtistCreateWithoutAlbumsInput!
+}
+
+input ArtistWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ArtistWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ArtistWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ArtistWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  albums_every: AlbumWhereInput
+  albums_some: AlbumWhereInput
+  albums_none: AlbumWhereInput
+}
+
+input ArtistWhereUniqueInput {
   id: ID
 }
 
@@ -1107,21 +1494,27 @@ scalar Long
 type Mutation {
   createAlbum(data: AlbumCreateInput!): Album!
   createGenre(data: GenreCreateInput!): Genre!
+  createArtist(data: ArtistCreateInput!): Artist!
   createUser(data: UserCreateInput!): User!
   updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
   updateGenre(data: GenreUpdateInput!, where: GenreWhereUniqueInput!): Genre
+  updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteAlbum(where: AlbumWhereUniqueInput!): Album
   deleteGenre(where: GenreWhereUniqueInput!): Genre
+  deleteArtist(where: ArtistWhereUniqueInput!): Artist
   deleteUser(where: UserWhereUniqueInput!): User
   upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
   upsertGenre(where: GenreWhereUniqueInput!, create: GenreCreateInput!, update: GenreUpdateInput!): Genre!
+  upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyAlbums(data: AlbumUpdateManyMutationInput!, where: AlbumWhereInput): BatchPayload!
   updateManyGenres(data: GenreUpdateManyMutationInput!, where: GenreWhereInput): BatchPayload!
+  updateManyArtists(data: ArtistUpdateManyMutationInput!, where: ArtistWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
   deleteManyGenres(where: GenreWhereInput): BatchPayload!
+  deleteManyArtists(where: ArtistWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -1164,12 +1557,15 @@ enum Permission {
 type Query {
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre]!
+  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   album(where: AlbumWhereUniqueInput!): Album
   genre(where: GenreWhereUniqueInput!): Genre
+  artist(where: ArtistWhereUniqueInput!): Artist
   user(where: UserWhereUniqueInput!): User
   albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
   genresConnection(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GenreConnection!
+  artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -1182,6 +1578,7 @@ type Query {
 type Subscription {
   album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
   genre(where: GenreSubscriptionWhereInput): GenreSubscriptionPayload
+  artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

@@ -16,8 +16,11 @@ const Nav = () => (
         </Link>
         {me && (
           <Fragment>
-            <Link href='/new-album'>
-              <a>New Album</a>
+            <Link href='/artists'>
+              <a>Artists</a>
+            </Link>
+            <Link href='/genres'>
+              <a>Genres</a>
             </Link>
             <Link href='/account'>
               <a>Account</a>

@@ -23,6 +23,8 @@ const Query = {
   },
   genres: forwardTo('db'),
   genre: forwardTo('db'),
+  artists: forwardTo('db'),
+  artist: forwardTo('db'),
 };
 
 module.exports = Query;

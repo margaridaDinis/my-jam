@@ -7,6 +7,7 @@ type Mutation {
   createAlbum(
     year: Int,
     name: String,
+    artists: [String],
     description: String,
     image: String,
     genres: [String],
@@ -16,6 +17,7 @@ type Mutation {
     id: ID!,
     year: Int,
     name: String,
+    artists: [String],
     description: String,
     genres: [String],
     image: String,
@@ -31,6 +33,9 @@ type Mutation {
   createGenre(name: String!): Genre!
   updateGenre(id: ID!, name: String!): Genre!
   deleteGenre(id: ID!): Genre!
+  createArtist(name: String!): Artist!
+  updateArtist(id: ID!, name: String!): Artist!
+  deleteArtist(id: ID!): Artist!
 }
 
 type Query {
@@ -41,6 +46,8 @@ type Query {
   users: [User]!
   genres: [Genre]!
   genre(where: GenreWhereUniqueInput): Genre
+  artists: [Artist]!
+  artist(where: ArtistWhereUniqueInput): Artist
 }
 
 type User {

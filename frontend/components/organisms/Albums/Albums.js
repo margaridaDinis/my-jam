@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
@@ -9,6 +9,7 @@ import Album from '../../molecules/Album';
 import Pagination from '../../molecules/Pagination/Pagination';
 
 import { perPage } from '../../../config';
+import Link from 'next/link';
 
 export const ALL_ALBUMS_QUERY = gql`
   query ALL_ALBUMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
@@ -44,15 +45,20 @@ const Albums = ({ page }) => {
   if (error) return <ErrorMessage error={error} />;
 
   return (
-    <Center>
-      <Pagination page={page} />
-      <AlbumsList>
-        {data.albums.map((album) => (
-          <Album key={album.id} album={album} />
-        ))}
-      </AlbumsList>
-      <Pagination page={page} />
-    </Center>
+    <Fragment>
+      <Link href='/new-album'>
+        <a>New Album</a>
+      </Link>
+      <Center>
+        <Pagination page={page} />
+        <AlbumsList>
+          {data.albums.map((album) => (
+            <Album key={album.id} album={album} />
+          ))}
+        </AlbumsList>
+        <Pagination page={page} />
+      </Center>
+    </Fragment>
   );
 };
 

@@ -191,7 +191,27 @@ const mutations = {
   async deleteGenre(parent, args, ctx, info) {
     return ctx.db.mutation.deleteGenre({ where: { id: args.id } }, info);
   },
+  createArtist(parent, args, ctx, info) {
+    return ctx.db.mutation.createArtist({
+      data: {
+        ...args,
+      },
+    }, info);
+  },
+  async updateArtist(parent, args, ctx, info) {
+    const updates = { ...args };
+    delete updates.id;
 
+    return ctx.db.mutation.updateArtist({
+      data: updates,
+      where: {
+        id: args.id,
+      },
+    }, info);
+  },
+  async deleteArtist(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteArtist({ where: { id: args.id } }, info);
+  },
 };
 
 module.exports = mutations;
