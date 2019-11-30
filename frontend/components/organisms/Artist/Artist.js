@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import ErrorMessage from '../../molecules/ErrorMessage';
 import Link from 'next/link';
+import ErrorMessage from '../../molecules/ErrorMessage';
 
 export const SINGLE_ARTIST_QUERY = gql`
   query SINGLE_ARTIST_QUERY($id: ID!) {
@@ -20,12 +20,12 @@ export const SINGLE_ARTIST_QUERY = gql`
 
 const Artist = ({ id }) => {
   const { data, loading, error } = useQuery(SINGLE_ARTIST_QUERY, { variables: { id } });
-  
+
   if (loading) return <p>Loading...</p>;
   if (error) return <ErrorMessage error={error} />;
 
   const { artist } = data;
-  
+
   return (
     <div>
       <h1>Artist</h1>

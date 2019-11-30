@@ -31,23 +31,23 @@ const ArtistForm = ({ id }) => {
       }],
     },
   );
-  
+
   const initialName = data ? data.artist.name : '';
-  
+
   const [values, setValues] = useState({ name: initialName, id });
-  
+
   const handleChange = ({ target: { name, value } }) => setValues({ ...values, [name]: value });
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await submit({ variables: values, id });
-    
+
     Router.push({
       pathname: '/artist',
       query: { id: id || res.data.createArtist.id },
     });
   };
-  
+
   return (
     <Form onSubmit={handleSubmit}>
       {error && <ErrorMessage error={error} />}

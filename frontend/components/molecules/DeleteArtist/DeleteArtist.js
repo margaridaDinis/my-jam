@@ -22,7 +22,7 @@ const DeleteArtist = ({ id, children }) => {
       }],
     },
   );
-  
+
   const deleteHandler = () => {
     // eslint-disable-next-line
     if (confirm('Are you sure you want to delete this artist?')) {
@@ -30,7 +30,7 @@ const DeleteArtist = ({ id, children }) => {
       deleteArtist({ variables: { id } }).catch((e) => alert(e.message));
     }
   };
-  
+
   return (
     <button onClick={deleteHandler}>
       {children}

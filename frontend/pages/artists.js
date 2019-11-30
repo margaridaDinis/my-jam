@@ -5,7 +5,7 @@ import Artists from '../components/organisms/Artists';
 
 const ArtistsPage = ({ query }) => {
   const page = !parseFloat(query.page) ? 1 : parseFloat(query.page);
-  
+
   return <Artists page={page} />;
 };
 

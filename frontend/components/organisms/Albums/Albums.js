@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
+import Link from 'next/link';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Album from '../../molecules/Album';
 import Pagination from '../../molecules/Pagination/Pagination';
 
 import { perPage } from '../../../config';
-import Link from 'next/link';
 
 export const ALL_ALBUMS_QUERY = gql`
   query ALL_ALBUMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
