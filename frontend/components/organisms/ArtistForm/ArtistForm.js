@@ -10,7 +10,7 @@ import { SINGLE_ARTIST_QUERY } from '../Artist';
 import { ALL_ARTISTS_QUERY } from '../Artists';
 
 export const CREATE_ARTIST_MUTATION = gql`
-  mutation CREATE_ARTIST_MUTATION($name: String!) { createArtist(name: $name) { id } }
+  mutation CREATE_ARTIST_MUTATION($name: String!) { createArtist(name: $name) { id name } }
 `;
 
 export const UPDATE_ARTIST_MUTATION = gql`

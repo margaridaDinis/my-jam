@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
 
@@ -7,7 +7,7 @@ const MultiSelect = ({
 }) => {
   const [selected, setSelected] = useState(options.filter((v) => defaultValue.includes(v.id)));
 
-  useEffect(() => {
+  useCallback(() => {
     const values = selected || [];
 
     onChange({ [type]: values.map((option) => option.id) });
@@ -19,9 +19,11 @@ const MultiSelect = ({
     if (newOption) setSelected([...selected, newOption]);
   };
 
-  const handleChange = (values) => {
-    setSelected(values);
-  };
+  const handleChange = (values) => setSelected(values);
+
+  const isValidNewOption = (inputValue, _, selectOptions) => (
+    !selectOptions.find(({ name }) => name.toLowerCase() === inputValue.toLowerCase())
+  );
 
   return (
     <label htmlFor={type}>
@@ -29,15 +31,13 @@ const MultiSelect = ({
       <CreatableSelect
         instanceId={type}
         options={options}
+        value={selected}
         getOptionLabel={({ name }) => name}
         getOptionValue={({ id }) => id}
-        getNewOptionData={(inputValue, optionLabel) => ({
-          id: inputValue,
-          name: optionLabel,
-        })}
-        value={selected}
+        getNewOptionData={(inputValue, optionLabel) => ({ id: inputValue, name: optionLabel })}
         onChange={handleChange}
         onCreateOption={handleCreate}
+        isValidNewOption={isValidNewOption}
         isLoading={loading}
         isMulti
         isClearable
