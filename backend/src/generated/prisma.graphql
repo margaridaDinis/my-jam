@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/my-jam/my-jam/dev
-# timestamp: Sat Nov 30 2019 17:50:27 GMT+0100 (Central European Standard Time)
+# timestamp: Mon Dec 02 2019 22:17:18 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
   count: Int!
@@ -10,6 +10,10 @@ type AggregateArtist {
 }
 
 type AggregateGenre {
+  count: Int!
+}
+
+type AggregateLocation {
   count: Int!
 }
 
@@ -26,6 +30,7 @@ type Album implements Node {
   largeImage: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  location: Location
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre!]
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
   user: User!
@@ -48,6 +53,7 @@ input AlbumCreateInput {
   description: String
   image: String!
   largeImage: String!
+  location: LocationCreateOneWithoutAlbumsInput
   genres: GenreCreateManyWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
@@ -63,6 +69,11 @@ input AlbumCreateManyWithoutGenresInput {
   connect: [AlbumWhereUniqueInput!]
 }
 
+input AlbumCreateManyWithoutLocationInput {
+  create: [AlbumCreateWithoutLocationInput!]
+  connect: [AlbumWhereUniqueInput!]
+}
+
 input AlbumCreateWithoutArtistsInput {
   id: ID
   year: Int
@@ -70,6 +81,7 @@ input AlbumCreateWithoutArtistsInput {
   description: String
   image: String!
   largeImage: String!
+  location: LocationCreateOneWithoutAlbumsInput
   genres: GenreCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
 }
@@ -81,6 +93,19 @@ input AlbumCreateWithoutGenresInput {
   description: String
   image: String!
   largeImage: String!
+  location: LocationCreateOneWithoutAlbumsInput
+  artists: ArtistCreateManyWithoutAlbumsInput
+  user: UserCreateOneInput!
+}
+
+input AlbumCreateWithoutLocationInput {
+  id: ID
+  year: Int
+  name: String!
+  description: String
+  image: String!
+  largeImage: String!
+  genres: GenreCreateManyWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
 }
@@ -446,6 +471,7 @@ input AlbumUpdateInput {
   description: String
   image: String
   largeImage: String
+  location: LocationUpdateOneWithoutAlbumsInput
   genres: GenreUpdateManyWithoutAlbumsInput
   artists: ArtistUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
@@ -491,6 +517,18 @@ input AlbumUpdateManyWithoutGenresInput {
   upsert: [AlbumUpsertWithWhereUniqueWithoutGenresInput!]
 }
 
+input AlbumUpdateManyWithoutLocationInput {
+  create: [AlbumCreateWithoutLocationInput!]
+  connect: [AlbumWhereUniqueInput!]
+  set: [AlbumWhereUniqueInput!]
+  disconnect: [AlbumWhereUniqueInput!]
+  delete: [AlbumWhereUniqueInput!]
+  update: [AlbumUpdateWithWhereUniqueWithoutLocationInput!]
+  updateMany: [AlbumUpdateManyWithWhereNestedInput!]
+  deleteMany: [AlbumScalarWhereInput!]
+  upsert: [AlbumUpsertWithWhereUniqueWithoutLocationInput!]
+}
+
 input AlbumUpdateManyWithWhereNestedInput {
   where: AlbumScalarWhereInput!
   data: AlbumUpdateManyDataInput!
@@ -502,6 +540,7 @@ input AlbumUpdateWithoutArtistsDataInput {
   description: String
   image: String
   largeImage: String
+  location: LocationUpdateOneWithoutAlbumsInput
   genres: GenreUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
 }
@@ -512,6 +551,18 @@ input AlbumUpdateWithoutGenresDataInput {
   description: String
   image: String
   largeImage: String
+  location: LocationUpdateOneWithoutAlbumsInput
+  artists: ArtistUpdateManyWithoutAlbumsInput
+  user: UserUpdateOneRequiredInput
+}
+
+input AlbumUpdateWithoutLocationDataInput {
+  year: Int
+  name: String
+  description: String
+  image: String
+  largeImage: String
+  genres: GenreUpdateManyWithoutAlbumsInput
   artists: ArtistUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
 }
@@ -526,6 +577,11 @@ input AlbumUpdateWithWhereUniqueWithoutGenresInput {
   data: AlbumUpdateWithoutGenresDataInput!
 }
 
+input AlbumUpdateWithWhereUniqueWithoutLocationInput {
+  where: AlbumWhereUniqueInput!
+  data: AlbumUpdateWithoutLocationDataInput!
+}
+
 input AlbumUpsertWithWhereUniqueWithoutArtistsInput {
   where: AlbumWhereUniqueInput!
   update: AlbumUpdateWithoutArtistsDataInput!
@@ -536,6 +592,12 @@ input AlbumUpsertWithWhereUniqueWithoutGenresInput {
   where: AlbumWhereUniqueInput!
   update: AlbumUpdateWithoutGenresDataInput!
   create: AlbumCreateWithoutGenresInput!
+}
+
+input AlbumUpsertWithWhereUniqueWithoutLocationInput {
+  where: AlbumWhereUniqueInput!
+  update: AlbumUpdateWithoutLocationDataInput!
+  create: AlbumCreateWithoutLocationInput!
 }
 
 input AlbumWhereInput {
@@ -813,6 +875,7 @@ input AlbumWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  location: LocationWhereInput
   genres_every: GenreWhereInput
   genres_some: GenreWhereInput
   genres_none: GenreWhereInput
@@ -828,7 +891,7 @@ input AlbumWhereUniqueInput {
 
 type Artist implements Node {
   id: ID!
-  name: String
+  name: String!
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
 }
 
@@ -844,7 +907,7 @@ type ArtistConnection {
 
 input ArtistCreateInput {
   id: ID
-  name: String
+  name: String!
   albums: AlbumCreateManyWithoutArtistsInput
 }
 
@@ -855,7 +918,7 @@ input ArtistCreateManyWithoutAlbumsInput {
 
 input ArtistCreateWithoutAlbumsInput {
   id: ID
-  name: String
+  name: String!
 }
 
 """An edge in a connection."""
@@ -876,7 +939,7 @@ enum ArtistOrderByInput {
 
 type ArtistPreviousValues {
   id: ID!
-  name: String
+  name: String!
 }
 
 input ArtistScalarWhereInput {
@@ -1161,7 +1224,7 @@ scalar DateTime
 
 type Genre implements Node {
   id: ID!
-  name: String
+  name: String!
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
 }
 
@@ -1177,7 +1240,7 @@ type GenreConnection {
 
 input GenreCreateInput {
   id: ID
-  name: String
+  name: String!
   albums: AlbumCreateManyWithoutGenresInput
 }
 
@@ -1188,7 +1251,7 @@ input GenreCreateManyWithoutAlbumsInput {
 
 input GenreCreateWithoutAlbumsInput {
   id: ID
-  name: String
+  name: String!
 }
 
 """An edge in a connection."""
@@ -1209,7 +1272,7 @@ enum GenreOrderByInput {
 
 type GenrePreviousValues {
   id: ID!
-  name: String
+  name: String!
 }
 
 input GenreScalarWhereInput {
@@ -1485,6 +1548,272 @@ input GenreWhereUniqueInput {
   id: ID
 }
 
+type Location implements Node {
+  id: ID!
+  name: String!
+  description: String
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
+}
+
+"""A connection to a list of items."""
+type LocationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LocationEdge]!
+  aggregate: AggregateLocation!
+}
+
+input LocationCreateInput {
+  id: ID
+  name: String!
+  description: String
+  albums: AlbumCreateManyWithoutLocationInput
+}
+
+input LocationCreateOneWithoutAlbumsInput {
+  create: LocationCreateWithoutAlbumsInput
+  connect: LocationWhereUniqueInput
+}
+
+input LocationCreateWithoutAlbumsInput {
+  id: ID
+  name: String!
+  description: String
+}
+
+"""An edge in a connection."""
+type LocationEdge {
+  """The item at the end of the edge."""
+  node: Location!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LocationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+}
+
+type LocationPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type LocationSubscriptionPayload {
+  mutation: MutationType!
+  node: Location
+  updatedFields: [String!]
+  previousValues: LocationPreviousValues
+}
+
+input LocationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LocationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LocationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LocationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LocationWhereInput
+}
+
+input LocationUpdateInput {
+  name: String
+  description: String
+  albums: AlbumUpdateManyWithoutLocationInput
+}
+
+input LocationUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input LocationUpdateOneWithoutAlbumsInput {
+  create: LocationCreateWithoutAlbumsInput
+  connect: LocationWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: LocationUpdateWithoutAlbumsDataInput
+  upsert: LocationUpsertWithoutAlbumsInput
+}
+
+input LocationUpdateWithoutAlbumsDataInput {
+  name: String
+  description: String
+}
+
+input LocationUpsertWithoutAlbumsInput {
+  update: LocationUpdateWithoutAlbumsDataInput!
+  create: LocationCreateWithoutAlbumsInput!
+}
+
+input LocationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LocationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LocationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LocationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  albums_every: AlbumWhereInput
+  albums_some: AlbumWhereInput
+  albums_none: AlbumWhereInput
+}
+
+input LocationWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -1495,26 +1824,32 @@ type Mutation {
   createAlbum(data: AlbumCreateInput!): Album!
   createGenre(data: GenreCreateInput!): Genre!
   createArtist(data: ArtistCreateInput!): Artist!
+  createLocation(data: LocationCreateInput!): Location!
   createUser(data: UserCreateInput!): User!
   updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
   updateGenre(data: GenreUpdateInput!, where: GenreWhereUniqueInput!): Genre
   updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
+  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteAlbum(where: AlbumWhereUniqueInput!): Album
   deleteGenre(where: GenreWhereUniqueInput!): Genre
   deleteArtist(where: ArtistWhereUniqueInput!): Artist
+  deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteUser(where: UserWhereUniqueInput!): User
   upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
   upsertGenre(where: GenreWhereUniqueInput!, create: GenreCreateInput!, update: GenreUpdateInput!): Genre!
   upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
+  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyAlbums(data: AlbumUpdateManyMutationInput!, where: AlbumWhereInput): BatchPayload!
   updateManyGenres(data: GenreUpdateManyMutationInput!, where: GenreWhereInput): BatchPayload!
   updateManyArtists(data: ArtistUpdateManyMutationInput!, where: ArtistWhereInput): BatchPayload!
+  updateManyLocations(data: LocationUpdateManyMutationInput!, where: LocationWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
   deleteManyGenres(where: GenreWhereInput): BatchPayload!
   deleteManyArtists(where: ArtistWhereInput): BatchPayload!
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -1558,14 +1893,17 @@ type Query {
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre]!
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   album(where: AlbumWhereUniqueInput!): Album
   genre(where: GenreWhereUniqueInput!): Genre
   artist(where: ArtistWhereUniqueInput!): Artist
+  location(where: LocationWhereUniqueInput!): Location
   user(where: UserWhereUniqueInput!): User
   albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
   genresConnection(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GenreConnection!
   artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
+  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -1579,6 +1917,7 @@ type Subscription {
   album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
   genre(where: GenreSubscriptionWhereInput): GenreSubscriptionPayload
   artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
+  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

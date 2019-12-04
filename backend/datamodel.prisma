@@ -26,6 +26,7 @@ type Album {
   largeImage: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  location: Location,
   genres: [Genre!]!
   artists: [Artist]!
   #  type: [one of "album" , "single" , or "compilation"]!
@@ -34,12 +35,19 @@ type Album {
 
 type Genre {
   id: ID! @id,
-  name: String,
+  name: String!,
   albums: [Album],
 }
 
 type Artist {
   id: ID! @id,
-  name: String,
+  name: String!,
+  albums: [Album],
+}
+
+type Location {
+  id: ID! @id,
+  name: String!,
+  description: String,
   albums: [Album],
 }

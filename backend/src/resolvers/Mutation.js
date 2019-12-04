@@ -199,6 +199,18 @@ const mutations = {
   async deleteArtist(parent, args, ctx, info) {
     return ctx.db.mutation.deleteArtist({ where: { id: args.id } }, info);
   },
+  createLocation(parent, args, ctx, info) {
+    return ctx.db.mutation.createLocation({ data: { ...args } }, info);
+  },
+  async updateLocation(parent, args, ctx, info) {
+    const updates = { ...args };
+    delete updates.id;
+
+    return ctx.db.mutation.updateLocation({ data: updates, where: { id: args.id } }, info);
+  },
+  async deleteLocation(parent, args, ctx, info) {
+    return ctx.db.mutation.deleteLocation({ where: { id: args.id } }, info);
+  },
 };
 
 module.exports = mutations;

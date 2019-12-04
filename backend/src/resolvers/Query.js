@@ -25,6 +25,8 @@ const Query = {
   genre: forwardTo('db'),
   artists: forwardTo('db'),
   artist: forwardTo('db'),
+  locations: forwardTo('db'),
+  location: forwardTo('db'),
 };
 
 module.exports = Query;
