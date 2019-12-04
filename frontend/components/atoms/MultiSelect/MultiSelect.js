@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
 
@@ -7,7 +7,7 @@ const MultiSelect = ({
 }) => {
   const [selected, setSelected] = useState(options.filter((v) => defaultValue.includes(v.id)));
 
-  useCallback(() => {
+  useEffect(() => {
     const values = selected || [];
 
     onChange({ [type]: values.map((option) => option.id) });
