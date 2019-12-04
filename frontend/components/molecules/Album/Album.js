@@ -8,17 +8,17 @@ const Album = ({ album }) => (
   <article>
     {album.image && <img src={album.image} alt={album.name} />}
     <h2>
-      <Link href={{ pathname: '/album', query: { id: album.id } }}>
+      <Link href={{ pathname: '/album/show', query: { id: album.id } }}>
         <a>{album.name}</a>
       </Link>
     </h2>
   <User>
     {({ me }) => me && (
       <div className='buttonList'>
-        <Link href={{ pathname: '/album', query: { id: album.id } }}>
+        <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>
           <button>See album</button>
         </Link>
-        <Link href={{ pathname: '/update-album', query: { id: album.id } }}>
+        <Link href={{ pathname: '/albums/update', query: { id: album.id } }}>
           <a>Edit ✏️</a>
         </Link>
         <DeleteAlbum id={album.id} image={album.image}>Delete</DeleteAlbum>

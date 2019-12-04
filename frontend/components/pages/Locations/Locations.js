@@ -24,7 +24,7 @@ const Locations = () => {
 
   return (
     <Fragment>
-      <Link href='/new-location'>
+      <Link href='/locations/new'>
         <a>New Location</a>
       </Link>
       <h1>Locations</h1>
@@ -34,10 +34,10 @@ const Locations = () => {
           {locations.map((location) => (
             <li key={location.id}>
               {location.name}
-              <Link href={{ pathname: 'location', query: { id: location.id } }}>
+              <Link href={{ pathname: '/locations/show', query: { id: location.id } }}>
                 <a>➕</a>
               </Link>
-              <Link href={{ pathname: 'update-location', query: { id: location.id } }}>
+              <Link href={{ pathname: '/locations/update', query: { id: location.id } }}>
                 <a>✏️</a>
               </Link>
               <DeleteLocation id={location.id}>Delete Location</DeleteLocation>

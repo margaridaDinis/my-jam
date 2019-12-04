@@ -5,12 +5,11 @@ import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
 import ErrorMessage from '../../molecules/ErrorMessage';
 
-export const SINGLE_LOCATION_QUERY = gql`
-  query SINGLE_LOCATION_QUERY($id: ID!) {
-    location(where: { id: $id }) {
+export const SINGLE_ARTIST_QUERY = gql`
+  query SINGLE_ARTIST_QUERY($id: ID!) {
+    artist(where: { id: $id }) {
       id
       name
-      description
       albums {
         id
         name
@@ -19,26 +18,26 @@ export const SINGLE_LOCATION_QUERY = gql`
   }
 `;
 
-const Location = ({ id }) => {
-  const { data, error, loading } = useQuery(SINGLE_LOCATION_QUERY, { variables: { id } });
+const Artist = ({ id }) => {
+  const { data, loading, error } = useQuery(SINGLE_ARTIST_QUERY, { variables: { id } });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <ErrorMessage error={error}/>;
+  if (error) return <ErrorMessage error={error} />;
 
-  const { location } = data;
+  const { artist } = data;
+
   return (
     <div>
-      <h1>Location</h1>
+      <h1>Artist</h1>
       <p>
-        {location.name}
-        <Link href={{ pathname: '/locations/update', query: { id: location.id } }}>
+        {artist.name}
+        <Link href={{ pathname: '/artist/update/', query: { id: artist.id } }}>
           <a>✏️</a>
         </Link>
       </p>
-      <p>{location.description}</p>
       <div>
         <b>Albums:</b>
-        {location.albums.map((album) => (
+        {artist.albums.map((album) => (
           <Link key={album.id} href={{ pathname: '/albums/show', query: { id: album.id } }}>
             <li>
               {album.name}
@@ -50,8 +49,8 @@ const Location = ({ id }) => {
   );
 };
 
-Location.propTypes = {
+Artist.propTypes = {
   id: PropTypes.string,
 };
 
-export default Location;
+export default Artist;

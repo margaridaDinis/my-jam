@@ -27,7 +27,7 @@ const NewLocation = () => {
     const res = await createLocation({ variables: values });
 
     Router.push({
-      pathname: '/location',
+      pathname: '/locations/show',
       query: { id: res.data.createLocation.id },
     });
   };

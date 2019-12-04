@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { ALL_ARTISTS_QUERY } from '../../organisms/Artists';
-import { CREATE_ARTIST_MUTATION } from '../../organisms/ArtistForm';
+import { ALL_ARTISTS_QUERY } from '../../pages/Artists';
+import { CREATE_ARTIST_MUTATION } from '../../pages/ArtistForm';
 import ErrorMessage from '../ErrorMessage';
 import MultiSelect from '../../atoms/MultiSelect';
 

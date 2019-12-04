@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import Link from 'next/link';
 import ErrorMessage from '../../molecules/ErrorMessage';
 
-export const SINGLE_LOCATION_QUERY = gql`
-  query SINGLE_LOCATION_QUERY($id: ID!) {
-    location(where: { id: $id }) {
+export const SINGLE_GENRE_QUERY = gql`
+  query SINGLE_GENRE_QUERY($id: ID!) {
+    genre (where: { id: $id }) {
       id
       name
-      description
       albums {
         id
         name
@@ -19,26 +18,27 @@ export const SINGLE_LOCATION_QUERY = gql`
   }
 `;
 
-const Location = ({ id }) => {
-  const { data, error, loading } = useQuery(SINGLE_LOCATION_QUERY, { variables: { id } });
+const Genre = ({ id }) => {
+  const { loading, error, data } = useQuery(
+    SINGLE_GENRE_QUERY,
+    { variables: { id } },
+  );
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <ErrorMessage error={error}/>;
+  if (error) return <ErrorMessage error={error} />;
 
-  const { location } = data;
   return (
     <div>
-      <h1>Location</h1>
+      <h1>Genre</h1>
       <p>
-        {location.name}
-        <Link href={{ pathname: '/locations/update', query: { id: location.id } }}>
+        {data.genre.name}
+        <Link href={{ pathname: '/genres/update', query: { id: data.genre.id } }}>
           <a>✏️</a>
         </Link>
       </p>
-      <p>{location.description}</p>
       <div>
         <b>Albums:</b>
-        {location.albums.map((album) => (
+        {data.genre.albums.map((album) => (
           <Link key={album.id} href={{ pathname: '/albums/show', query: { id: album.id } }}>
             <li>
               {album.name}
@@ -50,8 +50,8 @@ const Location = ({ id }) => {
   );
 };
 
-Location.propTypes = {
+Genre.propTypes = {
   id: PropTypes.string,
 };
 
-export default Location;
+export default Genre;

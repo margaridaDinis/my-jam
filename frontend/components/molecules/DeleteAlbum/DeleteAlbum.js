@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ALL_ALBUMS_QUERY } from '../../organisms/Albums';
+import { ALL_ALBUMS_QUERY } from '../../pages/Albums';
 import { removeImage } from '../../../actions/file';
 
 export const DELETE_ALBUM_MUTATION = gql`
@@ -26,7 +26,7 @@ const DeleteAlbum = ({ id, image, children }) => {
 
   const deleteHandler = () => {
     // eslint-disable-next-line
-    if (confirm('Are you sure you want to delete this album?')) {
+    if (confirm('Are you sure you want to delete this albums?')) {
       removeAlbum({ variables: { id } })
         .then(() => removeImage(image))
         .catch((e) => alert(e.message)); // eslint-disable-line

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { ALL_GENRES_QUERY } from '../../organisms/Genres';
-import { CREATE_GENRE_MUTATION } from '../../organisms/GenreForm';
+import { ALL_GENRES_QUERY } from '../../pages/Genres';
+import { CREATE_GENRE_MUTATION } from '../../pages/GenreForm';
 import ErrorMessage from '../ErrorMessage';
 import MultiSelect from '../../atoms/MultiSelect';
 

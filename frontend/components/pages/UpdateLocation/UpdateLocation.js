@@ -30,7 +30,7 @@ const UpdateLocation = ({ id }) => {
     const res = await updateLocation({ variables: { id, ...values } });
 
     Router.push({
-      pathname: '/location',
+      pathname: '/locations/show',
       query: { id: res.data.updateLocation.id },
     });
   };
