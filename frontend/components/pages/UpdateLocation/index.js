@@ -1,1 +1,1 @@
-export { default } from './NewLocation';
+export { default } from './UpdateLocation';

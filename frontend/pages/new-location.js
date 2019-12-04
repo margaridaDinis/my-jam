@@ -1,11 +1,11 @@
 import React from 'react';
-import GenreForm from '../components/organisms/GenreForm';
 import RequestSignIn from '../components/organisms/RequestSignIn';
+import NewLocation from '../components/pages/NewLocation';
 
-const CreateAlbumPage = () => (
+const NewLocationPage = () => (
   <RequestSignIn>
-    <GenreForm />
+    <NewLocation />
   </RequestSignIn>
 );
 
-export default CreateAlbumPage;
+export default NewLocationPage;

@@ -1,47 +1,56 @@
 import React from 'react';
-import LocationForm from '../../organisms/LocationForm/LocationForm';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import Router from 'next/dist/lib/router';
+import LocationForm from '../../organisms/LocationForm/LocationForm';
 import { ALL_LOCATIONS_QUERY } from '../Locations';
+import { SINGLE_LOCATION_QUERY } from '../Location';
 
-const CREATE_LOCATION_MUTATION = gql`
-  mutation CREATE_LOCATION_MUTATION($name: String!, $description: String) {
-    createLocation(name: $name, description: $description) {
+const UPDATE_LOCATION_MUTATION = gql`
+  mutation UPDATE_LOCATION_MUTATION($id: ID!, $name: String!, $description: String) {
+    updateLocation(id: $id, name: $name, description: $description) {
       id name description
     }
   }
 `;
 
-const NewLocation = () => {
-  const [createLocation, { error, loading }] = useMutation(
-    CREATE_LOCATION_MUTATION,
+const UpdateLocation = ({ id }) => {
+  const { data, ...state } = useQuery(SINGLE_LOCATION_QUERY, { variables: { id } });
+  const [updateLocation, { error, loading }] = useMutation(
+    UPDATE_LOCATION_MUTATION,
     {
       refetchQueries: [{
         query: ALL_LOCATIONS_QUERY,
-      }]
-    }
+      }],
+    },
   );
-  
-  const onSubmit = async(values) => {
-    const res = await createLocation({ variables: values });
-  
+
+  const onSubmit = async (values) => {
+    const res = await updateLocation({ variables: { id, ...values } });
+
     Router.push({
       pathname: '/location',
-      query: { id: res.data.createLocation.id },
+      query: { id: res.data.updateLocation.id },
     });
   };
-  
+  if (state.error || !data || !data.location) return <p>No location found for ID {id} </p>;
+
   return (
     <div>
       <LocationForm
-        defaultValues={{ name: '', description: '' }}
+        defaultValues={data.location}
         error={error}
         onSubmit={onSubmit}
-        isLoading={loading}
+        isLoading={state.loading || loading}
+        isEdit
       />
     </div>
   );
 };
 
-export default NewLocation;
+UpdateLocation.propTypes = {
+  id: PropTypes.string,
+};
+
+export default UpdateLocation;

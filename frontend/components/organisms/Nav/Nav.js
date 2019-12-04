@@ -22,6 +22,9 @@ const Nav = () => (
             <Link href='/genres'>
               <a>Genres</a>
             </Link>
+            <Link href='/locations'>
+              <a>Locations</a>
+            </Link>
             <Link href='/account'>
               <a>Account</a>
             </Link>

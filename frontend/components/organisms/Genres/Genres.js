@@ -41,7 +41,8 @@ const Genres = () => {
               <a>✏️</a>
             </Link>
             <DeleteGenre id={genre.id}>Delete Genre</DeleteGenre>
-          </li>))}
+          </li>
+        ))}
       </ul>
     </div>
   );

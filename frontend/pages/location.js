@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Locations from '../components/pages/Locations';
+import Location from '../components/pages/Location';
 
-const LocationsPage = ({ query }) => {
-  const page = !parseFloat(query.page) ? 1 : parseFloat(query.page);
-  
-  return <Locations page={page}/>;
-};
+const LocationPage = ({ query }) => <Location id={query.id}/>;
 
-LocationsPage.propTypes = {
+LocationPage.propTypes = {
   query: PropTypes.shape({
-    page: PropTypes.string,
+    id: PropTypes.string,
   }),
 };
 
-export default LocationsPage;
+export default LocationPage;

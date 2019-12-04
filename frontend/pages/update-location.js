@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Location from '../components/pages/Location';
+import UpdateLocation from '../components/pages/UpdateLocation';
 
-const LocationPage = ({ query }) => <Location id={query.id}/>;
+const UpdateLocationPage = ({ query }) => <UpdateLocation id={query.id}/>;
 
-LocationPage.propTypes = {
+UpdateLocationPage.propTypes = {
   query: PropTypes.shape({
     id: PropTypes.string,
   }),
 };
 
-export default LocationPage;
+export default UpdateLocationPage;

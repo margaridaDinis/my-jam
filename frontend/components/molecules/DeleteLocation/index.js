@@ -1,1 +1,1 @@
-export { default } from './DeleteGenre';
+export { default } from './DeleteLocation';
