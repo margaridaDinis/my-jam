@@ -1,1 +1,1 @@
-export { default, ALL_ALBUMS_QUERY } from './Albums';
+export { default } from './Albums';

@@ -1,38 +1,8 @@
 import React from 'react';
 import Router from 'next/router';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import AlbumForm from '../../molecules/AlbumForm';
-import { ALL_ALBUMS_QUERY } from '../Albums';
-
-export const CREATE_ALBUM_MUTATION = gql`
-  mutation CREATE_ALBUM_MUTATION(
-    $name: String!
-    $year: Int
-    $description: String
-    $image: String!
-    $largeImage: String!
-    $genres: [String]
-    $artists: [String]
-  ) {
-    createAlbum(
-      name: $name
-      year: $year
-      description: $description
-      image: $image
-      largeImage: $largeImage
-      genres: $genres
-      artists: $artists
-    ) {
-      id
-      name
-      year
-      description
-      image
-      largeImage
-    }
-  }
-`;
+import { ALL_ALBUMS_QUERY, CREATE_ALBUM_MUTATION } from '../../../lib/album';
 
 const CreateAlbum = () => {
   const [createAlbum, { loading, error }] = useMutation(

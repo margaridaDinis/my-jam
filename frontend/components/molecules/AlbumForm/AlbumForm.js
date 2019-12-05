@@ -55,6 +55,7 @@ const AlbumForm = ({
           defaultValue={album.description}
           handleChange={handleChange}
         />
+        {/* TODO add location as single creatable select */}
         <GenresSelect
           defaultValue={album.genres.map((genre) => genre.id)}
           onChange={handleExternalChange}

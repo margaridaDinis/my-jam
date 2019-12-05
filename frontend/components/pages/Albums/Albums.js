@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
 import Link from 'next/link';
@@ -10,19 +9,7 @@ import Album from '../../molecules/Album';
 import Pagination from '../../molecules/Pagination/Pagination';
 
 import { perPage } from '../../../config';
-
-export const ALL_ALBUMS_QUERY = gql`
-  query ALL_ALBUMS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    albums(skip: $skip, first: $first, orderBy: createdAt_DESC) {
-      id
-      year
-      name
-      description
-      image
-      largeImage
-    }
-  }
-`;
+import { ALL_ALBUMS_QUERY } from '../../../lib/album';
 
 const Center = styled.div`
   text-align: center;

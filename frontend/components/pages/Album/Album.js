@@ -1,34 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Head from 'next/head';
 import Link from 'next/link';
-
-export const SINGLE_ITEM_QUERY = gql`
-  query SINGLE_ITEM_QUERY($id: ID!) {
-    album(where: { id: $id }) {
-      id
-      name
-      year
-      description
-      image
-      largeImage
-      genres {
-        id
-        name
-      }
-      artists {
-        id
-        name
-      }
-    }
-  }
-`;
+import { SINGLE_ALBUM_QUERY } from '../../../lib/album';
 
 const Album = ({ id }) => {
   const { loading, data } = useQuery(
-    SINGLE_ITEM_QUERY,
+    SINGLE_ALBUM_QUERY,
     { variables: { id } },
   );
 

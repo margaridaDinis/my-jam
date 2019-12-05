@@ -1,48 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
-import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
-import { SINGLE_ITEM_QUERY } from '../Album';
+import { SINGLE_ALBUM_QUERY, UPDATE_ALBUM_MUTATION } from '../../../lib/album';
 import AlbumForm from '../../molecules/AlbumForm';
 
-export const UPDATE_ALBUM_MUTATION = gql`
-  mutation UPDATE_ALBUM_MUTATION(
-    $id: ID!
-    $name: String
-    $year: Int
-    $description: String
-    $image: String
-    $largeImage: String
-    $genres: [String]
-    $artists: [String]
-  ) {
-    updateAlbum(
-      id: $id
-      name: $name
-      year: $year
-      description: $description
-      image: $image
-      largeImage: $largeImage
-      genres: $genres
-      artists: $artists
-    ) {
-      id
-      name
-      year
-      description
-      genres { id }
-      artists { id }
-    }
-  }
-`;
-
 const UpdateAlbum = ({ id }) => {
-  const { loading, data } = useQuery(SINGLE_ITEM_QUERY, { variables: { id } });
+  const { loading, data } = useQuery(SINGLE_ALBUM_QUERY, { variables: { id } });
   const [updateAlbum, { loading: submitting, error }] = useMutation(
     UPDATE_ALBUM_MUTATION,
-    { refetchQueries: [{ query: SINGLE_ITEM_QUERY, variables: { id } }] },
+    { refetchQueries: [{ query: SINGLE_ALBUM_QUERY, variables: { id } }] },
   );
 
   if (loading) return <p>Loading...</p>;

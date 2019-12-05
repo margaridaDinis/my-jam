@@ -1,18 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ALL_ALBUMS_QUERY } from '../../pages/Albums';
+import { ALL_ALBUMS_QUERY, DELETE_ALBUM_MUTATION } from '../../../lib/album';
 import { removeImage } from '../../../actions/file';
-
-export const DELETE_ALBUM_MUTATION = gql`
-  mutation DELETE_ALBUM_MUTATION($id: ID!) {
-    deleteAlbum(id: $id) {
-      id
-    }
-  }
-`;
 
 const DeleteAlbum = ({ id, image, children }) => {
   const [removeAlbum] = useMutation(
