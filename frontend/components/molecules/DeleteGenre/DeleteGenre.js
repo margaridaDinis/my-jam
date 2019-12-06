@@ -1,17 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
-
-import { ALL_GENRES_QUERY } from '../../pages/Genres';
-
-export const DELETE_GENRE_MUTATION = gql`
-  mutation DELETE_GENRE_MUTATION($id: ID!) {
-    deleteGenre(id: $id) {
-      id
-    }
-  }
-`;
+import { ALL_GENRES_QUERY, DELETE_GENRE_MUTATION } from '../../../lib/genres';
 
 const DeleteGenre = ({ id, children }) => {
   const [removeGenre] = useMutation(

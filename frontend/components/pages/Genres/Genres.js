@@ -1,22 +1,10 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import Link from 'next/link';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import DeleteGenre from '../../molecules/DeleteGenre';
-
-export const ALL_GENRES_QUERY = gql`
-  query ALL_GENRES_QUERY {
-    genres {
-      id
-      name
-      albums {
-        id
-      }
-    }
-  }
-`;
+import { ALL_GENRES_QUERY } from '../../../lib/genres';
 
 const Genres = () => {
   const { loading, error, data } = useQuery(ALL_GENRES_QUERY);

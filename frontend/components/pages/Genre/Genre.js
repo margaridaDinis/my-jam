@@ -1,22 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
-
-export const SINGLE_GENRE_QUERY = gql`
-  query SINGLE_GENRE_QUERY($id: ID!) {
-    genre (where: { id: $id }) {
-      id
-      name
-      albums {
-        id
-        name
-      }
-    }
-  }
-`;
+import { SINGLE_GENRE_QUERY } from '../../../lib/genres';
 
 const Genre = ({ id }) => {
   const { loading, error, data } = useQuery(

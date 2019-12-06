@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
-import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import PropTypes from 'prop-types';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
-import { ALL_GENRES_QUERY } from '../Genres';
-import { SINGLE_GENRE_QUERY } from '../Genre';
-
-export const CREATE_GENRE_MUTATION = gql`
-  mutation CREATE_GENRE_MUTATION($name: String!) { createGenre(name: $name) { id name } }
-`;
-
-export const UPDATE_GENRE_MUTATION = gql`
-  mutation UPDATE_GENRE_MUTATION($id: ID! $name: String!) {
-    updateGenre(
-      id: $id
-      name: $name
-    ) { id name } }
-`;
+import {
+  ALL_GENRES_QUERY,
+  CREATE_GENRE_MUTATION,
+  SINGLE_GENRE_QUERY,
+  UPDATE_GENRE_MUTATION,
+} from '../../../lib/genres';
 
 const GenreForm = ({ id }) => {
   const { data, loading } = id ? useQuery(SINGLE_GENRE_QUERY, { variables: { id } }) : {};
