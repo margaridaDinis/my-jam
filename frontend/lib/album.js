@@ -45,6 +45,23 @@ export const ALBUMS_PAGINATION_QUERY = gql`
   }
 `;
 
+export const SEARCH_ALBUMS_QUERY = gql`
+  query SEARCH_ALBUNS_QUERY($searchTerm: String!) {
+    albums(where: {
+      OR: [
+        { name_contains: $searchTerm },
+        { description_contains: $searchTerm },
+        { artists_some: { name_contains: $searchTerm }}
+      ]
+    }) {
+      id
+      name
+      image
+      artists { name }
+    }
+  }
+`;
+
 export const CREATE_ALBUM_MUTATION = gql`
   mutation CREATE_ALBUM_MUTATION(
     $name: String!

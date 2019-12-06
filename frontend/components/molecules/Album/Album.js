@@ -8,7 +8,7 @@ const Album = ({ album }) => (
   <article>
     {album.image && <img src={album.image} alt={album.name} />}
     <h2>
-      <Link href={{ pathname: '/album/show', query: { id: album.id } }}>
+      <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>
         <a>{album.name}</a>
       </Link>
     </h2>
