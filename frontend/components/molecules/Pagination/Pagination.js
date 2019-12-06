@@ -1,26 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useQuery } from '@apollo/react-hooks';
-
+import { perPage } from '../../../config';
+import { ALBUMS_PAGINATION_QUERY } from '../../../lib/album';
 import PaginationStyles from '../../../styles/PaginationStyles';
 
-import { perPage } from '../../../config';
-
-const PAGINATION_QUERY = gql`
-  query PAGINATION_QUERY {
-    albumsConnection {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-
 const Pagination = ({ page }) => {
-  const { loading, data } = useQuery(PAGINATION_QUERY);
+  const { loading, data } = useQuery(ALBUMS_PAGINATION_QUERY);
 
   if (loading) return null;
 

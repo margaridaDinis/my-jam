@@ -35,6 +35,16 @@ export const SINGLE_ALBUM_QUERY = gql`
   }
 `;
 
+export const ALBUMS_PAGINATION_QUERY = gql`
+  query ALBUMS_PAGINATION_QUERY {
+    albumsConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
 export const CREATE_ALBUM_MUTATION = gql`
   mutation CREATE_ALBUM_MUTATION(
     $name: String!
