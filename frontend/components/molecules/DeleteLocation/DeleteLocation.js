@@ -1,17 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
-import { ALL_LOCATIONS_QUERY } from '../../pages/Locations';
-
-
-export const DELETE_LOCATION_MUTATION = gql`
-  mutation DELETE_LOCATION_MUTATION($id: ID!) {
-    deleteLocation(id: $id) {
-      id
-    }
-  }
-`;
+import { ALL_LOCATIONS_QUERY, DELETE_LOCATION_MUTATION } from '../../../lib/locations';
 
 const DeleteLocation = ({ id, children }) => {
   const [deleteLocation] = useMutation(

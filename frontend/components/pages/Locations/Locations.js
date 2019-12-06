@@ -1,18 +1,9 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import DeleteLocation from '../../molecules/DeleteLocation';
-
-export const ALL_LOCATIONS_QUERY = gql`
-  query ALL_LOCATIONS_QUERY {
-    locations {
-      id
-      name
-    }
-  }
-`;
+import { ALL_LOCATIONS_QUERY } from '../../../lib/locations';
 
 const Locations = () => {
   const { data, loading, error } = useQuery(ALL_LOCATIONS_QUERY);

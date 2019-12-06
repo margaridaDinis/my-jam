@@ -1,23 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
 import ErrorMessage from '../../molecules/ErrorMessage';
-
-export const SINGLE_LOCATION_QUERY = gql`
-  query SINGLE_LOCATION_QUERY($id: ID!) {
-    location(where: { id: $id }) {
-      id
-      name
-      description
-      albums {
-        id
-        name
-      }
-    }
-  }
-`;
+import { SINGLE_LOCATION_QUERY } from '../../../lib/locations';
 
 const Location = ({ id }) => {
   const { data, error, loading } = useQuery(SINGLE_LOCATION_QUERY, { variables: { id } });

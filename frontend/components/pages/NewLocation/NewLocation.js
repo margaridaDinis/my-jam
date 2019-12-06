@@ -1,17 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import Router from 'next/dist/lib/router';
 import LocationForm from '../../organisms/LocationForm/LocationForm';
-import { ALL_LOCATIONS_QUERY } from '../Locations';
-
-const CREATE_LOCATION_MUTATION = gql`
-  mutation CREATE_LOCATION_MUTATION($name: String!, $description: String) {
-    createLocation(name: $name, description: $description) {
-      id name description
-    }
-  }
-`;
+import { ALL_LOCATIONS_QUERY, CREATE_LOCATION_MUTATION } from '../../../lib/locations';
 
 const NewLocation = () => {
   const [createLocation, { error, loading }] = useMutation(

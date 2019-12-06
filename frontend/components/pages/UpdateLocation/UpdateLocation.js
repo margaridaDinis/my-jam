@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import Router from 'next/dist/lib/router';
 import LocationForm from '../../organisms/LocationForm/LocationForm';
-import { ALL_LOCATIONS_QUERY } from '../Locations';
-import { SINGLE_LOCATION_QUERY } from '../Location';
-
-const UPDATE_LOCATION_MUTATION = gql`
-  mutation UPDATE_LOCATION_MUTATION($id: ID!, $name: String!, $description: String) {
-    updateLocation(id: $id, name: $name, description: $description) {
-      id name description
-    }
-  }
-`;
+import {
+  ALL_LOCATIONS_QUERY,
+  SINGLE_LOCATION_QUERY,
+  UPDATE_LOCATION_MUTATION,
+} from '../../../lib/locations';
 
 const UpdateLocation = ({ id }) => {
   const { data, ...state } = useQuery(SINGLE_LOCATION_QUERY, { variables: { id } });
