@@ -1,25 +1,9 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import Router from 'next/router';
 import { useMutation } from '@apollo/react-hooks';
 
-import { CURRENT_USER_QUERY } from '../User';
 import AuthForm from '../../molecules/AuthForm';
-
-export const SIGN_IN_MUTATION = gql`
-  mutation SIGN_IN_MUTATION(
-    $email: String!
-    $password: String!
-  ) {
-    signIn(
-      email: $email
-      password: $password
-    ) {
-      id
-      email
-    }
-  }
-`;
+import { CURRENT_USER_QUERY, SIGN_IN_MUTATION } from '../../../lib/user';
 
 const SignIn = () => {
   const [signIn, formState] = useMutation(

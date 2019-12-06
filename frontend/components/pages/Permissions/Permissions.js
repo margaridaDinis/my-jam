@@ -1,25 +1,9 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Table from '../../../styles/Table';
 import UserPermissions from '../../molecules/UserPermissions';
-
-const USERS_QUERY = gql`
-  query USERS_QUERY {
-    users {
-      id
-      name
-      email
-      permissions
-    }
-    __type(name: "Permission") {
-      enumValues {
-        name
-      }
-    }
-  }
-`;
+import { USERS_QUERY } from '../../../lib/user';
 
 const Permissions = () => {
   const { data = {}, loading, error } = useQuery(USERS_QUERY);

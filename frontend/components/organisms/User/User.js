@@ -1,17 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-
-export const CURRENT_USER_QUERY = gql`
-  query CURRENT_USER_QUERY {
-   me {
-     id
-     name
-     email
-     permissions
-   }
-}`;
+import { CURRENT_USER_QUERY } from '../../../lib/user';
 
 const User = ({ children }) => {
   const { data } = useQuery(CURRENT_USER_QUERY);

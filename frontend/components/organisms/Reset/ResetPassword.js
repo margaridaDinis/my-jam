@@ -1,28 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import Router from 'next/router';
 import { useMutation } from '@apollo/react-hooks';
-
-import { CURRENT_USER_QUERY } from '../User';
 import AuthForm from '../../molecules/AuthForm';
-
-export const RESET_PASSWORD_MUTATION = gql`
-  mutation RESET_PASSWORD_MUTATION(
-    $resetToken: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    resetPassword(
-      resetToken: $resetToken
-      password: $password
-      confirmPassword: $confirmPassword
-    ) {
-      id
-      email
-    }
-  }
-`;
+import { CURRENT_USER_QUERY, RESET_PASSWORD_MUTATION } from '../../../lib/user';
 
 const ResetPassword = ({ resetToken }) => {
   const [resetPassword, formState] = useMutation(

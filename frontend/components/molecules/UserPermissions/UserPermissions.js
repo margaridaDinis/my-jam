@@ -1,19 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import ErrorMessage from '../ErrorMessage';
-
-const UPDATE_PERMISSIONS_MUTATION = gql`
-  mutation UPDATE_PERMISSIONS_MUTATION($userId: ID!, $permissions: [Permission]) {
-    updatePermissions(userId: $userId, permissions: $permissions) {
-      id
-      name
-      email
-      permissions
-    }
-  }
-`;
+import { UPDATE_PERMISSIONS_MUTATION } from '../../../lib/user';
 
 const UserPermissions = ({
   id, name, email, permissions, possiblePermissions,

@@ -1,16 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 import AuthForm from '../../molecules/AuthForm';
-
-export const REQUEST_RESET_MUTATION = gql`
-mutation REQUEST_RESET_MUTATION($email: String!) {
-    requestReset(email: $email) {
-      message
-    }
-  }
-`;
+import { REQUEST_RESET_MUTATION } from '../../../lib/user';
 
 const RequestReset = () => {
   const [requestReset, formState] = useMutation(REQUEST_RESET_MUTATION);

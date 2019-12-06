@@ -1,16 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { CURRENT_USER_QUERY } from '../../organisms/User';
-
-const SIGN_OUT_MUTATION = gql`
-  mutation SIGN_OUT_MUTATION{
-    signOut {
-      message
-    }
-  }
-`;
+import { SIGN_OUT_MUTATION } from '../../../lib/user';
 
 const SignOutButton = ({ children }) => {
   const [signOut] = useMutation(
