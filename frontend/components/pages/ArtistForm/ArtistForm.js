@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
-import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
-import { SINGLE_ARTIST_QUERY } from '../Artist';
-import { ALL_ARTISTS_QUERY } from '../Artists';
-
-export const CREATE_ARTIST_MUTATION = gql`
-  mutation CREATE_ARTIST_MUTATION($name: String!) { createArtist(name: $name) { id name } }
-`;
-
-export const UPDATE_ARTIST_MUTATION = gql`
-  mutation UPDATE_ARTIST_MUTATION($id: ID! $name: String!) {
-    updateArtist(id: $id name: $name) {
-      id
-    }
-  }
-`;
+import {
+  ALL_ARTISTS_QUERY,
+  CREATE_ARTIST_MUTATION,
+  SINGLE_ARTIST_QUERY,
+  UPDATE_ARTIST_MUTATION,
+} from '../../../lib/artist';
 
 const ArtistForm = ({ id }) => {
-  const { data, loading } = useQuery(SINGLE_ARTIST_QUERY, { variables: { id } });
+  const { data, loading } = id ? useQuery(SINGLE_ARTIST_QUERY, { variables: { id } }) : {};
   const [submit, { loading: submitting, error }] = useMutation(
     id ? UPDATE_ARTIST_MUTATION : CREATE_ARTIST_MUTATION,
     {

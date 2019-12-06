@@ -23,7 +23,7 @@ export const UPDATE_GENRE_MUTATION = gql`
 `;
 
 const GenreForm = ({ id }) => {
-  const { data, loading } = useQuery(SINGLE_GENRE_QUERY, { variables: { id } });
+  const { data, loading } = id ? useQuery(SINGLE_GENRE_QUERY, { variables: { id } }) : {};
   const [submit, { loading: submitting, error }] = useMutation(
     id ? UPDATE_GENRE_MUTATION : CREATE_GENRE_MUTATION,
     {

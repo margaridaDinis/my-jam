@@ -1,22 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
 import ErrorMessage from '../../molecules/ErrorMessage';
-
-export const SINGLE_ARTIST_QUERY = gql`
-  query SINGLE_ARTIST_QUERY($id: ID!) {
-    artist(where: { id: $id }) {
-      id
-      name
-      albums {
-        id
-        name
-      }
-    }
-  }
-`;
+import { SINGLE_ARTIST_QUERY } from '../../../lib/artist';
 
 const Artist = ({ id }) => {
   const { data, loading, error } = useQuery(SINGLE_ARTIST_QUERY, { variables: { id } });

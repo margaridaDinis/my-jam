@@ -1,17 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
-import { ALL_ARTISTS_QUERY } from '../../pages/Artists';
-
-export const DELETE_ARTIST_MUTATION = gql`
-  mutation DELETE_ARTIST_MUTATION($id: ID!) {
-    deleteArtist(id: $id) {
-      id
-    }
-  }
-`;
+import { ALL_ARTISTS_QUERY, DELETE_ARTIST_MUTATION } from '../../../lib/artist';
 
 const DeleteArtist = ({ id, children }) => {
   const [deleteArtist] = useMutation(
