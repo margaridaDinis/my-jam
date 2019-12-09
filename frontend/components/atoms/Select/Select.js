@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
 
-const MultiSelect = ({
+const Select = ({
   label, type, options, addNewOption, defaultValue, onChange, loading,
 }) => {
-  const [selected, setSelected] = useState(options.filter((v) => defaultValue.includes(v.id)));
-
-  useEffect(() => {
-    const values = selected || [];
-
-    onChange({ [type]: values.map((option) => option.id) });
-  }, [selected]);
+  const [selected, setSelected] = useState(options.find((v) => v.id === defaultValue));
 
   const handleCreate = async (name) => {
     const newOption = await addNewOption(name);
 
-    if (newOption) setSelected([...selected, newOption]);
+    if (newOption) setSelected(newOption.id);
   };
 
-  const handleChange = (values) => setSelected(values);
+  const handleChange = (value) => {
+    onChange({ [type]: value && value.id ? value.id : '' });
+    setSelected(value);
+  };
 
   const isValidNewOption = (inputValue, _, selectOptions) => (
     !selectOptions.find(({ name }) => name.toLowerCase() === inputValue.toLowerCase())
@@ -39,7 +36,6 @@ const MultiSelect = ({
         onCreateOption={handleCreate}
         isValidNewOption={isValidNewOption}
         isLoading={loading}
-        isMulti
         isClearable
         isSearchable
       />
@@ -47,14 +43,14 @@ const MultiSelect = ({
   );
 };
 
-MultiSelect.propTypes = {
+Select.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   options: PropTypes.array,
   addNewOption: PropTypes.func,
-  defaultValue: PropTypes.array,
+  defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   loading: PropTypes.bool,
 };
 
-export default MultiSelect;
+export default Select;

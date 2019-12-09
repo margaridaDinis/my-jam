@@ -33,7 +33,7 @@ const LocationForm = ({
           type='textarea'
           name='description'
           label='Description'
-          value={values.description}
+          defaultValue={values.description}
           handleChange={handleChange}
         />
       </fieldset>

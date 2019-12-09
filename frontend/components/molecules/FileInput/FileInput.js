@@ -21,7 +21,7 @@ const FileInput = ({ defaultValue, onChange, isEdit }) => {
       return;
     }
 
-    if (image) removeImage();
+    if (image) removeImage(image);
 
     try {
       const imageUrls = await uploadImage(uploadedFile);

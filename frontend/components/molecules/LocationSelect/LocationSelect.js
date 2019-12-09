@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ErrorMessage from '../ErrorMessage';
-import MultiSelect from '../../atoms/MultiSelect';
-import { ALL_GENRES_QUERY, CREATE_GENRE_MUTATION } from '../../../lib/genres';
+import Select from '../../atoms/Select';
+import { ALL_LOCATIONS_QUERY, CREATE_LOCATION_MUTATION } from '../../../lib/locations';
 
-const GenresSelect = ({ defaultValue, onChange }) => {
-  const { data = { genres: [] }, loading, error } = useQuery(ALL_GENRES_QUERY);
-  const [createGenre, createState] = useMutation(
-    CREATE_GENRE_MUTATION,
-    { refetchQueries: [{ query: ALL_GENRES_QUERY }] },
+const LocationSelect = ({ defaultValue, onChange }) => {
+  const { data = { locations: [] }, loading, error } = useQuery(ALL_LOCATIONS_QUERY);
+  const [createLocation, createState] = useMutation(
+    CREATE_LOCATION_MUTATION,
+    { refetchQueries: [{ query: ALL_LOCATIONS_QUERY }] },
   );
 
   const handleCreate = async (name) => {
-    const res = await createGenre({ variables: { name } });
+    const res = await createLocation({ variables: { name } });
 
     if (createState.error) return null;
 
@@ -21,23 +21,24 @@ const GenresSelect = ({ defaultValue, onChange }) => {
   };
 
   if (error) return <ErrorMessage error={error} />;
+  if (loading) return <p>Loading...</p>;
 
   return (
-    <MultiSelect
-      label='Genres'
-      type='genres'
-      options={data.genres}
+    <Select
+      label='Location'
+      type='location'
+      options={data.locations}
       onChange={onChange}
       defaultValue={defaultValue}
       addNewOption={handleCreate}
-      loading={loading || createState.loading}
+      loading={createState.loading}
     />
   );
 };
 
-GenresSelect.propTypes = {
-  defaultValue: PropTypes.array,
+LocationSelect.propTypes = {
+  defaultValue: PropTypes.string,
   onChange: PropTypes.func,
 };
 
-export default GenresSelect;
+export default LocationSelect;

@@ -6,6 +6,7 @@ import Form from '../../atoms/Form';
 import GenresSelect from '../GenresSelect';
 import FileInput from '../FileInput';
 import ArtistsSelect from '../ArtistsSelect';
+import LocationSelect from '../LocationSelect';
 
 const AlbumForm = ({
   album, handleSubmit, submitting, error, isEdit,
@@ -55,9 +56,12 @@ const AlbumForm = ({
           defaultValue={album.description}
           handleChange={handleChange}
         />
-        {/* TODO add location as single creatable select */}
         <GenresSelect
           defaultValue={album.genres.map((genre) => genre.id)}
+          onChange={handleExternalChange}
+        />
+        <LocationSelect
+          defaultValue={album.location && album.location.id}
           onChange={handleExternalChange}
         />
         <FileInput
@@ -88,6 +92,7 @@ AlbumForm.defaultProps = {
     largeImage: '',
     genres: [],
     artists: [],
+    location: {},
   },
 };
 
@@ -100,6 +105,7 @@ AlbumForm.propTypes = {
     largeImage: PropTypes.string,
     genres: PropTypes.array,
     artists: PropTypes.array,
+    location: PropTypes.object,
   }),
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,

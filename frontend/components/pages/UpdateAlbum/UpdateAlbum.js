@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-
 import { SINGLE_ALBUM_QUERY, UPDATE_ALBUM_MUTATION } from '../../../lib/album';
 import AlbumForm from '../../molecules/AlbumForm';
 
@@ -14,7 +13,7 @@ const UpdateAlbum = ({ id }) => {
   );
 
   if (loading) return <p>Loading...</p>;
-  if (!data.album) return <p>No item found for ID {id} </p>;
+  if (!data || !data.album) return <p>No item found for ID {id} </p>;
 
   const handleSubmit = async (values) => {
     const res = await updateAlbum({ variables: { id, ...values } });
@@ -24,7 +23,6 @@ const UpdateAlbum = ({ id }) => {
       query: { id: res.data.updateAlbum.id },
     });
   };
-
 
   return (
     <AlbumForm

@@ -31,6 +31,10 @@ export const SINGLE_ALBUM_QUERY = gql`
         id
         name
       }
+      location {
+        id
+        name
+      }
     }
   }
 `;
@@ -71,6 +75,7 @@ export const CREATE_ALBUM_MUTATION = gql`
     $largeImage: String!
     $genres: [String]
     $artists: [String]
+    $location: String
   ) {
     createAlbum(
       name: $name
@@ -80,6 +85,7 @@ export const CREATE_ALBUM_MUTATION = gql`
       largeImage: $largeImage
       genres: $genres
       artists: $artists
+      location: $location
     ) {
       id
       name
@@ -101,6 +107,7 @@ export const UPDATE_ALBUM_MUTATION = gql`
     $largeImage: String
     $genres: [String]
     $artists: [String]
+    $location: String
   ) {
     updateAlbum(
       id: $id
@@ -111,6 +118,7 @@ export const UPDATE_ALBUM_MUTATION = gql`
       largeImage: $largeImage
       genres: $genres
       artists: $artists
+      location: $location
     ) {
       id
       name

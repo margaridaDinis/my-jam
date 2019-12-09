@@ -12,7 +12,7 @@ const Album = ({ id }) => {
   );
 
   if (loading) return <p>Loading...</p>;
-  if (!data.album) return <p>No item found for ID {id} </p>;
+  if (!data || !data.album) return <p>No item found for ID {id} </p>;
 
   const { album } = data;
   return (
@@ -41,7 +41,7 @@ const Album = ({ id }) => {
       )}
       <p>{album.year}</p>
       <p>{album.description}</p>
-      {album.largeImage && <img src={album.largeImage} alt={album.name} width='400' />}
+      {album.largeImage && <img src={album.largeImage} alt={album.name} />}
       {album.genres && (
         <div>
           {album.genres.map((genre) => (
@@ -54,6 +54,15 @@ const Album = ({ id }) => {
             </p>
           ))}
         </div>
+      )}
+      {album.location && (
+        <p>
+          <Link href={{ pathname: '/locations/show', query: { id: album.location.id } }}>
+            <a>
+              {album.location.name}
+            </a>
+          </Link>
+        </p>
       )}
     </div>
   );
