@@ -39,7 +39,7 @@ type Mutation {
   updateArtist(id: ID!, name: String!): Artist!
   deleteArtist(id: ID!): Artist!
   createLocation(name: String!, description: String): Location!
-  updateLocation(id: ID!, name: String, description: String): Location!
+  updateLocation(id: ID!, name: String!, description: String): Location!
   deleteLocation(id: ID!): Location!
 }
 

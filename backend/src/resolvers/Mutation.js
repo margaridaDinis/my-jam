@@ -3,7 +3,7 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
 const { setToken, canPerformMutation, isAlbumOwner } = require('../utils');
-const { getItemsToDisconnect, getItemsToConnect } = require('../connections');
+const { getItemsToDisconnect, getConnectedItem, getItemsToConnect } = require('../connections');
 const {
   userEditPermissions,
   userAlbumCreatePermissions,
@@ -19,12 +19,14 @@ const mutations = {
     const artists = getItemsToConnect(album.artists);
     delete album.genres;
     delete album.artists;
+    delete album.location;
 
     return ctx.db.mutation.createAlbum({
       data: {
         user: { connect: { id: ctx.request.userId } },
         genres: { connect: genres },
         artists: { connect: artists },
+        location: args.location ? { connect: { id: args.location } } : null,
         ...album,
       },
     }, info);
@@ -35,18 +37,25 @@ const mutations = {
 
     const oldGenres = await getItemsToDisconnect({ ctx, args, model: 'genres' });
     const oldArtists = await getItemsToDisconnect({ ctx, args, model: 'artists' });
+    const oldLocation = await getConnectedItem({ ctx, args, model: 'locations' });
     const genres = getItemsToConnect(args.genres);
     const artists = getItemsToConnect(args.artists);
+    const location = args && args.location;
 
     const updates = { ...args };
     delete updates.id;
     delete updates.genres;
     delete updates.artists;
+    delete updates.location;
 
     return ctx.db.mutation.updateAlbum({
       data: {
         genres: { disconnect: oldGenres, connect: genres },
         artists: { disconnect: oldArtists, connect: artists },
+        location: {
+          disconnect: oldLocation && location === '' ? { id: oldLocation.id } : null,
+          connect: location ? { id: location } : null,
+        },
         ...updates,
       },
       where: { id: args.id },
