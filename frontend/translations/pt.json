@@ -1,0 +1,35 @@
+{
+  "app": {
+    "loading": "A carregar..."
+  },
+  "menu": {
+    "home":  "Home",
+    "albums": "Albuns",
+    "artists":  "Artistas",
+    "genres": "Géneros",
+    "locations":  "Lugares",
+    "account": "Conta",
+    "logout":  "Sair",
+    "signup": "Entrar"
+  },
+  "search": {
+    "placeholder": "Procurar por album ou artista"
+  },
+  "account": {
+    "permissions": "Permissões",
+    "login_request": "Inicie sessāo por favor.",
+    "login": "Iniciar sessāo",
+    "signup": "Criar conta",
+    "reset": "Recuperar a palavra-passe",
+    "login_form": {
+      "name": "Nome",
+      "email": "Email",
+      "password": "Palavra-passe",
+      "confirmPassword": "Confirmaçāo da Palavra-passe"
+    }
+  },
+  "permissions": {
+    "user_name": "Usuário",
+    "user_email": "Email"
+  }
+}

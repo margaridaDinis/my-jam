@@ -1,5 +1,6 @@
 import App, { Container } from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
+import '../lib/i18n';
 
 import withData from '../lib/withData';
 

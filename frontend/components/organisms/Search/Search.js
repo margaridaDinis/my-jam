@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import DownShift, { resetIdCounter } from 'downshift';
 import Router from 'next/router';
 import { useLazyQuery } from '@apollo/react-hooks';
+import { useTranslation } from 'react-i18next';
 import { SearchStyles } from '../../../styles/DropDown';
 import { SEARCH_ALBUMS_QUERY } from '../../../lib/album';
 import SearchDropDown from '../../molecules/SearchDropDown';
 
 const Search = () => {
+  const { t } = useTranslation();
   const [albums, setAlbums] = useState([]);
   const [getAlbums, { loading, data }] = useLazyQuery(SEARCH_ALBUMS_QUERY);
 
@@ -46,7 +48,7 @@ const Search = () => {
                 type: 'search',
                 id: 'search',
                 className: loading ? 'loading' : '',
-                placeholder: 'Search Album or Artist',
+                placeholder: t('search.placeholder'),
               })}
             />
             {isOpen && (

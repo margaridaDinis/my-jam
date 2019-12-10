@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { useTranslation } from 'react-i18next';
 import Form from '../../atoms/Form';
 import ErrorMessage from '../ErrorMessage';
 import Input from '../../atoms/Input';
@@ -21,6 +21,7 @@ const AuthForm = ({
   error,
   called,
 }) => {
+  const { t } = useTranslation();
   const [values, setValues] = useState(initialState);
 
   const succeeded = !loading && !error && called;
@@ -45,7 +46,7 @@ const AuthForm = ({
           <Input
             type='name'
             name='name'
-            label='Name'
+            label={t('account.login_form.name')}
             value={values.name}
             handleChange={change}
             required
@@ -55,7 +56,7 @@ const AuthForm = ({
           <Input
             type='email'
             name='email'
-            label='Email'
+            label={t('account.login_form.email')}
             value={values.email}
             handleChange={change}
             required
@@ -65,7 +66,7 @@ const AuthForm = ({
           <Input
             type='password'
             name='password'
-            label='Password'
+            label={t('account.login_form.password')}
             value={values.password}
             handleChange={change}
             required
@@ -75,7 +76,7 @@ const AuthForm = ({
           <Input
             type='password'
             name='confirmPassword'
-            label='Confirm Password'
+            label={t('account.login_form.confirmPassword')}
             value={values.confirmPassword}
             handleChange={change}
             required

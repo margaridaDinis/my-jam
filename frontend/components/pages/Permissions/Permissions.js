@@ -1,14 +1,16 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Table from '../../../styles/Table';
 import UserPermissions from '../../molecules/UserPermissions';
 import { USERS_QUERY } from '../../../lib/user';
 
 const Permissions = () => {
+  const { t } = useTranslation();
   const { data = {}, loading, error } = useQuery(USERS_QUERY);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>{t('app.loading')}</p>;
   if (error) return <ErrorMessage error={error}/>;
 
   const { users, __type } = data;
@@ -18,8 +20,8 @@ const Permissions = () => {
     <Table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>E-mail</th>
+          <th>{t('permissions.user_name')}</th>
+          <th>{t('permissions.user_email')}l</th>
           {possiblePermissions.map((permission) => (
             <th key={permission}>{permission}</th>
           ))}
