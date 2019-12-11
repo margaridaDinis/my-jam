@@ -7,7 +7,10 @@ const Meta = () => (
     <meta charSet='utf-8' />
     <link rel='shortcut icon' href='/static/favicon.png' />
     <link rel='stylesheet' type='text/css' href='/static/nprogress.css' />
-    <link href='https://fonts.googleapis.com/css?family=Livvic&display=swap' rel='stylesheet' />
+    <link
+      href='https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700'
+      rel='stylesheet'
+    />
     <title>My Jam!</title>
   </Head>
 );

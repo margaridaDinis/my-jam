@@ -1,47 +1,40 @@
 import React, { Fragment } from 'react';
-import Link from 'next/link';
+import NavigationList from '@kiwicom/orbit-components/lib/NavigationList';
+import AccountCircle from '@kiwicom/orbit-components/lib/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import User from '../User';
 import SignOutButton from '../../atoms/SignOutButton';
-import NavStyles from '../../../styles/NavStyles';
+import MenuItem from '../../atoms/MenuItem';
+
+const albumsMenuItems = ['albums', 'artists', 'genres', 'locations'];
 
 const Nav = () => {
   const { t } = useTranslation();
   return (
     <User>
       {({ me }) => (
-        <NavStyles>
-          <Link href='/'>
-            <a>{t('menu.home')}</a>
-          </Link>
-          <Link href='/albums'>
-            <a>{t('menu.albums')}</a>
-          </Link>
-          {me && (
-            <Fragment>
-              <Link href='/artists'>
-                <a>{t('menu.artists')}</a>
-              </Link>
-              <Link href='/genres'>
-                <a>{t('menu.genres')}</a>
-              </Link>
-              <Link href='/locations'>
-                <a>{t('menu.locations')}</a>
-              </Link>
-              <Link href='/account'>
-                <a>{t('menu.account')}</a>
-              </Link>
-              <SignOutButton>
-                {t('menu.logout')}
-              </SignOutButton>
-            </Fragment>
-          )}
-          {!me && (
-            <Link href='/signup'>
-              <a>{t('menu.signup')}</a>
-            </Link>
-          )}
-        </NavStyles>
+        <Fragment>
+          <NavigationList>
+            {albumsMenuItems.map((item) => (
+              <MenuItem key={item} pathname={`/${item}`} translationKey={item} />
+            ))}
+          </NavigationList>
+          <NavigationList title={t('menu.account_title')}>
+            {me && (
+              <Fragment>
+                <MenuItem pathname='/account' translationKey='account' />
+                <SignOutButton />
+              </Fragment>
+            )}
+            {!me && (
+              <Fragment>
+                {/* TODO link to login page */}
+                <MenuItem pathname='/signup' translationKey='signup' icon={<AccountCircle />}/>
+                <MenuItem pathname='/signup' translationKey='login' icon={<AccountCircle />}/>
+              </Fragment>
+            )}
+          </NavigationList>
+        </Fragment>
       )}
     </User>
   );

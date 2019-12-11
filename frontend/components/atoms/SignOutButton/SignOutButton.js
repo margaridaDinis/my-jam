@@ -1,28 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 import { CURRENT_USER_QUERY } from '../../organisms/User';
 import { SIGN_OUT_MUTATION } from '../../../lib/user';
+import MenuItem from '../MenuItem';
 
-const SignOutButton = ({ children }) => {
+const SignOutButton = () => {
   const [signOut] = useMutation(
-    SIGN_OUT_MUTATION,
-    {
-      refetchQueries: [
-        { query: CURRENT_USER_QUERY },
-      ],
-    },
+    SIGN_OUT_MUTATION, { refetchQueries: [{ query: CURRENT_USER_QUERY }] },
   );
 
   return (
-    <button onClick={signOut}>
-      {children}
-    </button>
+    <MenuItem
+      onClick={signOut}
+      pathname={''}
+      translationKey={'logout'}
+      textType='critical'
+    />
   );
-};
-
-SignOutButton.propTypes = {
-  children: PropTypes.string,
 };
 
 export default SignOutButton;

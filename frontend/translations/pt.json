@@ -10,7 +10,9 @@
     "locations":  "Lugares",
     "account": "Conta",
     "logout":  "Sair",
-    "signup": "Entrar"
+    "signup": "Criar conta",
+    "login": "Entrar",
+    "account_title": "Minha Conta"
   },
   "search": {
     "placeholder": "Procurar por album ou artista"
