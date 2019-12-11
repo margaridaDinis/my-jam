@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
-import Link from 'next/link';
 import { useQuery } from '@apollo/react-hooks';
+import Pagination from '@kiwicom/orbit-components/lib/Pagination';
+import Router from 'next/dist/lib/router';
 import { perPage } from '../../../config';
 import { ALBUMS_PAGINATION_QUERY } from '../../../lib/album';
-import PaginationStyles from '../../../styles/PaginationStyles';
 
-const Pagination = ({ page }) => {
+const PaginationComponent = ({ page }) => {
   const { loading, data } = useQuery(ALBUMS_PAGINATION_QUERY);
 
   if (loading) return null;
@@ -15,40 +14,28 @@ const Pagination = ({ page }) => {
   const { count } = data.albumsConnection.aggregate;
   const pages = Math.ceil(count / perPage);
 
+  if (pages <= 1) return null;
+
+  const handlePageChange = (newPage) => Router.push({ pathname: '/albums', query: { page: newPage } });
+
+  // TODO page title
   return (
-    <PaginationStyles>
-      <Head>
-        <title>Albums | My Jam | Page {page} of {pages}</title>
-      </Head>
-      <Link prefetch href={{
-        pathname: 'albums',
-        query: {
-          page: page - 1,
-        },
-      }}>
-        <a className='prev' aria-disabled={page <= 1}>Prev</a>
-      </Link>
-      <p>
-        {page} of {pages}
-      </p>
-      <Link prefetch href={{
-        pathname: 'albums',
-        query: {
-          page: page + 1,
-        },
-      }}>
-        <a className='next' aria-disabled={page >= pages}>Next</a>
-      </Link>
-    </PaginationStyles>
+    <div style={{ padding: '2rem 0' }}>
+
+      {/* <Head> */}
+      {/*  <title>Albums | My Jam | Page {page} of {pages}</title> */}
+      {/* </Head> */}
+      <Pagination pageCount={pages} selectedPage={page} onPageChange={handlePageChange} />
+    </div>
   );
 };
 
-Pagination.defaultProps = {
+PaginationComponent.defaultProps = {
   page: 1,
 };
 
-Pagination.propTypes = {
+PaginationComponent.propTypes = {
   page: PropTypes.number,
 };
 
-export default Pagination;
+export default PaginationComponent;

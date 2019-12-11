@@ -10,6 +10,9 @@ export const ALL_ALBUMS_QUERY = gql`
       description
       image
       largeImage
+      artists {
+        name
+      }
     }
   }
 `;

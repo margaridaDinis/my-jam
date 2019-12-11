@@ -13,7 +13,7 @@ const Page = ({ children }) => (
       <aside>
         <Nav/>
       </aside>
-      <main>
+      <main style={{ padding: '2rem' }}>
         {children}
       </main>
     </Grid>

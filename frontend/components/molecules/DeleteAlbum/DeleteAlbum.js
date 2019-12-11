@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 
+import Button from '@kiwicom/orbit-components/lib/Button';
 import { ALL_ALBUMS_QUERY, DELETE_ALBUM_MUTATION } from '../../../lib/album';
 import { removeImage } from '../../../actions/file';
 
@@ -25,9 +26,9 @@ const DeleteAlbum = ({ id, image, children }) => {
   };
 
   return (
-    <button onClick={deleteHandler}>
+    <Button onClick={deleteHandler} type='critical'>
       {children}
-    </button>
+    </Button>
   );
 };
 

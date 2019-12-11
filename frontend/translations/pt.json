@@ -2,6 +2,12 @@
   "app": {
     "loading": "A carregar..."
   },
+  "albums": {
+    "heading": "Albuns",
+    "button": {
+      "new": "Adicionar album"
+    }
+  },
   "menu": {
     "home":  "Home",
     "albums": "Albuns",
