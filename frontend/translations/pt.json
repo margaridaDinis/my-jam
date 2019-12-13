@@ -8,6 +8,24 @@
       "new": "Adicionar album"
     }
   },
+  "artists": {
+    "heading": "Artistas",
+    "button": {
+      "new": "Adicionar artista"
+    }
+  },
+  "genres": {
+    "heading": "Géneros",
+    "button": {
+      "new": "Adicionar género"
+    }
+  },
+  "locations": {
+    "heading": "Lugars",
+    "button": {
+      "new": "Adicionar lugar"
+    }
+  },
   "menu": {
     "home":  "Home",
     "albums": "Albuns",
