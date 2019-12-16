@@ -9,11 +9,14 @@ const Page = ({ children }) => (
   <Fragment>
     <Header />
     <Meta />
-    <Grid columns='minmax(256px, 1fr) 4fr'>
+    <Grid
+      columns='1fr'
+      desktop={{ columns: 'minmax(256px, 1fr) 4fr' }}
+    >
       <aside>
         <Nav/>
       </aside>
-      <main style={{ padding: '2rem' }}>
+      <main style={{ padding: '1rem' }}>
         {children}
       </main>
     </Grid>

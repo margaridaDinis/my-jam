@@ -1,30 +1,50 @@
 {
   "app": {
-    "loading": "A carregar..."
+    "loading": "A carregar...",
+    "name": "My Jam"
   },
   "albums": {
+    "pageTitle": {
+      "index": "Albuns",
+      "new": "Novo album",
+      "edit": "Editar {{album}}"
+    },
     "heading": "Albuns",
     "button": {
-      "new": "Adicionar album"
+      "new": "Adicionar"
     }
   },
   "artists": {
+    "pageTitle": {
+      "index": "Artistas"
+    },
     "heading": "Artistas",
     "button": {
-      "new": "Adicionar artista"
+      "new": "Adicionar"
     }
   },
   "genres": {
+    "pageTitle": {
+      "index": "Géneros"
+    },
     "heading": "Géneros",
     "button": {
-      "new": "Adicionar género"
+      "new": "Adicionar"
     }
   },
   "locations": {
-    "heading": "Lugars",
+    "pageTitle": {
+      "index": "Lugares"
+    },
+    "heading": "Lugares",
     "button": {
-      "new": "Adicionar lugar"
+      "new": "Adicionar"
     }
+  },
+  "table": {
+    "name": "Nome",
+    "count": "Número de albuns",
+    "actions": "Acções"
   },
   "menu": {
     "home":  "Home",
@@ -57,5 +77,10 @@
   "permissions": {
     "user_name": "Usuário",
     "user_email": "Email"
+  },
+  "button": {
+    "show": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar"
   }
 }

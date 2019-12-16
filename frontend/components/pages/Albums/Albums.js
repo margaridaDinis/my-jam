@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 import Loading from '@kiwicom/orbit-components/lib/Loading';
-import Grid from '@kiwicom/orbit-components/lib/utils/Grid/index';
+import Grid from '@kiwicom/orbit-components/lib/utils/Grid';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Album from '../../molecules/Album';
 import Pagination from '../../molecules/Pagination/Pagination';
@@ -23,8 +23,10 @@ const Albums = ({ page }) => {
       <Pagination page={page}/>
       <Grid
         gap='2rem'
-        columns='1fr 1fr'
-        tablet={{ columns: 'repeat(4, 1fr)' }}
+        columns='1fr'
+        tablet={{ gap: '1rem', columns: 'repeat(3, 1fr)' }}
+        desktop={{ columns: 'repeat(4, 1fr)' }}
+        justify='center'
       >
         {data.albums.map((album) => (
           <Album key={album.id} album={album}/>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Truncate from '@kiwicom/orbit-components/lib/Truncate';
 import Heading from '@kiwicom/orbit-components/lib/Heading';
-import { Stack } from '@kiwicom/orbit-components/lib/index';
+import Stack from '@kiwicom/orbit-components/lib/Stack';
 
 const Album = ({ album }) => {
   const artists = (album && album.artists) && album.artists.map(({ name }) => name);
@@ -12,7 +12,7 @@ const Album = ({ album }) => {
     <Stack spaceAfter='large'>
       {album.image && (
         <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>
-          <img src={album.image} alt={album.name} />
+          <img src={album.image} alt={album.name} style={{ maxWidth: '100%' }}/>
         </Link>
       )}
       <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>

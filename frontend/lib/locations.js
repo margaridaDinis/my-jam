@@ -5,6 +5,10 @@ export const ALL_LOCATIONS_QUERY = gql`
     locations {
       id
       name
+      albums {
+        id
+        name
+      }
     }
   }
 `;

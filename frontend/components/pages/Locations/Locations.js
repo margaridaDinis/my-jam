@@ -1,44 +1,21 @@
-import React, { Fragment } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import ErrorMessage from '../../molecules/ErrorMessage';
-import DeleteLocation from '../../molecules/DeleteLocation';
-import { ALL_LOCATIONS_QUERY } from '../../../lib/locations';
+import { ALL_LOCATIONS_QUERY, DELETE_LOCATION_MUTATION } from '../../../lib/locations';
+import IndexTable from '../../organisms/IndexTable';
 
 const Locations = () => {
-  const { data, loading, error } = useQuery(ALL_LOCATIONS_QUERY);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <ErrorMessage error={error} />;
-
-  const { locations } = data;
+  const { loading, error, data } = useQuery(ALL_LOCATIONS_QUERY);
 
   return (
-    <Fragment>
-      <Link href='/locations/new'>
-        <a>New Location</a>
-      </Link>
-      <h1>Locations</h1>
-      {locations.length === 0 && 'No locations'}
-      {locations.length >= 1 && (
-        <ul>
-          {locations.map((location) => (
-            <li key={location.id}>
-              {location.name}
-              <Link href={{ pathname: '/locations/show', query: { id: location.id } }}>
-                <a>➕</a>
-              </Link>
-              <Link href={{ pathname: '/locations/update', query: { id: location.id } }}>
-                <a>✏️</a>
-              </Link>
-              <DeleteLocation id={location.id}>Delete Location</DeleteLocation>
-            </li>
-          ))}
-        </ul>
-      )}
-    </Fragment>
+    <IndexTable
+      itemName='locations'
+      data={data}
+      loading={loading}
+      error={error}
+      query={ALL_LOCATIONS_QUERY}
+      deleteMutation={DELETE_LOCATION_MUTATION}
+    />
   );
 };
-
 
 export default Locations;

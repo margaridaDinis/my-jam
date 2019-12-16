@@ -4,7 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import NavigationBar from '@kiwicom/orbit-components/lib/NavigationBar';
 import ButtonLink from '@kiwicom/orbit-components/lib/ButtonLink';
-import Grid from '@kiwicom/orbit-components/lib/utils/Grid/index';
+import Grid from '@kiwicom/orbit-components/lib/utils/Grid';
 import Search from '../Search';
 
 Router.onRouteChangeStart = () => NProgress.start();
