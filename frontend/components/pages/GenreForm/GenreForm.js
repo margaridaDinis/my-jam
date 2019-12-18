@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-
+import { Button } from '@kiwicom/orbit-components/lib/index';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Form from '../../atoms/Form';
@@ -14,6 +15,7 @@ import {
 } from '../../../lib/genres';
 
 const GenreForm = ({ id }) => {
+  const { t } = useTranslation();
   const { data, loading } = id ? useQuery(SINGLE_GENRE_QUERY, { variables: { id } }) : {};
   const [submit, { loading: submitting, error }] = useMutation(
     id ? UPDATE_GENRE_MUTATION : CREATE_GENRE_MUTATION,
@@ -46,13 +48,18 @@ const GenreForm = ({ id }) => {
       <fieldset disabled={loading || submitting} aria-busy={loading || submitting}>
         <Input
           name='name'
-          label='Genre Name'
+          label={t('input.label.name')}
           value={values.name}
           handleChange={handleChange}
           required
         />
       </fieldset>
-      <button type='submit'>Submit</button>
+      <Button
+        loading={submitting}
+        submit
+      >
+        {t('button.submit.general')}
+      </Button>
     </Form>
   );
 };
