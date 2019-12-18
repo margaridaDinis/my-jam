@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@kiwicom/orbit-components/lib/index';
+import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
@@ -7,6 +9,7 @@ import Form from '../../atoms/Form';
 const LocationForm = ({
   isEdit, defaultValues, error, onSubmit, isLoading,
 }) => {
+  const { t } = useTranslation();
   const [values, setValues] = useState(defaultValues);
 
   const handleChange = ({ target: { name, value } }) => {
@@ -24,7 +27,7 @@ const LocationForm = ({
       <fieldset disabled={isLoading} aria-busy={isLoading}>
         <Input
           name='name'
-          label='Name'
+          label={t('input.label.name')}
           value={values.name}
           handleChange={handleChange}
           required={!isEdit}
@@ -32,12 +35,17 @@ const LocationForm = ({
         <Input
           type='textarea'
           name='description'
-          label='Description'
+          label={t('input.label.description')}
           defaultValue={values.description}
           handleChange={handleChange}
         />
       </fieldset>
-      <button type='submit'>Submit</button>
+      <Button
+        loading={isLoading}
+        submit
+      >
+        {t('button.submit.general')}
+      </Button>
     </Form>
   );
 };
