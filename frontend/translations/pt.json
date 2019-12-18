@@ -16,7 +16,9 @@
   },
   "artists": {
     "pageTitle": {
-      "index": "Artistas"
+      "index": "Artistas",
+      "new": "Novo artista",
+      "edit": "Editar {{artist}}"
     },
     "heading": "Artistas",
     "button": {
@@ -25,7 +27,9 @@
   },
   "genres": {
     "pageTitle": {
-      "index": "Géneros"
+      "index": "Géneros",
+      "new": "Novo Género",
+      "edit": "Editar {{genre}}"
     },
     "heading": "Géneros",
     "button": {
@@ -34,7 +38,9 @@
   },
   "locations": {
     "pageTitle": {
-      "index": "Lugares"
+      "index": "Lugares",
+      "new": "Novo Lugar",
+      "edit": "Editar {{location}}"
     },
     "heading": "Lugares",
     "button": {

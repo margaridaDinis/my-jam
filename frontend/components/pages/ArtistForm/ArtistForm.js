@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import Head from 'next/head';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Button } from '@kiwicom/orbit-components/lib/index';
+import { Button, Heading } from '@kiwicom/orbit-components/lib/index';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Input from '../../atoms/Input';
@@ -28,6 +29,8 @@ const ArtistForm = ({ id }) => {
 
   const initialName = data ? data.artist.name : '';
 
+  const pageTitle = initialName ? t('artists.pageTitle.edit', { artist: initialName }) : t('artists.pageTitle.new');
+
   const [values, setValues] = useState({ name: initialName, id });
 
   const handleChange = ({ target: { name, value } }) => setValues({ ...values, [name]: value });
@@ -43,24 +46,30 @@ const ArtistForm = ({ id }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      {error && <ErrorMessage error={error} />}
-      <fieldset disabled={loading || submitting} aria-busy={loading || submitting}>
-        <Input
-          name='name'
-          label={t('input.label.name')}
-          value={values.name}
-          handleChange={handleChange}
-          required
-        />
-      </fieldset>
-      <Button
-        loading={submitting}
-        submit
-      >
-        {t('button.submit.general')}
-      </Button>
-    </Form>
+    <Fragment>
+      <Head>
+        <title>{pageTitle} | {t('app.name')}</title>
+      </Head>
+      <Heading type='display' spaceAfter='large'>{pageTitle}</Heading>
+      <Form onSubmit={handleSubmit}>
+        {error && <ErrorMessage error={error} />}
+        <fieldset disabled={loading || submitting} aria-busy={loading || submitting}>
+          <Input
+            name='name'
+            label={t('input.label.name')}
+            value={values.name}
+            handleChange={handleChange}
+            required
+          />
+        </fieldset>
+        <Button
+          loading={submitting}
+          submit
+        >
+          {t('button.submit.general')}
+        </Button>
+      </Form>
+    </Fragment>
   );
 };
 

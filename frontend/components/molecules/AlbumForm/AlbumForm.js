@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@kiwicom/orbit-components/lib';
+import { Button, Heading } from '@kiwicom/orbit-components/lib';
 import ErrorMessage from '../ErrorMessage';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
@@ -37,6 +37,7 @@ const AlbumForm = ({
       <Head>
         <title>{pageTitle} | {t('app.name')}</title>
       </Head>
+      <Heading type='display' spaceAfter='large'>{pageTitle}</Heading>
       <Form onSubmit={onSubmit}>
         {error && <ErrorMessage error={error} />}
         <fieldset disabled={submitting} aria-busy={submitting}>
