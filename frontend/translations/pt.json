@@ -83,6 +83,7 @@
     "edit": "Editar",
     "delete": "Eliminar",
     "submit": {
+      "general": "Submeter",
       "new_album": "Criar album",
       "update_album": "Actualizar album"
     }

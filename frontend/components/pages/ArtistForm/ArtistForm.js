@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import { Button } from '@kiwicom/orbit-components/lib/index';
+import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../molecules/ErrorMessage';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
@@ -13,6 +15,7 @@ import {
 } from '../../../lib/artist';
 
 const ArtistForm = ({ id }) => {
+  const { t } = useTranslation();
   const { data, loading } = id ? useQuery(SINGLE_ARTIST_QUERY, { variables: { id } }) : {};
   const [submit, { loading: submitting, error }] = useMutation(
     id ? UPDATE_ARTIST_MUTATION : CREATE_ARTIST_MUTATION,
@@ -45,13 +48,18 @@ const ArtistForm = ({ id }) => {
       <fieldset disabled={loading || submitting} aria-busy={loading || submitting}>
         <Input
           name='name'
-          label='Artist Name'
+          label={t('input.label.name')}
           value={values.name}
           handleChange={handleChange}
           required
         />
       </fieldset>
-      <button type='submit'>Submit</button>
+      <Button
+        loading={submitting}
+        submit
+      >
+        {t('button.submit.general')}
+      </Button>
     </Form>
   );
 };
