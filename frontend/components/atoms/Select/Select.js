@@ -24,7 +24,7 @@ const Select = ({
   return (
     <Stack spaceAfter='medium'>
       <label htmlFor={type}>
-        <Text>{label}</Text>
+        <Text spaceAfter='smallest'>{label}</Text>
         <CreatableSelect
           instanceId={type}
           options={options}

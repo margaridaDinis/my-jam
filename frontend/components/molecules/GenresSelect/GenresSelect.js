@@ -5,7 +5,7 @@ import ErrorMessage from '../ErrorMessage';
 import MultiSelect from '../../atoms/MultiSelect';
 import { ALL_GENRES_QUERY, CREATE_GENRE_MUTATION, GENRES_OPTIONS_QUERY } from '../../../lib/genres';
 
-const GenresSelect = ({ defaultValue, onChange }) => {
+const GenresSelect = ({ label, defaultValue, onChange }) => {
   const { data = { genres: [] }, loading, error } = useQuery(GENRES_OPTIONS_QUERY);
   const [createGenre, createState] = useMutation(
     CREATE_GENRE_MUTATION,
@@ -24,7 +24,7 @@ const GenresSelect = ({ defaultValue, onChange }) => {
 
   return (
     <MultiSelect
-      label='Genres'
+      label={label}
       type='genres'
       options={data.genres}
       onChange={onChange}
@@ -36,6 +36,7 @@ const GenresSelect = ({ defaultValue, onChange }) => {
 };
 
 GenresSelect.propTypes = {
+  label: PropTypes.string.isRequired,
   defaultValue: PropTypes.array,
   onChange: PropTypes.func,
 };

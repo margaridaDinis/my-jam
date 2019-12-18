@@ -1,53 +1,30 @@
-import styled, { keyframes } from 'styled-components';
-
-const loading = keyframes`
-  from {
-    background-position: 0 0;
-    /* rotate: 0; */
-  }
-
-  to {
-    background-position: 100% 100%;
-    /* rotate: 360deg; */
-  }
-`;
+import styled from 'styled-components';
 
 const Form = styled.form`
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
-  background: rgba(0, 0, 0, 0.02);
-  border: 5px solid white;
-  padding: 20px;
-  font-size: 1.5rem;
-  line-height: 1.5;
-  font-weight: 600;
-  label {
-    display: block;
-    margin-bottom: 1rem;
-  }
   input,
-  textarea,
-  select {
+  textarea {
+    display: block;
+    border-color: ${(props) => props.theme.orbit.borderColorInput};
+    border-radius: ${(props) => props.theme.orbit.borderRadiusNormal};
+    border-style: solid;
+    border-width: ${(props) => props.theme.orbit.borderWidthInput};
+    font-size: ${(props) => props.theme.orbit.fontSizeInputNormal};
+    color: ${(props) => props.theme.orbit.colorTextInput};
+    padding: ${(props) => props.theme.orbit.paddingInputNormal};
     width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid black;
-    &:focus {
-      outline: 0;
-      border-color: ${(props) => props.theme.red};
-    }
+    outline: none;
   }
-  button,
-  input[type='submit'] {
-    width: auto;
-    background: red;
-    color: white;
-    border: 0;
-    font-size: 2rem;
-    font-weight: 600;
-    padding: 0.5rem 1.2rem;
+  textarea {
+    padding: ${(props) => props.theme.orbit.paddingTextareaNormal};
+    line-height: ${(props) => props.theme.orbit.lineHeightText};
   }
-  button:disabled {
-    opacity: 0.5;
+  input:not([aria-autocomplete='list']) {
+    height: ${(props) => props.theme.orbit.heightInputNormal};
+  }
+  input:focus,
+  textarea:focus {
+    border-width: ${(props) => props.theme.orbit.borderWidthInputFocus};
+    border-color: ${(props) => props.theme.orbit.borderColorInputFocus};
   }
   fieldset {
     border: 0;
@@ -55,16 +32,6 @@ const Form = styled.form`
 
     &[disabled] {
       opacity: 0.5;
-    }
-    &::before {
-      height: 10px;
-      content: '';
-      display: block;
-      background-image: linear-gradient(to right, #ff3019 0%, #e2b04a 50%, #ff3019 100%);
-    }
-    &[aria-busy='true']::before {
-      background-size: 50% auto;
-      animation: ${loading} 0.5s linear infinite;
     }
   }
 `;

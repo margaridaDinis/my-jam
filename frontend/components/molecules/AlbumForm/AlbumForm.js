@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@kiwicom/orbit-components/lib';
 import ErrorMessage from '../ErrorMessage';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
@@ -41,49 +42,55 @@ const AlbumForm = ({
         <fieldset disabled={submitting} aria-busy={submitting}>
           <Input
             name='name'
-            label='Album Name'
+            label={t('input.label.name')}
             defaultValue={album.name}
             handleChange={handleChange}
             required={!isEdit}
           />
           <ArtistsSelect
+            label={t('input.label.artists')}
             defaultValue={album.artists.map((artist) => artist.id)}
             onChange={handleExternalChange}
           />
           <Input
             type='number'
             name='year'
-            label='Year'
+            label={t('input.label.year')}
             defaultValue={album.year}
             handleChange={handleChange}
           />
-          <Input
-            type='textarea'
-            name='description'
-            label='Description'
-            defaultValue={album.description}
-            handleChange={handleChange}
-          />
           <GenresSelect
+            label={t('input.label.genres')}
             defaultValue={album.genres.map((genre) => genre.id)}
             onChange={handleExternalChange}
           />
           <LocationSelect
+            label={t('input.label.location')}
             defaultValue={album.location && album.location.id}
             onChange={handleExternalChange}
           />
+          <Input
+            type='textarea'
+            name='description'
+            label={t('input.label.description')}
+            defaultValue={album.description}
+            handleChange={handleChange}
+          />
           <FileInput
+            name='image'
+            label={t('input.label.image')}
             defaultValue={album.image}
             onChange={handleExternalChange}
-            isEdit={isEdit}
+            required={!isEdit}
           />
           <footer>
-            <button
-              type='submit'
+            <Button
               disabled={!isEdit && (!values.name || !values.image)}
+              loading={submitting}
+              submit
             >
-              {isEdit ? 'Save Changes' : 'Create album'}
-            </button>
+              {isEdit ? t('button.submit.update_album') : t('button.submit.new_album')}
+            </Button>
           </footer>
         </fieldset>
       </Form>

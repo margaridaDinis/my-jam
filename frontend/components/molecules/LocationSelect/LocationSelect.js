@@ -5,7 +5,7 @@ import ErrorMessage from '../ErrorMessage';
 import Select from '../../atoms/Select';
 import { ALL_LOCATIONS_QUERY, CREATE_LOCATION_MUTATION, LOCATIONS_OPTIONS_QUERY } from '../../../lib/locations';
 
-const LocationSelect = ({ defaultValue, onChange }) => {
+const LocationSelect = ({ label, defaultValue, onChange }) => {
   const { data = { locations: [] }, loading, error } = useQuery(LOCATIONS_OPTIONS_QUERY);
   const [createLocation, createState] = useMutation(
     CREATE_LOCATION_MUTATION,
@@ -25,7 +25,7 @@ const LocationSelect = ({ defaultValue, onChange }) => {
 
   return (
     <Select
-      label='Location'
+      label={label}
       type='location'
       options={data.locations}
       onChange={onChange}
@@ -37,6 +37,7 @@ const LocationSelect = ({ defaultValue, onChange }) => {
 };
 
 LocationSelect.propTypes = {
+  label: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
 };

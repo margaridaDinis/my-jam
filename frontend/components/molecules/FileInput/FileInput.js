@@ -1,10 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import { InputFile, Loading } from '@kiwicom/orbit-components/lib';
+import {
+  InputFile, Loading, Stack, Text,
+} from '@kiwicom/orbit-components/lib';
 import { useTranslation } from 'react-i18next';
 import { removeImage, uploadImage } from '../../../actions/file';
 
-const FileInput = ({ defaultValue, onChange, isEdit }) => {
+const FileInput = ({
+  label, name, defaultValue, onChange, required,
+}) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(defaultValue);
@@ -51,15 +55,18 @@ const FileInput = ({ defaultValue, onChange, isEdit }) => {
 
   return (
     <Fragment>
+      <Stack spacing='tight' direction='row' align='start' spaceAfter='smallest'>
+        <Text>{label}</Text>
+        {required && <Text type='critical'>*</Text>}
+      </Stack>
       <InputFile
         type='file'
-        id='image'
-        name='image'
-        label='Album cover'
+        id={name}
+        name={name}
         onChange={upload}
         onRemoveFile={remove}
         allowedFileTypes={['image/x-png', 'image/gif', 'image/jpeg']}
-        required={!isEdit}
+        required={!required}
         fileName={fileName}
         buttonLabel={t('input.file.button')}
         placeholder={t('input.file.placeholder')}
@@ -73,9 +80,11 @@ const FileInput = ({ defaultValue, onChange, isEdit }) => {
 
 
 FileInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
-  isEdit: PropTypes.bool,
+  required: PropTypes.bool,
 };
 
 export default FileInput;

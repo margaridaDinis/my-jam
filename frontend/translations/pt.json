@@ -81,7 +81,11 @@
   "button": {
     "show": "Ver",
     "edit": "Editar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "submit": {
+      "new_album": "Criar album",
+      "update_album": "Actualizar album"
+    }
   },
   "input": {
     "multi_select": {
@@ -93,6 +97,15 @@
     "file": {
       "button": "Escolher imagem",
       "placeholder": "Nenhuma imagem seleccionada"
+    },
+    "label": {
+      "name": "Nome",
+      "year": "Ano",
+      "description":  "Observações",
+      "image": "Capa do album",
+      "artists": "Artistas",
+      "genres": "Géneros",
+      "location": "Localizaçāo"
     }
   }
 }

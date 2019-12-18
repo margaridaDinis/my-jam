@@ -5,7 +5,7 @@ import { CREATE_ARTIST_MUTATION, ALL_ARTISTS_QUERY, ARTISTS_OPTIONS_QUERY } from
 import ErrorMessage from '../ErrorMessage';
 import MultiSelect from '../../atoms/MultiSelect';
 
-const ArtistsSelect = ({ defaultValue, onChange }) => {
+const ArtistsSelect = ({ label, defaultValue, onChange }) => {
   const { data = { artists: [] }, loading, error } = useQuery(ARTISTS_OPTIONS_QUERY);
   const [createArtist, createState] = useMutation(
     CREATE_ARTIST_MUTATION,
@@ -24,7 +24,7 @@ const ArtistsSelect = ({ defaultValue, onChange }) => {
 
   return (
     <MultiSelect
-      label='Artists'
+      label={label}
       type='artists'
       options={data.artists}
       onChange={onChange}
@@ -36,6 +36,7 @@ const ArtistsSelect = ({ defaultValue, onChange }) => {
 };
 
 ArtistsSelect.propTypes = {
+  label: PropTypes.string.isRequired,
   defaultValue: PropTypes.array,
   onChange: PropTypes.func,
 };
