@@ -1,49 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
+import { Stack, Text } from '@kiwicom/orbit-components/lib';
+import { useTranslation } from 'react-i18next';
 
 const MultiSelect = ({
   label, type, options, addNewOption, defaultValue, onChange, loading,
 }) => {
-  const [selected, setSelected] = useState(options.filter((v) => defaultValue.includes(v.id)));
+  const { t } = useTranslation();
+  const [selected, setSelected] = useState(options.filter((v) => defaultValue.includes(v.value)));
 
   useEffect(() => {
     const values = selected || [];
 
-    onChange({ [type]: values.map((option) => option.id) });
+    onChange({ [type]: values.map((option) => option.value) });
   }, [selected]);
 
   const handleCreate = async (name) => {
     const newOption = await addNewOption(name);
 
-    if (newOption) setSelected([...selected, newOption]);
+    if (newOption) setSelected([...selected, { value: newOption.id, label: newOption.name }]);
   };
 
   const handleChange = (values) => setSelected(values);
 
-  const isValidNewOption = (inputValue, _, selectOptions) => (
-    !selectOptions.find(({ name }) => name.toLowerCase() === inputValue.toLowerCase())
-  );
-
   return (
-    <label htmlFor={type}>
-      {label}
-      <CreatableSelect
-        instanceId={type}
-        options={options}
-        value={selected}
-        getOptionLabel={({ name }) => name}
-        getOptionValue={({ id }) => id}
-        getNewOptionData={(inputValue, optionLabel) => ({ id: inputValue, name: optionLabel })}
-        onChange={handleChange}
-        onCreateOption={handleCreate}
-        isValidNewOption={isValidNewOption}
-        isLoading={loading}
-        isMulti
-        isClearable
-        isSearchable
-      />
-    </label>
+    <Stack spaceAfter='medium'>
+      <label htmlFor={type}>
+        <Text>{label}</Text>
+        <CreatableSelect
+          instanceId={type}
+          options={options}
+          value={selected}
+          onChange={handleChange}
+          onCreateOption={handleCreate}
+          isLoading={loading}
+          placeholder={t('input.multi_select.placeholder')}
+          isMulti
+          isClearable
+          isSearchable
+        />
+      </label>
+    </Stack>
   );
 };
 

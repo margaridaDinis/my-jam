@@ -12,6 +12,15 @@ export const ALL_GENRES_QUERY = gql`
   }
 `;
 
+export const GENRES_OPTIONS_QUERY = gql`
+  query GENRES_OPTIONS_QUERY {
+    genres {
+      value: id
+      label: name
+    }
+  }
+`;
+
 export const SINGLE_GENRE_QUERY = gql`
   query SINGLE_GENRE_QUERY($id: ID!) {
     genre (where: { id: $id }) {

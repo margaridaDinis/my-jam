@@ -13,6 +13,15 @@ export const ALL_LOCATIONS_QUERY = gql`
   }
 `;
 
+export const LOCATIONS_OPTIONS_QUERY = gql`
+  query LOCATIONS_OPTIONS_QUERY {
+    locations {
+      value: id
+      label: name
+    }
+  }
+`;
+
 export const SINGLE_LOCATION_QUERY = gql`
   query SINGLE_LOCATION_QUERY($id: ID!) {
     location(where: { id: $id }) {

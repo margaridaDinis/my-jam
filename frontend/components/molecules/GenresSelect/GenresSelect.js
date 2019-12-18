@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ErrorMessage from '../ErrorMessage';
 import MultiSelect from '../../atoms/MultiSelect';
-import { ALL_GENRES_QUERY, CREATE_GENRE_MUTATION } from '../../../lib/genres';
+import { ALL_GENRES_QUERY, CREATE_GENRE_MUTATION, GENRES_OPTIONS_QUERY } from '../../../lib/genres';
 
 const GenresSelect = ({ defaultValue, onChange }) => {
-  const { data = { genres: [] }, loading, error } = useQuery(ALL_GENRES_QUERY);
+  const { data = { genres: [] }, loading, error } = useQuery(GENRES_OPTIONS_QUERY);
   const [createGenre, createState] = useMutation(
     CREATE_GENRE_MUTATION,
     { refetchQueries: [{ query: ALL_GENRES_QUERY }] },

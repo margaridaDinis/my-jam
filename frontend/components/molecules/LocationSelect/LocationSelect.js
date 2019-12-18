@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ErrorMessage from '../ErrorMessage';
 import Select from '../../atoms/Select';
-import { ALL_LOCATIONS_QUERY, CREATE_LOCATION_MUTATION } from '../../../lib/locations';
+import { ALL_LOCATIONS_QUERY, CREATE_LOCATION_MUTATION, LOCATIONS_OPTIONS_QUERY } from '../../../lib/locations';
 
 const LocationSelect = ({ defaultValue, onChange }) => {
-  const { data = { locations: [] }, loading, error } = useQuery(ALL_LOCATIONS_QUERY);
+  const { data = { locations: [] }, loading, error } = useQuery(LOCATIONS_OPTIONS_QUERY);
   const [createLocation, createState] = useMutation(
     CREATE_LOCATION_MUTATION,
     { refetchQueries: [{ query: ALL_LOCATIONS_QUERY }] },

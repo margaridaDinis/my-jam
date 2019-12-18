@@ -25,7 +25,7 @@ const Header = () => (
         tablet={{ columns: 'minmax(256px, 1fr) 4fr' }}
       >
         <Link href='/'>
-          <ButtonLink size='large' transparent>
+          <ButtonLink size='large' transparent title='MyJam'>
             MyJam
           </ButtonLink>
         </Link>

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
+import { Stack, Text } from '@kiwicom/orbit-components/lib';
+import { useTranslation } from 'react-i18next';
 
 const Select = ({
   label, type, options, addNewOption, defaultValue, onChange, loading,
 }) => {
-  const [selected, setSelected] = useState(options.find((v) => v.id === defaultValue));
+  const { t } = useTranslation();
+  const [selected, setSelected] = useState(options.find((v) => v.value === defaultValue));
 
   const handleCreate = async (name) => {
     const newOption = await addNewOption(name);
@@ -13,33 +16,28 @@ const Select = ({
     if (newOption) setSelected(newOption.id);
   };
 
-  const handleChange = (value) => {
-    onChange({ [type]: value && value.id ? value.id : '' });
-    setSelected(value);
+  const handleChange = (option) => {
+    onChange({ [type]: option && option.value ? option.value : '' });
+    setSelected(option);
   };
 
-  const isValidNewOption = (inputValue, _, selectOptions) => (
-    !selectOptions.find(({ name }) => name.toLowerCase() === inputValue.toLowerCase())
-  );
-
   return (
-    <label htmlFor={type}>
-      {label}
-      <CreatableSelect
-        instanceId={type}
-        options={options}
-        value={selected}
-        getOptionLabel={({ name }) => name}
-        getOptionValue={({ id }) => id}
-        getNewOptionData={(inputValue, optionLabel) => ({ id: inputValue, name: optionLabel })}
-        onChange={handleChange}
-        onCreateOption={handleCreate}
-        isValidNewOption={isValidNewOption}
-        isLoading={loading}
-        isClearable
-        isSearchable
-      />
-    </label>
+    <Stack spaceAfter='medium'>
+      <label htmlFor={type}>
+        <Text>{label}</Text>
+        <CreatableSelect
+          instanceId={type}
+          options={options}
+          value={selected}
+          onChange={handleChange}
+          onCreateOption={handleCreate}
+          isLoading={loading}
+          placeholder={t('input.select.placeholder')}
+          isClearable
+          isSearchable
+        />
+      </label>
+    </Stack>
   );
 };
 

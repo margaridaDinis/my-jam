@@ -12,6 +12,15 @@ export const ALL_ARTISTS_QUERY = gql`
   }
 `;
 
+export const ARTISTS_OPTIONS_QUERY = gql`
+  query ARTISTS_OPTIONS_QUERY {
+    artists {
+      value: id
+      label: name
+    }
+  }
+`;
+
 export const SINGLE_ARTIST_QUERY = gql`
   query SINGLE_ARTIST_QUERY($id: ID!) {
     artist(where: { id: $id }) {

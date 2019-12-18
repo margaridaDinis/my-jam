@@ -82,5 +82,17 @@
     "show": "Ver",
     "edit": "Editar",
     "delete": "Eliminar"
+  },
+  "input": {
+    "multi_select": {
+      "placeholder": "Seleccionar opções"
+    },
+    "select": {
+      "placeholder": "Seleccionar opção"
+    },
+    "file": {
+      "button": "Escolher imagem",
+      "placeholder": "Nenhuma imagem seleccionada"
+    }
   }
 }

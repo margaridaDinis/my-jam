@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CREATE_ARTIST_MUTATION, ALL_ARTISTS_QUERY } from '../../../lib/artist';
+import { CREATE_ARTIST_MUTATION, ALL_ARTISTS_QUERY, ARTISTS_OPTIONS_QUERY } from '../../../lib/artist';
 import ErrorMessage from '../ErrorMessage';
 import MultiSelect from '../../atoms/MultiSelect';
 
 const ArtistsSelect = ({ defaultValue, onChange }) => {
-  const { data = { artists: [] }, loading, error } = useQuery(ALL_ARTISTS_QUERY);
+  const { data = { artists: [] }, loading, error } = useQuery(ARTISTS_OPTIONS_QUERY);
   const [createArtist, createState] = useMutation(
     CREATE_ARTIST_MUTATION,
     { refetchQueries: [{ query: ALL_ARTISTS_QUERY }] },
