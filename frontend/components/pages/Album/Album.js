@@ -51,7 +51,7 @@ const Album = ({ id }) => {
       </Stack>
 
       <List type='separated' spaceAfter='large'>
-        {album.artists && (
+        {album.artists.length > 1 && (
           <ListItem label={t('album.title.artists')} icon={<Passengers color='secondary' />}>
             {album.artists.map((artist, index) => (
               <Link key={artist.id} href={{ pathname: '/artists/show', query: { id: artist.id } }}>
@@ -62,7 +62,7 @@ const Album = ({ id }) => {
             ))}
           </ListItem>
         )}
-        {album.genres && (
+        {album.genres.length > 1 && (
           <ListItem label={t('album.title.genres')} icon={<MusicalInstruments color='secondary' />}>
             {album.genres.map((genre, index) => (
               <Link key={genre.id} href={{ pathname: '/genres/show', query: { id: genre.id } }}>
