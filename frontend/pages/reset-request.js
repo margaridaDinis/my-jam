@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, CardSection } from '@kiwicom/orbit-components/lib';
-import SignUp from '../components/organisms/SignUp';
+import RequestReset from '../components/organisms/RequestReset';
 
 const SignUpPage = () => (
   <Card>
     <CardSection>
-      <SignUp />
+      <RequestReset />
     </CardSection>
   </Card>
 );

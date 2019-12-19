@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { Button, Stack, TextLink } from '@kiwicom/orbit-components/lib/index';
+import Router from 'next/dist/lib/router';
 import Form from '../../atoms/Form';
 import ErrorMessage from '../ErrorMessage';
 import Input from '../../atoms/Input';
@@ -17,6 +19,7 @@ const AuthForm = ({
   showEmail,
   showPassword,
   showConfirmPassword,
+  showResetLink,
   loading,
   error,
   called,
@@ -28,6 +31,10 @@ const AuthForm = ({
 
   const change = ({ target: { name, value } }) => {
     setValues({ ...values, [name]: value });
+  };
+
+  const navigateToResetRequest = () => {
+    Router.push({ pathname: '/reset-request' });
   };
 
   const submit = (e) => {
@@ -62,27 +69,49 @@ const AuthForm = ({
             required
           />
         )}
-        {showPassword && (
-          <Input
-            type='password'
-            name='password'
-            label={t('account.login_form.password')}
-            value={values.password}
-            handleChange={change}
-            required
-          />
-        )}
-        {showConfirmPassword && (
-          <Input
-            type='password'
-            name='confirmPassword'
-            label={t('account.login_form.confirmPassword')}
-            value={values.confirmPassword}
-            handleChange={change}
-            required
-          />
-        )}
-        <button type='submit'>{title}</button>
+        <Stack
+          desktop={{
+            inline: false,
+          }}
+          spaceAfter='medium'
+        >
+          {showPassword && (
+            <Input
+              type='password'
+              name='password'
+              label={t('account.login_form.password')}
+              value={values.password}
+              handleChange={change}
+              required
+            />
+          )}
+          {showConfirmPassword && (
+            <Input
+              type='password'
+              name='confirmPassword'
+              label={t('account.login_form.confirmPassword')}
+              value={values.confirmPassword}
+              handleChange={change}
+              required
+            />
+          )}
+        </Stack>
+        <Stack desktop={{ justify: 'between' }}>
+          <Button
+            loading={loading}
+            submit
+          >
+            {title}
+          </Button>
+          {showResetLink && (
+            <TextLink
+              size='small'
+              onClick={navigateToResetRequest}
+            >
+              {t('account.login_form.reset_request')}
+            </TextLink>
+          )}
+        </Stack>
       </fieldset>
     </Form>
   );
@@ -96,6 +125,7 @@ AuthForm.propTypes = {
   showEmail: PropTypes.bool,
   showPassword: PropTypes.bool,
   showConfirmPassword: PropTypes.bool,
+  showResetLink: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.string,
   called: PropTypes.bool,

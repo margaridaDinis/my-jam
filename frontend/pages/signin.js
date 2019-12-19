@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, CardSection } from '@kiwicom/orbit-components/lib';
-import SignUp from '../components/organisms/SignUp';
+import SignIn from '../components/organisms/SignIn';
 
 const SignUpPage = () => (
   <Card>
     <CardSection>
-      <SignUp />
+      <SignIn shouldRedirectOnSuccess/>
     </CardSection>
   </Card>
 );

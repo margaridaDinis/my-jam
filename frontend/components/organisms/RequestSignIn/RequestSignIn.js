@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
+import { Card, CardSection } from '@kiwicom/orbit-components/lib/index';
 import { CURRENT_USER_QUERY } from '../User';
 import SignIn from '../SignIn';
 
@@ -12,10 +13,11 @@ const RequestSignIn = ({ children }) => {
   if (loading) return <p>{t('app.loading')}</p>;
   if (!data.me) {
     return (
-    <div>
-      <p>{t('account.login_request')}</p>
-      <SignIn />
-    </div>
+      <Card>
+        <CardSection>
+          <SignIn />
+        </CardSection>
+      </Card>
     );
   }
 

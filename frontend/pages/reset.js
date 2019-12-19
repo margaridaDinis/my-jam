@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card, CardSection } from '@kiwicom/orbit-components/lib/index';
 import ResetPassword from '../components/organisms/Reset';
 
 const Reset = ({ query }) => (
-    <ResetPassword resetToken={query.resetToken || ''} />
+  <Card>
+    <CardSection>
+      <ResetPassword resetToken={query.resetToken || ''} />
+    </CardSection>
+  </Card>
 );
 
 Reset.propTypes = {

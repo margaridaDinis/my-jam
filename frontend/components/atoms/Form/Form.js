@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Form = styled.form`
+  * {
+    box-sizing: border-box;
+  }
   input,
   textarea {
     display: block;

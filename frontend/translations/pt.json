@@ -77,7 +77,8 @@
       "name": "Nome",
       "email": "Email",
       "password": "Palavra-passe",
-      "confirmPassword": "Confirmaçāo da Palavra-passe"
+      "confirmPassword": "Confirmaçāo da Palavra-passe",
+      "reset_request": "Recuperar palavra-passe"
     }
   },
   "permissions": {

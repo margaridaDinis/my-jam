@@ -30,7 +30,7 @@ const Nav = () => {
               <Fragment>
                 {/* TODO link to login page */}
                 <MenuItem pathname='/signup' translationKey='signup' icon={<AccountCircle />}/>
-                <MenuItem pathname='/signup' translationKey='login' icon={<AccountCircle />}/>
+                <MenuItem pathname='/signin' translationKey='login' icon={<AccountCircle />}/>
               </Fragment>
             )}
           </NavigationList>
