@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import DownShift, { resetIdCounter } from 'downshift';
 import Router from 'next/router';
+import { InputField, Stack } from '@kiwicom/orbit-components/lib';
+import SearchIcon from '@kiwicom/orbit-components/lib/icons/Search';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { SearchStyles } from '../../../styles/DropDown';
 import { SEARCH_ALBUMS_QUERY } from '../../../lib/album';
 import SearchDropDown from '../../molecules/SearchDropDown';
 
@@ -33,7 +34,7 @@ const Search = () => {
   resetIdCounter();
 
   return (
-    <SearchStyles>
+    <Stack align='center' justify='end'>
       <DownShift
         onChange={navigateToAlbum}
         itemToString={(item) => (item === null ? '' : label(item))}
@@ -42,13 +43,14 @@ const Search = () => {
           getInputProps, getItemProps, isOpen, inputValue, highlightedIndex,
         }) => (
           <div>
-            <input
+            <InputField
+              placeholder={t('search.placeholder')}
+              prefix={<SearchIcon />}
               {...getInputProps({
                 onChange,
                 type: 'search',
                 id: 'search',
                 className: loading ? 'loading' : '',
-                placeholder: t('search.placeholder'),
               })}
             />
             {isOpen && (
@@ -64,7 +66,7 @@ const Search = () => {
           </div>
         )}
       </DownShift>
-    </SearchStyles>
+    </Stack>
   );
 };
 
