@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import {
-  Button, Heading, Stack, Badge, List, ListItem,
+  Button, Heading, Stack, Badge, List, ListItem, Loading,
 } from '@kiwicom/orbit-components/lib';
 import {
   Edit, Location, Passengers, MusicalInstruments, Calendar, ChevronRight,
@@ -19,7 +19,7 @@ const Album = ({ id }) => {
     { variables: { id } },
   );
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   if (!data || !data.album) return <p>No item found for ID {id} </p>;
 
   const { album } = data;

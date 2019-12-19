@@ -32,7 +32,8 @@
     "heading": "Artistas",
     "button": {
       "new": "Adicionar"
-    }
+    },
+    "no_albums": "Ainda nāo tem albuns deste artista"
   },
   "genres": {
     "pageTitle": {
@@ -43,7 +44,8 @@
     "heading": "Géneros",
     "button": {
       "new": "Adicionar"
-    }
+    },
+    "no_albums": "Ainda nāo tem albuns deste género"
   },
   "locations": {
     "pageTitle": {
@@ -54,7 +56,8 @@
     "heading": "Lugares",
     "button": {
       "new": "Adicionar"
-    }
+    },
+    "no_albums": "Ainda nāo há albuns neste lugar"
   },
   "table": {
     "name": "Nome",
