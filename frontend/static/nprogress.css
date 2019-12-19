@@ -1,10 +1,14 @@
+:root {
+  --main-color: #00A991;
+}
+
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
 }
 
 #nprogress .bar {
-  background: red;
+  background: var(--main-color);
   position: fixed;
   z-index: 1031;
   top: 0;
@@ -18,10 +22,10 @@
 #nprogress .peg {
   display: block;
   position: absolute;
-  right: 0px;
+  right: 0;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px red, 0 0 5px red;
+  box-shadow: 0 0 10px #00A991, 0 0 5px var(--main-color);
   opacity: 1.0;
 
   -webkit-transform: rotate(3deg) translate(0px, -4px);
@@ -44,8 +48,8 @@
   box-sizing: border-box;
 
   border: solid 2px transparent;
-  border-top-color: red;
-  border-left-color: red;
+  border-top-color: var(--main-color);
+  border-left-color: var(--main-color);
   border-radius: 50%;
 
   -webkit-animation: nprogress-spinner 400ms linear infinite;
