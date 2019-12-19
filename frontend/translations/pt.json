@@ -14,6 +14,15 @@
       "new": "Adicionar"
     }
   },
+  "album": {
+    "title": {
+      "artists": "Artistas",
+      "genres": "Géneros",
+      "year": "Ano",
+      "description":"Observaçoes",
+      "tracks": "Faixas"
+    }
+  },
   "artists": {
     "pageTitle": {
       "index": "Artistas",
