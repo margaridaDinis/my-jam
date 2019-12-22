@@ -13,11 +13,15 @@ const Select = ({
   const handleCreate = async (name) => {
     const newOption = await addNewOption(name);
 
-    if (newOption) setSelected(newOption.id);
+    if (newOption) {
+      setSelected({ value: newOption.id, label: newOption.name });
+      onChange({ [type]: newOption.id });
+    }
   };
 
   const handleChange = (option) => {
     onChange({ [type]: option && option.value ? option.value : '' });
+
     setSelected(option);
   };
 

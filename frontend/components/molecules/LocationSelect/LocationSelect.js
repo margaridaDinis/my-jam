@@ -17,7 +17,7 @@ const LocationSelect = ({ label, defaultValue, onChange }) => {
 
     if (createState.error) return null;
 
-    return res.data.createGenre;
+    return res.data.createLocation;
   };
 
   if (error) return <ErrorMessage error={error} />;

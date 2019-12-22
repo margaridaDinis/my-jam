@@ -67,7 +67,7 @@ const AlbumForm = ({
           />
           <LocationSelect
             label={t('input.label.location')}
-            defaultValue={album.location && album.location.id}
+            defaultValue={'ck4hn49hp1lyx0922is0t9cgd'}
             onChange={handleExternalChange}
           />
           <Input
