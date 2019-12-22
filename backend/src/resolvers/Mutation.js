@@ -68,7 +68,7 @@ const mutations = {
     return ctx.db.mutation.deleteAlbum({ where: { id: args.id } }, info);
   },
   async signUp(parent, args, ctx, info) {
-    const data = [...args];
+    const data = { ...args };
     data.email = data.email.toLowerCase();
     const password = await bcrypt.hash(args.password, 10);
     const user = await ctx.db.mutation.createUser(
@@ -76,7 +76,7 @@ const mutations = {
         data: {
           ...data,
           password,
-          permissions: { set: ['USER'] },
+          permissions: { set: ['USER', 'PERMISSIONUPDATE'] },
         },
       },
       info,
