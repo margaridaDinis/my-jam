@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "next -p 7777",
     "build": "next build",
-    "start": "next start",
+    "heroku-postbuild": "next build",
+    "start": "next start -p $PORT",
     "lint": "eslint ./components ./pages",
     "test": "NODE_ENV=test jest --watch",
     "test-win": "SET NODE_ENV=test&& jest --watch",
-    "heroku-postbuild": "next build",
     "commitizen": "git-cz",
     "commit": "npm-run-all lint commitizen"
   },
