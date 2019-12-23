@@ -7,6 +7,11 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+enum ALBUM_TYPE {
+  CD
+  LP
+}
+
 type User {
   id: ID! @id
   name: String!
@@ -31,7 +36,7 @@ type Album {
   location: Location,
   genres: [Genre!]!
   artists: [Artist]!
-  #  type: [one of "album" , "single" , or "compilation"]!
+  type: ALBUM_TYPE
   user: User!
 }
 

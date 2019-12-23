@@ -76,7 +76,7 @@ const mutations = {
         data: {
           ...data,
           password,
-          permissions: { set: ['USER', 'PERMISSIONUPDATE'] },
+          permissions: { set: ['USER'] },
         },
       },
       info,

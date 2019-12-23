@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/margarida-dinis-a70bd9/sick-fits/dev
-# timestamp: Sun Dec 22 2019 20:51:28 GMT+0000 (Western European Standard Time)
+# timestamp: Mon Dec 23 2019 14:14:51 GMT+0000 (Western European Standard Time)
 
 type AggregateAlbum {
   count: Int!
@@ -33,7 +33,13 @@ type Album implements Node {
   location: Location
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre!]
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
+  type: ALBUM_TYPE
   user: User!
+}
+
+enum ALBUM_TYPE {
+  CD
+  LP
 }
 
 """A connection to a list of items."""
@@ -53,6 +59,7 @@ input AlbumCreateInput {
   description: String
   image: String!
   largeImage: String!
+  type: ALBUM_TYPE
   location: LocationCreateOneWithoutAlbumsInput
   genres: GenreCreateManyWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
@@ -81,6 +88,7 @@ input AlbumCreateWithoutArtistsInput {
   description: String
   image: String!
   largeImage: String!
+  type: ALBUM_TYPE
   location: LocationCreateOneWithoutAlbumsInput
   genres: GenreCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
@@ -93,6 +101,7 @@ input AlbumCreateWithoutGenresInput {
   description: String
   image: String!
   largeImage: String!
+  type: ALBUM_TYPE
   location: LocationCreateOneWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
@@ -105,6 +114,7 @@ input AlbumCreateWithoutLocationInput {
   description: String
   image: String!
   largeImage: String!
+  type: ALBUM_TYPE
   genres: GenreCreateManyWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
   user: UserCreateOneInput!
@@ -136,6 +146,8 @@ enum AlbumOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  type_ASC
+  type_DESC
 }
 
 type AlbumPreviousValues {
@@ -147,6 +159,7 @@ type AlbumPreviousValues {
   largeImage: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  type: ALBUM_TYPE
 }
 
 input AlbumScalarWhereInput {
@@ -424,6 +437,16 @@ input AlbumScalarWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  type: ALBUM_TYPE
+
+  """All values that are not equal to given value."""
+  type_not: ALBUM_TYPE
+
+  """All values that are contained in given list."""
+  type_in: [ALBUM_TYPE!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [ALBUM_TYPE!]
 }
 
 type AlbumSubscriptionPayload {
@@ -471,6 +494,7 @@ input AlbumUpdateInput {
   description: String
   image: String
   largeImage: String
+  type: ALBUM_TYPE
   location: LocationUpdateOneWithoutAlbumsInput
   genres: GenreUpdateManyWithoutAlbumsInput
   artists: ArtistUpdateManyWithoutAlbumsInput
@@ -483,6 +507,7 @@ input AlbumUpdateManyDataInput {
   description: String
   image: String
   largeImage: String
+  type: ALBUM_TYPE
 }
 
 input AlbumUpdateManyMutationInput {
@@ -491,6 +516,7 @@ input AlbumUpdateManyMutationInput {
   description: String
   image: String
   largeImage: String
+  type: ALBUM_TYPE
 }
 
 input AlbumUpdateManyWithoutArtistsInput {
@@ -540,6 +566,7 @@ input AlbumUpdateWithoutArtistsDataInput {
   description: String
   image: String
   largeImage: String
+  type: ALBUM_TYPE
   location: LocationUpdateOneWithoutAlbumsInput
   genres: GenreUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
@@ -551,6 +578,7 @@ input AlbumUpdateWithoutGenresDataInput {
   description: String
   image: String
   largeImage: String
+  type: ALBUM_TYPE
   location: LocationUpdateOneWithoutAlbumsInput
   artists: ArtistUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
@@ -562,6 +590,7 @@ input AlbumUpdateWithoutLocationDataInput {
   description: String
   image: String
   largeImage: String
+  type: ALBUM_TYPE
   genres: GenreUpdateManyWithoutAlbumsInput
   artists: ArtistUpdateManyWithoutAlbumsInput
   user: UserUpdateOneRequiredInput
@@ -875,6 +904,16 @@ input AlbumWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  type: ALBUM_TYPE
+
+  """All values that are not equal to given value."""
+  type_not: ALBUM_TYPE
+
+  """All values that are contained in given list."""
+  type_in: [ALBUM_TYPE!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [ALBUM_TYPE!]
   location: LocationWhereInput
   genres_every: GenreWhereInput
   genres_some: GenreWhereInput

@@ -13,6 +13,7 @@ type Mutation {
     genres: [String],
     largeImage: String
     location: String
+    type: String
   ): Album!
   updateAlbum(
     id: ID!,
@@ -24,6 +25,7 @@ type Mutation {
     image: String,
     largeImage: String
     location: String
+    type: String
   ): Album!
   deleteAlbum(id: ID!): Album
   signUp(email: String!, password: String!, name: String!): User!
