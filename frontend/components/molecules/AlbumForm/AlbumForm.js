@@ -10,6 +10,7 @@ import GenresSelect from '../GenresSelect';
 import FileInput from '../FileInput';
 import ArtistsSelect from '../ArtistsSelect';
 import LocationSelect from '../LocationSelect';
+import AlbumType from '../AlbumType/AlbumType';
 
 const AlbumForm = ({
   album, handleSubmit, submitting, error, isEdit,
@@ -52,6 +53,12 @@ const AlbumForm = ({
             label={t('input.label.artists')}
             defaultValue={album.artists.map((artist) => artist.id)}
             onChange={handleExternalChange}
+          />
+          <AlbumType
+            name='type'
+            label={t('input.label.type')}
+            value={values.type || album.type}
+            handleChange={handleChange}
           />
           <Input
             type='number'
@@ -110,6 +117,7 @@ AlbumForm.defaultProps = {
     genres: [],
     artists: [],
     location: {},
+    type: '',
   },
 };
 
@@ -123,6 +131,7 @@ AlbumForm.propTypes = {
     genres: PropTypes.array,
     artists: PropTypes.array,
     location: PropTypes.object,
+    type: PropTypes.string,
   }),
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,

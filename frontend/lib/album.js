@@ -10,6 +10,7 @@ export const ALL_ALBUMS_QUERY = gql`
       description
       image
       largeImage
+      type
       artists {
         name
       }
@@ -26,6 +27,7 @@ export const SINGLE_ALBUM_QUERY = gql`
       description
       image
       largeImage
+      type
       genres {
         id
         name
@@ -79,6 +81,7 @@ export const CREATE_ALBUM_MUTATION = gql`
     $genres: [String]
     $artists: [String]
     $location: String
+    $type: String
   ) {
     createAlbum(
       name: $name
@@ -89,6 +92,7 @@ export const CREATE_ALBUM_MUTATION = gql`
       genres: $genres
       artists: $artists
       location: $location
+      type: $type
     ) {
       id
       name
@@ -111,6 +115,7 @@ export const UPDATE_ALBUM_MUTATION = gql`
     $genres: [String]
     $artists: [String]
     $location: String
+    $type: String
   ) {
     updateAlbum(
       id: $id
@@ -122,6 +127,7 @@ export const UPDATE_ALBUM_MUTATION = gql`
       genres: $genres
       artists: $artists
       location: $location
+      type: $type
     ) {
       id
       name

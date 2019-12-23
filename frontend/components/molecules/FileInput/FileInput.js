@@ -73,7 +73,11 @@ const FileInput = ({
         spaceAfter='medium'
       />
       {loading && <Loading />}
-      {(!loading && image) && <img src={image} alt='Uploaded Image' width='200' />}
+      {(!loading && image) && (
+        <Stack spaceAfter='medium'>
+          <img src={image} alt='Uploaded Image' width='200'/>
+        </Stack>
+      )}
     </Fragment>
   );
 };

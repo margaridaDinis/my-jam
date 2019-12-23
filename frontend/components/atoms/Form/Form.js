@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const Form = styled.form`
   * {
     box-sizing: border-box;
+    font-family: ${(props) => props.theme.orbit.fontFamily};
+    font-size: ${(props) => props.theme.orbit.fontSizeTextNormal};
   }
   input,
   textarea {

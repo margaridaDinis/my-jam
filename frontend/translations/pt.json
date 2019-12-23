@@ -20,7 +20,8 @@
       "genres": "Géneros",
       "year": "Ano",
       "description":"Observaçoes",
-      "tracks": "Faixas"
+      "tracks": "Faixas",
+      "type": "Tipo"
     }
   },
   "artists": {
@@ -125,7 +126,8 @@
       "image": "Capa do album",
       "artists": "Artistas",
       "genres": "Géneros",
-      "location": "Localizaçāo"
+      "location": "Localizaçāo",
+      "type": "Tipo"
     }
   }
 }

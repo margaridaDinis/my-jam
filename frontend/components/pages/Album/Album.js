@@ -8,9 +8,10 @@ import {
   Button, Heading, Stack, Badge, List, ListItem, Loading,
 } from '@kiwicom/orbit-components/lib';
 import {
-  Edit, Location, Passengers, MusicalInstruments, Calendar, ChevronRight,
+  Edit, Location, Passengers, MusicalInstruments, Calendar, ChevronRight, Circle,
 } from '@kiwicom/orbit-components/lib/icons';
 import { SINGLE_ALBUM_QUERY } from '../../../lib/album';
+import ALBUM_TYPES from '../../../lib/albumTypes';
 
 const Album = ({ id }) => {
   const { t } = useTranslation();
@@ -76,6 +77,11 @@ const Album = ({ id }) => {
         {album.year && (
           <ListItem label={t('album.title.year')} icon={<Calendar color='secondary' />}>
             {album.year}
+          </ListItem>
+        )}
+        {album.type && (
+          <ListItem label={t('album.title.type')} icon={<Circle color='secondary' />}>
+            {ALBUM_TYPES.find(({ value }) => value === album.type).label}
           </ListItem>
         )}
         {album.description && (
