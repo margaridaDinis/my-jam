@@ -32,6 +32,22 @@ cd frontend
 yarn dev
 ```
 
+## Deploy
+
+## Backend
+From root folder run in the terminal:
+
+```bash
+git subtree push --prefix backend heroku-backend master
+```
+
+## Frontedn
+From root folder run in the terminal:
+
+```bash
+git subtree push --prefix frontend heroku-frontend master
+```
+
 ## Contribution
 
 To commit do the following command in `backend` or frontend folder:
