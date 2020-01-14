@@ -8,13 +8,13 @@ import Stack from '@kiwicom/orbit-components/lib/Stack';
 const Album = ({ album }) => {
   const artists = (album && album.artists) && album.artists.map(({ name }) => name);
 
+  const image = album.image ? album.image : 'https://via.placeholder.com/250?text=Sem imagem';
+
   return (
     <Stack spaceAfter='large'>
-      {album.image && (
-        <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>
-          <img src={album.image} alt={album.name} style={{ maxWidth: '100%' }}/>
-        </Link>
-      )}
+      <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>
+        <img src={image} alt={album.name} />
+      </Link>
       <Link href={{ pathname: '/albums/show', query: { id: album.id } }}>
         <Truncate>
           <Heading type='displaySubtitle'>
