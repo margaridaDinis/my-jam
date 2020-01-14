@@ -10,6 +10,7 @@ enum Permission {
 enum ALBUM_TYPE {
   CD
   LP
+  CASSETE
 }
 
 type User {

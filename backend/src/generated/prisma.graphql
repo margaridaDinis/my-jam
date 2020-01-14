@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/margarida-dinis-a70bd9/sick-fits/dev
-# timestamp: Mon Dec 23 2019 14:14:51 GMT+0000 (Western European Standard Time)
+# timestamp: Tue Jan 07 2020 21:22:11 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
   count: Int!
@@ -40,6 +40,7 @@ type Album implements Node {
 enum ALBUM_TYPE {
   CD
   LP
+  CASSETE
 }
 
 """A connection to a list of items."""
