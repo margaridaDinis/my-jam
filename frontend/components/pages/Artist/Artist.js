@@ -37,7 +37,7 @@ const Artist = ({ id }) => {
         </Link>
       </Stack>
 
-      {artist.albums.length > 1 ? (
+      {artist.albums.length > 0 ? (
         <List
           size='normal'
           type='primary'

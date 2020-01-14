@@ -37,7 +37,7 @@ const Location = ({ id }) => {
         </Link>
       </Stack>
 
-      {location.albums.length > 1 ? (
+      {location.albums.length > 0 ? (
         <List
           size='normal'
           type='primary'

@@ -40,7 +40,7 @@ const Genre = ({ id }) => {
         </Link>
       </Stack>
 
-      {genre.albums.length > 1 ? (
+      {genre.albums.length > 0 ? (
         <List
           size='normal'
           type='primary'
