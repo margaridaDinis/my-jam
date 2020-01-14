@@ -30,8 +30,8 @@ type Album {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   location: Location,

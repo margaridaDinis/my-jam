@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/margarida-dinis-a70bd9/sick-fits/dev
-# timestamp: Tue Jan 07 2020 21:22:11 GMT+0100 (Central European Standard Time)
+# timestamp: Tue Jan 14 2020 21:41:41 GMT+0100 (Central European Standard Time)
 
 type AggregateAlbum {
   count: Int!
@@ -26,8 +26,8 @@ type Album implements Node {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   createdAt: DateTime!
   updatedAt: DateTime!
   location: Location
@@ -58,8 +58,8 @@ input AlbumCreateInput {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   type: ALBUM_TYPE
   location: LocationCreateOneWithoutAlbumsInput
   genres: GenreCreateManyWithoutAlbumsInput
@@ -87,8 +87,8 @@ input AlbumCreateWithoutArtistsInput {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   type: ALBUM_TYPE
   location: LocationCreateOneWithoutAlbumsInput
   genres: GenreCreateManyWithoutAlbumsInput
@@ -100,8 +100,8 @@ input AlbumCreateWithoutGenresInput {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   type: ALBUM_TYPE
   location: LocationCreateOneWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
@@ -113,8 +113,8 @@ input AlbumCreateWithoutLocationInput {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   type: ALBUM_TYPE
   genres: GenreCreateManyWithoutAlbumsInput
   artists: ArtistCreateManyWithoutAlbumsInput
@@ -156,8 +156,8 @@ type AlbumPreviousValues {
   year: Int
   name: String!
   description: String
-  image: String!
-  largeImage: String!
+  image: String
+  largeImage: String
   createdAt: DateTime!
   updatedAt: DateTime!
   type: ALBUM_TYPE
