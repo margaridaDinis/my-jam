@@ -76,8 +76,8 @@ export const CREATE_ALBUM_MUTATION = gql`
     $name: String!
     $year: Int
     $description: String
-    $image: String!
-    $largeImage: String!
+    $image: String
+    $largeImage: String
     $genres: [String]
     $artists: [String]
     $location: String

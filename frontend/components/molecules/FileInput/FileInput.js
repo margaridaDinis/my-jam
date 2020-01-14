@@ -25,6 +25,8 @@ const FileInput = ({
 
     if (!uploadedFile) {
       reset(image);
+      setLoading(false);
+
       return;
     }
 

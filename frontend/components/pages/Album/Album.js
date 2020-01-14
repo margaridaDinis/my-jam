@@ -12,6 +12,7 @@ import {
 } from '@kiwicom/orbit-components/lib/icons';
 import { SINGLE_ALBUM_QUERY } from '../../../lib/album';
 import ALBUM_TYPES from '../../../lib/albumTypes';
+import DeleteAlbum from '../../molecules/DeleteAlbum';
 
 const Album = ({ id }) => {
   const { t } = useTranslation();
@@ -44,11 +45,16 @@ const Album = ({ id }) => {
             )}
           </Stack>
         </div>
-        <Link href={{ pathname: '/albums/update', query: { id: album.id } }}>
-          <Button iconLeft={<Edit />}>
-            {t('button.edit')}
-          </Button>
-        </Link>
+        <Stack inline direction='row' justify='end'>
+          <Link href={{ pathname: '/albums/update', query: { id: album.id } }}>
+            <Button iconLeft={<Edit />}>
+              {t('button.edit')}
+            </Button>
+          </Link>
+          <DeleteAlbum id={album.id} image={album.image}>
+            {t('button.delete')}
+          </DeleteAlbum>
+        </Stack>
       </Stack>
 
       <List type='separated' spaceAfter='large'>

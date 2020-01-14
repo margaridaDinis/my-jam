@@ -89,11 +89,10 @@ const AlbumForm = ({
             label={t('input.label.image')}
             defaultValue={album.image}
             onChange={handleExternalChange}
-            required={!isEdit}
           />
           <footer>
             <Button
-              disabled={!isEdit && (!values.name || !values.image)}
+              disabled={!isEdit && !values.name}
               loading={submitting}
               submit
             >

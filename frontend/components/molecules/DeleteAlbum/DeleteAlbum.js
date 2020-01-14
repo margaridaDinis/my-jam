@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
+import Router from 'next/router';
 
 import Button from '@kiwicom/orbit-components/lib/Button';
 import { ALL_ALBUMS_QUERY, DELETE_ALBUM_MUTATION } from '../../../lib/album';
@@ -20,7 +21,10 @@ const DeleteAlbum = ({ id, image, children }) => {
     // eslint-disable-next-line
     if (confirm('Are you sure you want to delete this albums?')) {
       removeAlbum({ variables: { id } })
-        .then(() => removeImage(image))
+        .then(() => {
+          Router.push({ pathname: '/albums' });
+          removeImage(image);
+        })
         .catch((e) => alert(e.message)); // eslint-disable-line
     }
   };
