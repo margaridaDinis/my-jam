@@ -1,13 +1,23 @@
 const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 
-const transport = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-});
+const sendMail = (msg) => {
+  if (process.env.NODE_ENV === 'production' && process.env.SENDGRID_API_KEY) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    return sgMail.send(msg);
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  return transporter.sendMail(msg);
+};
 
 const makeANiceEmail = (text) => `
   <div className="email" style="
@@ -25,5 +35,5 @@ const makeANiceEmail = (text) => `
 `;
 
 
-exports.transport = transport;
+exports.sendMail = sendMail;
 exports.makeANiceEmail = makeANiceEmail;

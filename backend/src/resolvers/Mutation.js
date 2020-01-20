@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
-const { transport, makeANiceEmail } = require('../mail');
+const { sendMail, makeANiceEmail } = require('../mail');
 const { setToken, canPerformMutation, isAlbumOwner } = require('../utils');
 const { getItemsToDisconnect, getConnectedItem, getItemsToConnect } = require('../connections');
 const {
@@ -115,7 +115,7 @@ const mutations = {
       data: { resetToken, resetTokenExpiry },
     });
 
-    await transport.sendMail({
+    const msg = {
       from: 'margarida@margaridadinis.com',
       to: user.email,
       subject: 'MyJam password reset request',
@@ -124,7 +124,9 @@ const mutations = {
         <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">
         Click here to set a new password for your MyJam account.
         </a>`),
-    });
+    };
+
+    sendMail(msg);
 
     return { message: 'Success! Check your email for a reset link!' };
   },
