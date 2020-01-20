@@ -128,7 +128,7 @@ const mutations = {
 
     sendMail(msg);
 
-    return { message: 'Success! Check your email for a reset link!' };
+    return { message: 'account.reset_request_success' };
   },
   async resetPassword(parent, args, ctx, info) {
     const { resetToken, password, confirmPassword } = args;

@@ -18,7 +18,7 @@ const RequestReset = () => {
       title={t('account.reset')}
       handleSubmit={handleSubmit}
       {...formState}
-      successMessage={successMessage}
+      successMessage={t(successMessage)}
       showEmail
     />
   );

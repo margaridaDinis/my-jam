@@ -92,7 +92,8 @@
       "password": "Palavra-passe",
       "confirmPassword": "Confirmaçāo da Palavra-passe",
       "reset_request": "Recuperar palavra-passe"
-    }
+    },
+    "reset_request_success": "Pedido processado com sucesso! Por favor verifique o seu email."
   },
   "permissions": {
     "user_name": "Usuário",
