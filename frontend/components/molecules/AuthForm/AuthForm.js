@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Stack, TextLink } from '@kiwicom/orbit-components/lib/index';
+import {
+  Button, Stack, TextLink, Alert,
+} from '@kiwicom/orbit-components/lib/index';
 import Router from 'next/dist/lib/router';
 import Form from '../../atoms/Form';
 import ErrorMessage from '../ErrorMessage';
@@ -46,9 +48,13 @@ const AuthForm = ({
   return (
     <Form onSubmit={submit}>
       {error && <ErrorMessage error={error} />}
-      <fieldset disabled={loading} aria-busy={loading}>
-        <h2>{title}</h2>
-        {succeeded && successMessage && <p>{successMessage}</p>}
+      <h2>{title}</h2>
+      {succeeded && successMessage && (
+        <Alert icon type='success' spaceAfter='medium'>
+          {successMessage}
+        </Alert>
+      )}
+      <fieldset disabled={loading || succeeded} aria-busy={loading || succeeded}>
         {showName && (
           <Input
             type='name'

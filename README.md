@@ -41,7 +41,7 @@ From root folder run in the terminal:
 git subtree push --prefix backend heroku-backend master
 ```
 
-## Frontedn
+## Frontend
 From root folder run in the terminal:
 
 ```bash
